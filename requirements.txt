@@ -1,0 +1,22 @@
+# AI智能体核心依赖
+langchain==0.3.0
+langchain-openai==0.3.0
+langchain-community==0.3.0
+langchain-text-splitters==0.3.0
+
+# 数据处理和工具
+pandas==2.1.4
+numpy==1.26.0
+pydantic==2.7.4
+
+# 日志和配置
+python-dotenv==1.0.0
+loguru==0.7.2
+
+# 测试框架
+pytest==7.4.3
+pytest-asyncio==0.21.1
+
+# 开发工具
+black==23.12.1
+flake8==6.1.0

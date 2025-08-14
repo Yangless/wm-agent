@@ -1,0 +1,1724 @@
+2025-08-13 20:07:09,799 - __main__ - ERROR - 演示过程中发生错误: 'Settings' object has no attribute 'DATA_DIR'
+Traceback (most recent call last):
+  File "D:\Project\Agent-demo\demo.py", line 326, in main
+    data_manager, settings = demo_basic_functionality()
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project\Agent-demo\demo.py", line 81, in demo_basic_functionality
+    print(f"   - 数据目录: {settings.DATA_DIR}")
+                            ^^^^^^^^^^^^^^^^^
+  File "D:\Project\Agent-demo\.venv\Lib\site-packages\pydantic\main.py", line 811, in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+AttributeError: 'Settings' object has no attribute 'DATA_DIR'
+2025-08-13 20:08:07,920 - __main__ - ERROR - 演示过程中发生错误: DataManager.__init__() takes 1 positional argument but 2 were given
+Traceback (most recent call last):
+  File "D:\Project\Agent-demo\demo.py", line 326, in main
+    data_manager, settings = demo_basic_functionality()
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project\Agent-demo\demo.py", line 87, in demo_basic_functionality
+    data_manager = DataManager(settings)
+                   ^^^^^^^^^^^^^^^^^^^^^
+TypeError: DataManager.__init__() takes 1 positional argument but 2 were given
+2025-08-13 20:08:30,519 - __main__ - ERROR - 演示过程中发生错误: 'MockDataGenerator' object has no attribute 'create_player'
+Traceback (most recent call last):
+  File "D:\Project\Agent-demo\demo.py", line 326, in main
+    data_manager, settings = demo_basic_functionality()
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project\Agent-demo\demo.py", line 96, in demo_basic_functionality
+    mock_generator.create_player("player_001", "张三", level=25, vip_level=5),
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MockDataGenerator' object has no attribute 'create_player'. Did you mean: 'generate_player'?
+2025-08-13 20:09:21,536 - __main__ - ERROR - 演示过程中发生错误: 'MockDataGenerator' object has no attribute 'generate_normal_sequence'
+Traceback (most recent call last):
+  File "D:\Project\Agent-demo\demo.py", line 326, in main
+    data_manager, settings = demo_basic_functionality()
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project\Agent-demo\demo.py", line 109, in demo_basic_functionality
+    normal_actions = mock_generator.generate_normal_sequence(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MockDataGenerator' object has no attribute 'generate_normal_sequence'. Did you mean: 'generate_action_sequence'?
+2025-08-13 20:09:47,099 - __main__ - ERROR - 演示过程中发生错误: 'DataManager' object has no attribute 'add_player_action'
+Traceback (most recent call last):
+  File "D:\Project\Agent-demo\demo.py", line 326, in main
+    data_manager, settings = demo_basic_functionality()
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project\Agent-demo\demo.py", line 113, in demo_basic_functionality
+    data_manager.add_player_action(action)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DataManager' object has no attribute 'add_player_action'. Did you mean: 'get_player_actions'?
+2025-08-13 20:10:34,448 - __main__ - ERROR - 演示过程中发生错误: 'DataManager' object has no attribute 'get_data_stats'
+Traceback (most recent call last):
+  File "D:\Project\Agent-demo\demo.py", line 326, in main
+    data_manager, settings = demo_basic_functionality()
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project\Agent-demo\demo.py", line 119, in demo_basic_functionality
+    stats = data_manager.get_data_stats()
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DataManager' object has no attribute 'get_data_stats'
+2025-08-13 20:10:59,557 - src.triggers.behavior_analyzer - ERROR - 分析玩家 player_001 行为时出错: type object 'ActionType' has no attribute 'CHAT_NEGATIVE'
+2025-08-13 20:10:59,558 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-13 20:10:59,558 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-13 20:10:59,558 - __main__ - ERROR - 演示过程中发生错误: 'TriggerCondition' object has no attribute 'enabled'
+Traceback (most recent call last):
+  File "D:\Project\Agent-demo\demo.py", line 332, in main
+    trigger_engine = demo_trigger_system(data_manager, analyzer)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project\Agent-demo\demo.py", line 160, in demo_trigger_system
+    conditions = trigger_engine.get_condition_list()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project\Agent-demo\src\triggers\trigger_engine.py", line 642, in get_condition_list
+    "enabled": condition.enabled,
+               ^^^^^^^^^^^^^^^^^
+  File "D:\Project\Agent-demo\.venv\Lib\site-packages\pydantic\main.py", line 811, in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+AttributeError: 'TriggerCondition' object has no attribute 'enabled'
+2025-08-13 20:11:51,620 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-13 20:11:51,620 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-13 20:11:51,621 - src.triggers.trigger_engine - ERROR - 评估触发条件时出错: 'TriggerCondition' object has no attribute 'max_vip_level'
+2025-08-13 20:11:51,622 - src.triggers.trigger_engine - ERROR - 评估触发条件时出错: 'TriggerCondition' object has no attribute 'max_vip_level'
+2025-08-13 20:11:51,622 - src.triggers.trigger_engine - ERROR - 评估触发条件时出错: 'TriggerCondition' object has no attribute 'max_vip_level'
+2025-08-13 20:11:51,622 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-13 20:11:51,639 - src.agent.smart_game_agent - WARNING - 无法初始化OpenAI LLM: The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable，将使用模拟模式
+2025-08-13 20:11:51,640 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-13 20:11:51,640 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-13 20:11:51,641 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-13 20:11:51,641 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-13 20:11:51,641 - src.scenarios.frustration_scenario - ERROR - 快速测试时出错: 'MockDataGenerator' object has no attribute 'create_player'
+2025-08-13 20:11:51,642 - __main__ - ERROR - 演示过程中发生错误: 'DataManager' object has no attribute 'get_data_stats'
+Traceback (most recent call last):
+  File "D:\Project\Agent-demo\demo.py", line 341, in main
+    demo_system_stats(data_manager, analyzer, trigger_engine, agent)
+  File "D:\Project\Agent-demo\demo.py", line 282, in demo_system_stats
+    data_stats = data_manager.get_data_stats()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DataManager' object has no attribute 'get_data_stats'
+2025-08-13 20:13:03,774 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-13 20:13:03,774 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-13 20:13:03,775 - src.triggers.trigger_engine - ERROR - 评估触发条件时出错: 'TriggerCondition' object has no attribute 'max_vip_level'
+2025-08-13 20:13:03,775 - src.triggers.trigger_engine - ERROR - 评估触发条件时出错: 'TriggerCondition' object has no attribute 'max_vip_level'
+2025-08-13 20:13:03,775 - src.triggers.trigger_engine - ERROR - 评估触发条件时出错: 'TriggerCondition' object has no attribute 'max_vip_level'
+2025-08-13 20:13:03,775 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-13 20:13:03,777 - src.agent.smart_game_agent - WARNING - 无法初始化OpenAI LLM: The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable，将使用模拟模式
+2025-08-13 20:13:03,778 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-13 20:13:03,778 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-13 20:13:03,779 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-13 20:13:03,779 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-13 20:13:03,779 - src.scenarios.frustration_scenario - ERROR - 快速测试时出错: 'MockDataGenerator' object has no attribute 'generate_normal_sequence'
+2025-08-13 20:13:03,780 - __main__ - ERROR - 演示过程中发生错误: 'total_trigger_events'
+Traceback (most recent call last):
+  File "D:\Project\Agent-demo\demo.py", line 341, in main
+    demo_system_stats(data_manager, analyzer, trigger_engine, agent)
+  File "D:\Project\Agent-demo\demo.py", line 286, in demo_system_stats
+    print(f"   - 触发事件: {data_stats['total_trigger_events']}")
+                            ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'total_trigger_events'
+2025-08-13 20:14:11,126 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-13 20:14:11,126 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-13 20:14:11,127 - src.triggers.trigger_engine - ERROR - 评估触发条件时出错: 'TriggerCondition' object has no attribute 'max_vip_level'
+2025-08-13 20:14:11,127 - src.triggers.trigger_engine - ERROR - 评估触发条件时出错: 'TriggerCondition' object has no attribute 'max_vip_level'
+2025-08-13 20:14:11,128 - src.triggers.trigger_engine - ERROR - 评估触发条件时出错: 'TriggerCondition' object has no attribute 'max_vip_level'
+2025-08-13 20:14:11,128 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-13 20:14:11,129 - src.agent.smart_game_agent - WARNING - 无法初始化OpenAI LLM: The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable，将使用模拟模式
+2025-08-13 20:14:11,130 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-13 20:14:11,130 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-13 20:14:11,130 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-13 20:14:11,131 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-13 20:14:11,131 - src.scenarios.frustration_scenario - ERROR - 快速测试时出错: 'DataManager' object has no attribute 'add_player_action'
+2025-08-13 20:15:13,803 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-13 20:15:13,803 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-13 20:15:13,804 - src.triggers.trigger_engine - ERROR - 评估触发条件时出错: 'TriggerCondition' object has no attribute 'max_vip_level'
+2025-08-13 20:15:13,804 - src.triggers.trigger_engine - ERROR - 评估触发条件时出错: 'TriggerCondition' object has no attribute 'max_vip_level'
+2025-08-13 20:15:13,805 - src.triggers.trigger_engine - ERROR - 评估触发条件时出错: 'TriggerCondition' object has no attribute 'max_vip_level'
+2025-08-13 20:15:13,805 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-13 20:15:13,807 - src.agent.smart_game_agent - WARNING - 无法初始化OpenAI LLM: The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable，将使用模拟模式
+2025-08-13 20:15:13,808 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-13 20:15:13,808 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-13 20:15:13,809 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-13 20:15:13,809 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-13 20:15:13,810 - src.scenarios.frustration_scenario - ERROR - 快速测试时出错: 'Player' object has no attribute 'name'
+2025-08-13 20:15:42,721 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-13 20:15:42,722 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-13 20:15:42,722 - src.triggers.trigger_engine - ERROR - 评估触发条件时出错: 'TriggerCondition' object has no attribute 'max_vip_level'
+2025-08-13 20:15:42,723 - src.triggers.trigger_engine - ERROR - 评估触发条件时出错: 'TriggerCondition' object has no attribute 'max_vip_level'
+2025-08-13 20:15:42,723 - src.triggers.trigger_engine - ERROR - 评估触发条件时出错: 'TriggerCondition' object has no attribute 'max_vip_level'
+2025-08-13 20:15:42,723 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-13 20:15:42,725 - src.agent.smart_game_agent - WARNING - 无法初始化OpenAI LLM: The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable，将使用模拟模式
+2025-08-13 20:15:42,726 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-13 20:15:42,726 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-13 20:15:42,726 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-13 20:15:42,726 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-13 20:15:42,727 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=48, VIP=8
+2025-08-13 20:15:42,727 - src.scenarios.frustration_scenario - ERROR - 快速测试时出错: 'MockDataGenerator' object has no attribute 'generate_frustration_sequence'
+2025-08-13 20:17:09,633 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-13 20:17:09,634 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-13 20:17:09,634 - src.triggers.trigger_engine - ERROR - 评估触发条件时出错: 'TriggerCondition' object has no attribute 'max_vip_level'
+2025-08-13 20:17:09,635 - src.triggers.trigger_engine - ERROR - 评估触发条件时出错: 'TriggerCondition' object has no attribute 'max_vip_level'
+2025-08-13 20:17:09,635 - src.triggers.trigger_engine - ERROR - 评估触发条件时出错: 'TriggerCondition' object has no attribute 'max_vip_level'
+2025-08-13 20:17:09,635 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-13 20:17:09,637 - src.agent.smart_game_agent - WARNING - 无法初始化OpenAI LLM: The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable，将使用模拟模式
+2025-08-13 20:17:09,638 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-13 20:17:09,638 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-13 20:17:09,638 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-13 20:17:09,639 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-13 20:17:09,639 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=22, VIP=7
+2025-08-13 20:17:09,639 - src.triggers.trigger_engine - ERROR - 评估触发条件时出错: 'TriggerCondition' object has no attribute 'max_vip_level'
+2025-08-13 20:17:09,639 - src.triggers.trigger_engine - ERROR - 评估触发条件时出错: 'TriggerCondition' object has no attribute 'max_vip_level'
+2025-08-13 20:17:09,640 - src.triggers.trigger_engine - ERROR - 评估触发条件时出错: 'TriggerCondition' object has no attribute 'max_vip_level'
+2025-08-13 20:17:09,640 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-13 20:17:09,640 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 2, 'test_success': False, 'timestamp': '2025-08-13T20:17:09.640692'}
+2025-08-13 20:29:00,241 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-13 20:29:00,241 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-13 20:29:00,242 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-13 20:29:00,244 - src.agent.smart_game_agent - WARNING - 无法初始化OpenAI LLM: The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable，将使用模拟模式
+2025-08-13 20:29:00,245 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-13 20:29:00,245 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-13 20:29:00,245 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-13 20:29:00,246 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-13 20:29:00,246 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=22, VIP=5
+2025-08-13 20:29:00,247 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-13 20:29:00,247 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 6, 'test_success': False, 'timestamp': '2025-08-13T20:29:00.247614'}
+2025-08-13 20:50:50,294 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-13 20:50:50,294 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-13 20:50:50,295 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-13 20:50:50,297 - src.agent.smart_game_agent - WARNING - 无法初始化OpenAI LLM: The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable，将使用模拟模式
+2025-08-13 20:50:50,298 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-13 20:50:50,298 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-13 20:50:50,298 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-13 20:50:50,299 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-13 20:50:50,299 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=21, VIP=7
+2025-08-13 20:50:50,300 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-13 20:50:50,300 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 2, 'test_success': False, 'timestamp': '2025-08-13T20:50:50.300238'}
+2025-08-14 09:15:45,657 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 09:15:45,658 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 09:15:45,659 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 09:15:51,954 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 09:15:51,955 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 09:15:51,955 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 09:15:51,955 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 09:15:51,956 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=27, VIP=7
+2025-08-14 09:15:51,956 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 09:15:51,957 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 2, 'test_success': False, 'timestamp': '2025-08-14T09:15:51.957336'}
+2025-08-14 09:24:30,222 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 09:24:30,222 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 09:24:30,223 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 09:24:32,374 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 09:24:32,375 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 09:24:32,375 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 09:24:32,375 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 09:24:32,376 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=49, VIP=7
+2025-08-14 09:24:32,376 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 09:24:32,376 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 4, 'test_success': False, 'timestamp': '2025-08-14T09:24:32.376942'}
+2025-08-14 09:30:34,310 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 09:30:34,310 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 09:30:34,311 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 09:30:36,500 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 09:30:36,500 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 09:30:36,501 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 09:30:36,501 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 09:30:36,502 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=31, VIP=6
+2025-08-14 09:30:36,502 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 09:30:36,502 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 0, 'test_success': False, 'timestamp': '2025-08-14T09:30:36.502631'}
+2025-08-14 09:31:25,655 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 09:31:25,655 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 09:31:25,656 - src.triggers.trigger_engine - ERROR - 强制检查条件 高价值玩家受挫 时出错: 'Player' object has no attribute 'status'
+2025-08-14 09:31:25,657 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 09:31:27,797 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 09:31:27,797 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 09:31:27,797 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 09:31:27,798 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 09:31:27,798 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=50, VIP=6
+2025-08-14 09:31:27,798 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 09:31:27,798 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 2, 'test_success': False, 'timestamp': '2025-08-14T09:31:27.798260'}
+2025-08-14 09:39:03,935 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 09:39:03,936 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 09:39:03,937 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 09:39:06,823 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 09:39:06,824 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 09:39:06,824 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 09:39:06,824 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 09:39:06,825 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=40, VIP=3
+2025-08-14 09:39:06,825 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 09:39:06,826 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 2, 'test_success': False, 'timestamp': '2025-08-14T09:39:06.826665'}
+2025-08-14 09:52:04,803 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 09:52:04,804 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 09:52:04,805 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 09:52:07,156 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 09:52:07,156 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 09:52:07,156 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 09:52:07,157 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 09:52:07,158 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=50, VIP=5
+2025-08-14 09:52:07,158 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 09:52:07,158 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 4, 'test_success': False, 'timestamp': '2025-08-14T09:52:07.158221'}
+2025-08-14 09:53:27,913 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 09:53:27,914 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 09:53:27,915 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 09:53:30,066 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 09:53:30,066 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 09:53:30,066 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 09:53:30,067 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 09:53:30,067 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=22, VIP=7
+2025-08-14 09:53:30,067 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 09:53:30,068 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 0, 'test_success': False, 'timestamp': '2025-08-14T09:53:30.068677'}
+2025-08-14 09:58:53,600 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 09:58:53,601 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 09:58:53,602 - src.triggers.trigger_engine - ERROR - 强制检查条件 高价值玩家受挫 时出错: 'Player' object has no attribute 'status'
+2025-08-14 09:58:53,602 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 09:58:55,872 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 09:58:55,872 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 09:58:55,872 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 09:58:55,872 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 09:58:55,873 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=35, VIP=5
+2025-08-14 09:58:55,873 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 09:58:55,873 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 0, 'test_success': False, 'timestamp': '2025-08-14T09:58:55.873818'}
+2025-08-14 10:01:20,215 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 10:01:20,216 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 10:01:20,217 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 10:01:22,340 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 10:01:22,340 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 10:01:22,341 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 10:01:22,341 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 10:01:22,342 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=36, VIP=5
+2025-08-14 10:01:22,342 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 10:01:22,342 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 5, 'test_success': False, 'timestamp': '2025-08-14T10:01:22.342901'}
+2025-08-14 10:06:09,295 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 10:06:09,295 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 10:06:09,296 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 10:06:11,496 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 10:06:11,496 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 10:06:11,496 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 10:06:11,497 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 10:06:11,497 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=37, VIP=3
+2025-08-14 10:06:11,497 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 10:06:11,498 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 4, 'test_success': False, 'timestamp': '2025-08-14T10:06:11.498985'}
+2025-08-14 10:10:49,705 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 10:10:49,706 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 10:10:49,707 - src.triggers.trigger_engine - ERROR - 强制检查条件 高价值玩家受挫 时出错: 'Player' object has no attribute 'status'
+2025-08-14 10:10:49,707 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 10:10:52,137 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 10:10:52,137 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 10:10:52,137 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 10:10:52,137 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 10:10:52,138 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=43, VIP=5
+2025-08-14 10:10:52,138 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 10:10:52,139 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 3, 'test_success': False, 'timestamp': '2025-08-14T10:10:52.139531'}
+2025-08-14 10:11:30,615 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 10:11:30,615 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 10:11:30,616 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 10:11:32,749 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 10:11:32,749 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 10:11:32,749 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 10:11:32,750 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 10:11:32,750 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=38, VIP=7
+2025-08-14 10:11:32,750 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 10:11:32,751 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 2, 'test_success': False, 'timestamp': '2025-08-14T10:11:32.751810'}
+2025-08-14 10:12:36,246 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 10:12:36,246 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 10:12:36,247 - src.triggers.trigger_engine - ERROR - 强制检查条件 高价值玩家受挫 时出错: 'Player' object has no attribute 'status'
+2025-08-14 10:12:36,247 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 10:12:38,398 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 10:12:38,398 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 10:12:38,399 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 10:12:38,399 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 10:12:38,399 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=24, VIP=6
+2025-08-14 10:12:38,400 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 10:12:38,400 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 2, 'test_success': False, 'timestamp': '2025-08-14T10:12:38.400858'}
+2025-08-14 10:13:54,402 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 10:13:54,403 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 10:13:54,404 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 10:13:56,557 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 10:13:56,558 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 10:13:56,558 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 10:13:56,558 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 10:13:56,559 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=26, VIP=5
+2025-08-14 10:13:56,559 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 10:13:56,559 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 6, 'test_success': False, 'timestamp': '2025-08-14T10:13:56.559389'}
+2025-08-14 10:15:19,083 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 10:15:19,083 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 10:15:19,084 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 10:15:21,219 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 10:15:21,219 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 10:15:21,219 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 10:15:21,220 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 10:15:21,220 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=22, VIP=4
+2025-08-14 10:15:21,221 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 10:15:21,221 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 0, 'test_success': False, 'timestamp': '2025-08-14T10:15:21.221895'}
+2025-08-14 10:15:51,951 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 10:15:51,951 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 10:15:51,952 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 10:15:54,114 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 10:15:54,114 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 10:15:54,114 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 10:15:54,115 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 10:15:54,115 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=25, VIP=8
+2025-08-14 10:15:54,115 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 10:15:54,116 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 0, 'test_success': False, 'timestamp': '2025-08-14T10:15:54.116544'}
+2025-08-14 10:30:15,747 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 10:30:15,747 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 10:30:15,748 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 10:30:17,894 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 10:30:17,894 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 10:30:17,894 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 10:30:17,895 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 10:30:17,895 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=21, VIP=5
+2025-08-14 10:30:17,896 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 10:30:17,896 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 0, 'test_success': False, 'timestamp': '2025-08-14T10:30:17.896607'}
+2025-08-14 10:33:52,380 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 10:33:52,380 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 10:33:52,381 - src.triggers.trigger_engine - ERROR - 强制检查条件 高价值玩家受挫 时出错: 'Player' object has no attribute 'status'
+2025-08-14 10:33:52,381 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 10:33:54,508 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 10:33:54,509 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 10:33:54,509 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 10:33:54,509 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 10:33:54,510 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=36, VIP=4
+2025-08-14 10:33:54,510 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 10:33:54,510 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 0, 'test_success': False, 'timestamp': '2025-08-14T10:33:54.510775'}
+2025-08-14 10:47:15,857 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 10:47:15,857 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 10:47:15,858 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 10:47:18,179 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 10:47:18,179 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 10:47:18,179 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 10:47:18,180 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 10:47:18,180 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=21, VIP=8
+2025-08-14 10:47:18,181 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 10:47:18,181 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 2, 'test_success': False, 'timestamp': '2025-08-14T10:47:18.181928'}
+2025-08-14 10:54:22,939 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 10:54:22,940 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 10:54:22,941 - src.triggers.trigger_engine - ERROR - 强制检查条件 高价值玩家受挫 时出错: 'Player' object has no attribute 'status'
+2025-08-14 10:54:22,941 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 10:54:25,097 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 10:54:25,097 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 10:54:25,097 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 10:54:25,098 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 10:54:25,098 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=45, VIP=8
+2025-08-14 10:54:25,098 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 10:54:25,099 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 2, 'test_success': False, 'timestamp': '2025-08-14T10:54:25.099253'}
+2025-08-14 10:57:23,219 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 10:57:23,220 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 10:57:23,221 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 10:57:25,337 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 10:57:25,337 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 10:57:25,338 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 10:57:25,338 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 10:57:25,339 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=28, VIP=6
+2025-08-14 10:57:25,339 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 10:57:25,339 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 0, 'test_success': False, 'timestamp': '2025-08-14T10:57:25.339899'}
+2025-08-14 10:58:33,440 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 10:58:33,441 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 10:58:33,442 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 10:58:35,580 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 10:58:35,580 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 10:58:35,581 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 10:58:35,581 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 10:58:35,582 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=49, VIP=6
+2025-08-14 10:58:35,582 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 10:58:35,582 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 4, 'test_success': False, 'timestamp': '2025-08-14T10:58:35.582484'}
+2025-08-14 11:00:16,461 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 11:00:16,461 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 11:00:16,462 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 11:00:18,598 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 11:00:18,598 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 11:00:18,598 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 11:00:18,599 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 11:00:18,599 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=33, VIP=6
+2025-08-14 11:00:18,599 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 11:00:18,599 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 2, 'test_success': False, 'timestamp': '2025-08-14T11:00:18.599367'}
+2025-08-14 11:01:52,510 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 11:01:52,511 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 11:01:52,511 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 11:01:54,678 - src.agent.smart_game_agent - INFO - 初始化了 4 个工具
+2025-08-14 11:01:54,678 - src.agent.smart_game_agent - ERROR - 创建Agent执行器失败: Prompt missing required variables: {'tool_names'}
+2025-08-14 11:01:54,680 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 11:01:54,680 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 11:01:54,680 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 11:01:54,681 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 11:01:54,681 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=42, VIP=7
+2025-08-14 11:01:54,682 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 11:01:54,682 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 4, 'test_success': False, 'timestamp': '2025-08-14T11:01:54.682707'}
+2025-08-14 11:01:54,685 - __main__ - ERROR - 演示过程中发生错误: 'total_events_processed'
+Traceback (most recent call last):
+  File "D:\Project\Agent-demo\demo.py", line 350, in main
+    demo_system_stats(data_manager, analyzer, trigger_engine, agent)
+  File "D:\Project\Agent-demo\demo.py", line 319, in demo_system_stats
+    print(f"   - 处理事件: {agent_stats['total_events_processed']}")
+                            ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'total_events_processed'
+2025-08-14 11:04:38,111 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 11:04:38,112 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 11:04:38,113 - src.triggers.trigger_engine - ERROR - 强制检查条件 高价值玩家受挫 时出错: 'Player' object has no attribute 'status'
+2025-08-14 11:04:38,113 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 11:04:40,263 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 11:04:40,263 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 11:04:40,263 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 11:04:40,264 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 11:04:40,264 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=35, VIP=4
+2025-08-14 11:04:40,264 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 11:04:40,265 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 2, 'test_success': False, 'timestamp': '2025-08-14T11:04:40.265913'}
+2025-08-14 11:09:07,420 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 11:09:07,420 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 11:09:07,421 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 11:09:09,641 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 11:09:09,641 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 11:09:09,641 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 11:09:09,642 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 11:09:09,642 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=30, VIP=8
+2025-08-14 11:09:09,643 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 11:09:09,643 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 2, 'test_success': False, 'timestamp': '2025-08-14T11:09:09.643487'}
+2025-08-14 11:10:29,586 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 11:10:29,587 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 11:10:29,588 - src.triggers.trigger_engine - ERROR - 强制检查条件 高价值玩家受挫 时出错: 'Player' object has no attribute 'status'
+2025-08-14 11:10:29,588 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 11:10:31,735 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 11:10:31,735 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 11:10:31,736 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 11:10:31,736 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 11:10:31,736 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=35, VIP=7
+2025-08-14 11:10:31,737 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 11:10:31,737 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 4, 'test_success': False, 'timestamp': '2025-08-14T11:10:31.737417'}
+2025-08-14 11:11:57,807 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 11:11:57,808 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 11:11:57,809 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 11:11:59,945 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 11:11:59,945 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 11:11:59,945 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 11:11:59,946 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 11:11:59,946 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=30, VIP=7
+2025-08-14 11:11:59,946 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 11:11:59,947 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 4, 'test_success': False, 'timestamp': '2025-08-14T11:11:59.947164'}
+2025-08-14 11:16:27,891 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 11:16:27,891 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 11:16:27,892 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 11:16:30,102 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 11:16:30,102 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 11:16:30,103 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 11:16:30,103 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 11:16:30,103 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=20, VIP=6
+2025-08-14 11:16:30,104 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 11:16:30,104 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 0, 'test_success': False, 'timestamp': '2025-08-14T11:16:30.104687'}
+2025-08-14 11:20:05,775 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 11:20:05,775 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 11:20:05,776 - src.triggers.trigger_engine - ERROR - 强制检查条件 高价值玩家受挫 时出错: 'Player' object has no attribute 'status'
+2025-08-14 11:20:05,776 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 11:20:07,950 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 11:20:07,950 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 11:20:07,951 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 11:20:07,951 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 11:20:07,951 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=45, VIP=5
+2025-08-14 11:20:07,952 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 11:20:07,952 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 3, 'test_success': False, 'timestamp': '2025-08-14T11:20:07.952657'}
+2025-08-14 11:25:31,216 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 11:25:31,216 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 11:25:31,217 - src.triggers.trigger_engine - ERROR - 强制检查条件 高价值玩家受挫 时出错: 'Player' object has no attribute 'status'
+2025-08-14 11:25:31,217 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 11:25:33,377 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 11:25:33,377 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 11:25:33,377 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 11:25:33,378 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 11:25:33,378 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=50, VIP=4
+2025-08-14 11:25:33,378 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 11:25:33,379 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 4, 'test_success': False, 'timestamp': '2025-08-14T11:25:33.378830'}
+2025-08-14 11:27:09,093 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 11:27:09,094 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 11:27:09,094 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 11:27:11,235 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 11:27:11,235 - src.agent.smart_game_agent - ERROR - 创建Agent执行器失败: Prompt missing required variables: {'tool_names'}
+2025-08-14 11:27:11,237 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 11:27:11,238 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 11:27:11,238 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 11:27:11,238 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 11:27:11,239 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=39, VIP=3
+2025-08-14 11:27:11,239 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 11:27:11,239 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 4, 'test_success': False, 'timestamp': '2025-08-14T11:27:11.239344'}
+2025-08-14 11:27:11,242 - __main__ - ERROR - 演示过程中发生错误: 'total_events_processed'
+Traceback (most recent call last):
+  File "D:\Project\Agent-demo\demo.py", line 352, in main
+    demo_system_stats(data_manager, analyzer, trigger_engine, agent)
+  File "D:\Project\Agent-demo\demo.py", line 321, in demo_system_stats
+    print(f"   - 处理事件: {agent_stats['total_events_processed']}")
+                            ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'total_events_processed'
+2025-08-14 11:32:48,214 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 11:32:48,214 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 11:32:48,215 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 11:32:50,388 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 11:32:50,388 - src.agent.smart_game_agent - ERROR - 创建Agent执行器失败: Prompt missing required variables: {'tool_names'}
+2025-08-14 11:32:50,402 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 11:32:50,403 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 11:32:50,403 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 11:32:50,403 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 11:32:50,404 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=43, VIP=6
+2025-08-14 11:32:50,404 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 11:32:50,404 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 5, 'test_success': False, 'timestamp': '2025-08-14T11:32:50.404511'}
+2025-08-14 11:32:50,407 - __main__ - ERROR - 演示过程中发生错误: 'total_events_processed'
+Traceback (most recent call last):
+  File "D:\Project\Agent-demo\demo.py", line 352, in main
+    demo_system_stats(data_manager, analyzer, trigger_engine, agent)
+  File "D:\Project\Agent-demo\demo.py", line 321, in demo_system_stats
+    print(f"   - 处理事件: {agent_stats['total_events_processed']}")
+                            ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'total_events_processed'
+2025-08-14 11:48:53,000 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 11:48:53,000 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 11:48:53,002 - src.triggers.trigger_engine - ERROR - 强制检查条件 高价值玩家受挫 时出错: 'Player' object has no attribute 'status'
+2025-08-14 11:48:53,002 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 11:48:55,345 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 11:48:55,354 - src.agent.smart_game_agent - INFO - 成功创建ReAct Agent执行器
+2025-08-14 11:48:55,356 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 11:48:55,356 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 11:48:55,356 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 11:48:55,357 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 11:48:55,357 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=50, VIP=7
+2025-08-14 11:48:55,358 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 11:48:55,358 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 2, 'test_success': False, 'timestamp': '2025-08-14T11:48:55.358860'}
+2025-08-14 11:48:55,361 - __main__ - ERROR - 演示过程中发生错误: 'total_events_processed'
+Traceback (most recent call last):
+  File "D:\Project\Agent-demo\demo.py", line 352, in main
+    demo_system_stats(data_manager, analyzer, trigger_engine, agent)
+  File "D:\Project\Agent-demo\demo.py", line 321, in demo_system_stats
+    print(f"   - 处理事件: {agent_stats['total_events_processed']}")
+                            ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'total_events_processed'
+2025-08-14 11:52:10,895 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 11:52:10,895 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 11:52:10,896 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 11:52:13,031 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 11:52:13,038 - src.agent.smart_game_agent - INFO - 成功创建ReAct Agent执行器
+2025-08-14 11:52:13,041 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 11:52:13,041 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 11:52:13,041 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 11:52:13,042 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 11:52:13,042 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=21, VIP=4
+2025-08-14 11:52:13,042 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 11:52:13,042 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 0, 'test_success': False, 'timestamp': '2025-08-14T11:52:13.042897'}
+2025-08-14 13:25:57,430 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 13:25:57,431 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 13:25:57,432 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 13:25:59,797 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 13:25:59,815 - src.agent.smart_game_agent - INFO - 成功创建ReAct Agent执行器
+2025-08-14 13:25:59,818 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 13:25:59,818 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 13:25:59,818 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 13:25:59,819 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 13:25:59,820 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=43, VIP=8
+2025-08-14 13:25:59,820 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 13:25:59,821 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 2, 'test_success': False, 'timestamp': '2025-08-14T13:25:59.821208'}
+2025-08-14 13:32:02,182 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 13:32:02,182 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 13:32:02,183 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 13:32:04,408 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 13:32:04,414 - src.agent.smart_game_agent - INFO - 成功创建ReAct Agent执行器
+2025-08-14 13:32:04,417 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 13:32:04,417 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 13:32:04,417 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 13:32:04,418 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 13:32:04,418 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=24, VIP=7
+2025-08-14 13:32:04,418 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 13:32:04,419 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 3, 'test_success': False, 'timestamp': '2025-08-14T13:32:04.419731'}
+2025-08-14 13:35:23,530 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 13:35:23,530 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 13:35:23,531 - src.triggers.trigger_engine - ERROR - 强制检查条件 高价值玩家受挫 时出错: 'Player' object has no attribute 'status'
+2025-08-14 13:35:23,531 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 13:35:25,752 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 13:35:25,760 - src.agent.smart_game_agent - INFO - 成功创建ReAct Agent执行器
+2025-08-14 13:35:25,763 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 13:35:25,763 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 13:35:25,763 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 13:35:25,763 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 13:35:25,764 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=33, VIP=7
+2025-08-14 13:35:25,764 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 13:35:25,764 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 2, 'test_success': False, 'timestamp': '2025-08-14T13:35:25.764409'}
+2025-08-14 13:37:22,786 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 13:37:22,786 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 13:37:22,787 - src.triggers.trigger_engine - ERROR - 强制检查条件 高价值玩家受挫 时出错: 'Player' object has no attribute 'status'
+2025-08-14 13:37:22,787 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 13:37:24,963 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 13:37:24,971 - src.agent.smart_game_agent - INFO - 成功创建ReAct Agent执行器
+2025-08-14 13:37:24,973 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 13:37:24,973 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 13:37:24,973 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 13:37:24,974 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 13:37:24,974 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=42, VIP=6
+2025-08-14 13:37:24,976 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 13:37:24,976 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 0, 'test_success': False, 'timestamp': '2025-08-14T13:37:24.976372'}
+2025-08-14 13:39:48,802 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 13:39:48,803 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 13:39:48,803 - src.triggers.trigger_engine - ERROR - 强制检查条件 高价值玩家受挫 时出错: 'Player' object has no attribute 'status'
+2025-08-14 13:39:48,804 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 13:39:50,971 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 13:39:50,979 - src.agent.smart_game_agent - INFO - 成功创建ReAct Agent执行器
+2025-08-14 13:39:50,981 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 13:39:50,981 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 13:39:50,981 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 13:39:50,982 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 13:39:50,982 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=20, VIP=3
+2025-08-14 13:39:50,983 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 13:39:50,983 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 2, 'triggers_fired': 0, 'consecutive_failures': 4, 'test_success': False, 'timestamp': '2025-08-14T13:39:50.983091'}
+2025-08-14 13:41:58,755 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 13:41:58,756 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 13:41:58,756 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 13:42:00,957 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 13:42:00,964 - src.agent.smart_game_agent - INFO - 成功创建ReAct Agent执行器
+2025-08-14 13:42:00,966 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 13:42:00,966 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 13:42:00,967 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 13:42:00,967 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 13:42:00,967 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=50, VIP=8
+2025-08-14 13:42:00,968 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 13:42:00,968 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 5, 'triggers_fired': 0, 'consecutive_failures': 6, 'test_success': False, 'timestamp': '2025-08-14T13:42:00.968882'}
+2025-08-14 13:48:55,877 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 13:48:55,878 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 13:48:55,879 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 13:48:58,144 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 13:48:58,152 - src.agent.smart_game_agent - INFO - 成功创建ReAct Agent执行器
+2025-08-14 13:48:58,154 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 13:48:58,154 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 13:48:58,154 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 13:48:58,155 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 13:48:58,155 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=37, VIP=3
+2025-08-14 13:48:58,156 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 13:48:58,156 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 5, 'triggers_fired': 0, 'consecutive_failures': 9, 'test_success': False, 'timestamp': '2025-08-14T13:48:58.156097'}
+2025-08-14 13:52:09,889 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 13:52:09,889 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 13:52:09,890 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 13:52:12,084 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 13:52:12,092 - src.agent.smart_game_agent - INFO - 成功创建ReAct Agent执行器
+2025-08-14 13:52:12,095 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 13:52:12,095 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 13:52:12,095 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 13:52:12,096 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 13:52:12,096 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=26, VIP=4
+2025-08-14 13:52:12,097 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 13:52:12,097 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 5, 'triggers_fired': 0, 'consecutive_failures': 6, 'test_success': False, 'timestamp': '2025-08-14T13:52:12.097527'}
+2025-08-14 13:53:00,041 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 13:53:00,041 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 13:53:00,042 - src.triggers.trigger_engine - ERROR - 强制检查条件 高价值玩家受挫 时出错: 'Player' object has no attribute 'status'
+2025-08-14 13:53:00,042 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 13:53:02,221 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 13:53:02,229 - src.agent.smart_game_agent - INFO - 成功创建ReAct Agent执行器
+2025-08-14 13:53:02,232 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 13:53:02,232 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 13:53:02,232 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 13:53:02,233 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 13:53:02,233 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=35, VIP=4
+2025-08-14 13:53:02,234 - src.triggers.trigger_engine - ERROR - 强制检查条件 连续攻城失败 时出错: 'Player' object has no attribute 'status'
+2025-08-14 13:53:02,235 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 13:53:02,235 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 10, 'triggers_fired': 0, 'consecutive_failures': 6, 'test_success': False, 'timestamp': '2025-08-14T13:53:02.235534'}
+2025-08-14 13:57:03,627 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 13:57:03,628 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 13:57:03,630 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 13:57:05,821 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 13:57:05,830 - src.agent.smart_game_agent - INFO - 成功创建ReAct Agent执行器
+2025-08-14 13:57:05,832 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 13:57:05,832 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 13:57:05,832 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 13:57:05,833 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 13:57:05,833 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=49, VIP=6
+2025-08-14 13:57:05,837 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 13:57:05,837 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 10, 'triggers_fired': 0, 'consecutive_failures': 10, 'test_success': False, 'timestamp': '2025-08-14T13:57:05.837304'}
+2025-08-14 13:59:48,415 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 13:59:48,415 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 13:59:48,420 - src.triggers.trigger_engine - ERROR - 强制检查条件 连续攻城失败 时出错: 'Player' object has no attribute 'status'
+2025-08-14 13:59:48,422 - src.triggers.trigger_engine - ERROR - 强制检查条件 高价值玩家受挫 时出错: 'Player' object has no attribute 'status'
+2025-08-14 13:59:48,422 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 13:59:50,617 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 13:59:50,625 - src.agent.smart_game_agent - INFO - 成功创建ReAct Agent执行器
+2025-08-14 13:59:50,628 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 13:59:50,628 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 13:59:50,628 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 13:59:50,628 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 13:59:50,629 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=20, VIP=6
+2025-08-14 13:59:50,633 - src.triggers.trigger_engine - ERROR - 强制检查条件 连续攻城失败 时出错: 'Player' object has no attribute 'status'
+2025-08-14 13:59:50,634 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 13:59:50,634 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 10, 'triggers_fired': 0, 'consecutive_failures': 15, 'test_success': False, 'timestamp': '2025-08-14T13:59:50.634070'}
+2025-08-14 14:03:15,915 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 14:03:15,915 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 14:03:15,931 - src.triggers.trigger_engine - ERROR - 强制检查条件 高价值玩家受挫 时出错: 1 validation error for TriggerEvent
+triggered_at
+  Field required [type=missing, input_value={'event_id': 'player_001_...'status': 'frustrated'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.7/v/missing
+2025-08-14 14:03:15,931 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 14:03:18,192 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 14:03:18,199 - src.agent.smart_game_agent - INFO - 成功创建ReAct Agent执行器
+2025-08-14 14:03:18,201 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 14:03:18,201 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 14:03:18,201 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 14:03:18,202 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 14:03:18,202 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=32, VIP=6
+2025-08-14 14:03:18,207 - src.triggers.trigger_engine - ERROR - 强制检查条件 连续攻城失败 时出错: 1 validation error for TriggerEvent
+triggered_at
+  Field required [type=missing, input_value={'event_id': 'test_player...'status': 'frustrated'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.7/v/missing
+2025-08-14 14:03:18,207 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 14:03:18,208 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 10, 'triggers_fired': 0, 'consecutive_failures': 10, 'test_success': False, 'timestamp': '2025-08-14T14:03:18.208904'}
+2025-08-14 14:21:07,214 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 14:21:07,214 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 14:21:07,217 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 0 个事件
+2025-08-14 14:21:09,396 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 14:21:09,403 - src.agent.smart_game_agent - INFO - 成功创建ReAct Agent执行器
+2025-08-14 14:21:09,405 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 14:21:09,406 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 14:21:09,406 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 14:21:09,406 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 14:21:09,407 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=33, VIP=7
+2025-08-14 14:21:09,410 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 0 个事件
+2025-08-14 14:21:09,410 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 10, 'triggers_fired': 0, 'consecutive_failures': 4, 'test_success': False, 'timestamp': '2025-08-14T14:21:09.410738'}
+2025-08-14 14:38:52,483 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 14:38:52,483 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 14:38:52,487 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 3 个事件
+2025-08-14 14:38:54,691 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 14:38:54,698 - src.agent.smart_game_agent - INFO - 成功创建ReAct Agent执行器
+2025-08-14 14:38:54,700 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 14:38:54,700 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 14:38:54,700 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 14:38:54,701 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 14:38:54,701 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=32, VIP=3
+2025-08-14 14:38:54,705 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 14:38:54,706 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 10, 'triggers_fired': 3, 'consecutive_failures': 13, 'test_success': True, 'timestamp': '2025-08-14T14:38:54.706494'}
+2025-08-14 14:38:54,706 - src.scenarios.frustration_scenario - INFO - 开始运行受挫场景
+2025-08-14 14:38:54,707 - src.scenarios.frustration_scenario - INFO - === 第一幕：场景设置 ===
+2025-08-14 14:38:54,707 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=35, VIP=5
+2025-08-14 14:38:54,707 - src.scenarios.frustration_scenario - INFO - === 第二幕：触发受挫 ===
+2025-08-14 14:38:54,707 - src.scenarios.frustration_scenario - INFO - 开始触发受挫情况...
+2025-08-14 14:38:54,707 - src.scenarios.frustration_scenario - INFO - 行为 1/3: login - 成功
+2025-08-14 14:38:55,208 - src.scenarios.frustration_scenario - INFO - 行为 2/3: attack_player - 失败
+2025-08-14 14:38:55,709 - src.scenarios.frustration_scenario - INFO - 行为 3/3: attack_player - 失败
+2025-08-14 14:38:56,213 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 14:38:56,213 - src.scenarios.frustration_scenario - INFO - 受挫触发完成: 连续失败=4, 触发事件数=3
+2025-08-14 14:38:56,213 - src.scenarios.frustration_scenario - INFO - === 第三幕：智能体干预 ===
+2025-08-14 14:38:56,213 - src.scenarios.frustration_scenario - INFO - 开始智能体干预...
+2025-08-14 14:38:56,214 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 连续攻城失败
+2025-08-14 14:39:01,215 - src.scenarios.frustration_scenario - ERROR - 处理触发事件时出错: SmartGameAgent.process_trigger_event() missing 1 required positional argument: 'trigger_context'
+2025-08-14 14:39:01,215 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 高价值玩家受挫
+2025-08-14 14:39:06,216 - src.scenarios.frustration_scenario - ERROR - 处理触发事件时出错: SmartGameAgent.process_trigger_event() missing 1 required positional argument: 'trigger_context'
+2025-08-14 14:39:06,216 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 寻求帮助信号
+2025-08-14 14:39:11,217 - src.scenarios.frustration_scenario - ERROR - 处理触发事件时出错: SmartGameAgent.process_trigger_event() missing 1 required positional argument: 'trigger_context'
+2025-08-14 14:39:11,217 - src.scenarios.frustration_scenario - INFO - 智能体干预完成，处理了 3 个事件
+2025-08-14 14:39:11,218 - src.scenarios.frustration_scenario - INFO - === 第四幕：效果评估 ===
+2025-08-14 14:39:11,218 - src.scenarios.frustration_scenario - INFO - 开始评估场景结果...
+2025-08-14 14:39:11,218 - src.scenarios.frustration_scenario - ERROR - 运行受挫场景时出错: 'Player' object has no attribute 'status'
+Traceback (most recent call last):
+  File "D:\Project\Agent-demo\src\scenarios\frustration_scenario.py", line 85, in run_complete_scenario
+    results = self._evaluate_results()
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project\Agent-demo\src\scenarios\frustration_scenario.py", line 246, in _evaluate_results
+    "status": updated_player.status.value,
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project\Agent-demo\.venv\Lib\site-packages\pydantic\main.py", line 811, in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+AttributeError: 'Player' object has no attribute 'status'
+2025-08-14 14:40:49,423 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 14:40:49,423 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 14:40:49,427 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 3 个事件
+2025-08-14 14:40:51,585 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 14:40:51,593 - src.agent.smart_game_agent - INFO - 成功创建ReAct Agent执行器
+2025-08-14 14:40:51,596 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 14:40:51,596 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 14:40:51,596 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 14:40:51,597 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 14:40:51,597 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=28, VIP=5
+2025-08-14 14:40:51,601 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 14:40:51,601 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 10, 'triggers_fired': 3, 'consecutive_failures': 12, 'test_success': True, 'timestamp': '2025-08-14T14:40:51.601813'}
+2025-08-14 14:40:51,602 - src.scenarios.frustration_scenario - INFO - 开始运行受挫场景
+2025-08-14 14:40:51,602 - src.scenarios.frustration_scenario - INFO - === 第一幕：场景设置 ===
+2025-08-14 14:40:51,602 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=35, VIP=7
+2025-08-14 14:40:51,603 - src.scenarios.frustration_scenario - INFO - === 第二幕：触发受挫 ===
+2025-08-14 14:40:51,603 - src.scenarios.frustration_scenario - INFO - 开始触发受挫情况...
+2025-08-14 14:40:51,603 - src.scenarios.frustration_scenario - INFO - 行为 1/3: login - 成功
+2025-08-14 14:40:52,105 - src.scenarios.frustration_scenario - INFO - 行为 2/3: attack_player - 成功
+2025-08-14 14:40:52,605 - src.scenarios.frustration_scenario - INFO - 行为 3/3: attack_player - 失败
+2025-08-14 14:40:53,109 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 14:40:53,109 - src.scenarios.frustration_scenario - INFO - 受挫触发完成: 连续失败=2, 触发事件数=3
+2025-08-14 14:40:53,109 - src.scenarios.frustration_scenario - INFO - === 第三幕：智能体干预 ===
+2025-08-14 14:40:53,110 - src.scenarios.frustration_scenario - INFO - 开始智能体干预...
+2025-08-14 14:40:53,110 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 连续攻城失败
+2025-08-14 14:40:58,111 - src.scenarios.frustration_scenario - ERROR - 处理触发事件时出错: SmartGameAgent.process_trigger_event() missing 1 required positional argument: 'trigger_context'
+2025-08-14 14:40:58,111 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 高价值玩家受挫
+2025-08-14 14:41:03,112 - src.scenarios.frustration_scenario - ERROR - 处理触发事件时出错: SmartGameAgent.process_trigger_event() missing 1 required positional argument: 'trigger_context'
+2025-08-14 14:41:03,112 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 寻求帮助信号
+2025-08-14 14:41:08,113 - src.scenarios.frustration_scenario - ERROR - 处理触发事件时出错: SmartGameAgent.process_trigger_event() missing 1 required positional argument: 'trigger_context'
+2025-08-14 14:41:08,113 - src.scenarios.frustration_scenario - INFO - 智能体干预完成，处理了 3 个事件
+2025-08-14 14:41:08,113 - src.scenarios.frustration_scenario - INFO - === 第四幕：效果评估 ===
+2025-08-14 14:41:08,114 - src.scenarios.frustration_scenario - INFO - 开始评估场景结果...
+2025-08-14 14:41:08,114 - src.scenarios.frustration_scenario - ERROR - 运行受挫场景时出错: 'TriggerEvent' object has no attribute 'timestamp'
+Traceback (most recent call last):
+  File "D:\Project\Agent-demo\src\scenarios\frustration_scenario.py", line 85, in run_complete_scenario
+    results = self._evaluate_results()
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project\Agent-demo\src\scenarios\frustration_scenario.py", line 262, in _evaluate_results
+    "timestamp": event.timestamp.isoformat()
+                 ^^^^^^^^^^^^^^^
+  File "D:\Project\Agent-demo\.venv\Lib\site-packages\pydantic\main.py", line 811, in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+AttributeError: 'TriggerEvent' object has no attribute 'timestamp'
+2025-08-14 14:42:57,460 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 14:42:57,460 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 14:42:57,464 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 3 个事件
+2025-08-14 14:42:59,646 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 14:42:59,653 - src.agent.smart_game_agent - INFO - 成功创建ReAct Agent执行器
+2025-08-14 14:42:59,656 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 14:42:59,656 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 14:42:59,656 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 14:42:59,656 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 14:42:59,657 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=29, VIP=8
+2025-08-14 14:42:59,661 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 14:42:59,661 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 10, 'triggers_fired': 3, 'consecutive_failures': 8, 'test_success': True, 'timestamp': '2025-08-14T14:42:59.661655'}
+2025-08-14 14:42:59,662 - src.scenarios.frustration_scenario - INFO - 开始运行受挫场景
+2025-08-14 14:42:59,662 - src.scenarios.frustration_scenario - INFO - === 第一幕：场景设置 ===
+2025-08-14 14:42:59,662 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=47, VIP=3
+2025-08-14 14:42:59,663 - src.scenarios.frustration_scenario - INFO - === 第二幕：触发受挫 ===
+2025-08-14 14:42:59,663 - src.scenarios.frustration_scenario - INFO - 开始触发受挫情况...
+2025-08-14 14:42:59,663 - src.scenarios.frustration_scenario - INFO - 行为 1/3: open_inventory - 成功
+2025-08-14 14:43:00,164 - src.scenarios.frustration_scenario - INFO - 行为 2/3: attack_city - 失败
+2025-08-14 14:43:00,664 - src.scenarios.frustration_scenario - INFO - 行为 3/3: attack_player - 失败
+2025-08-14 14:43:01,168 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 14:43:01,168 - src.scenarios.frustration_scenario - INFO - 受挫触发完成: 连续失败=5, 触发事件数=3
+2025-08-14 14:43:01,169 - src.scenarios.frustration_scenario - INFO - === 第三幕：智能体干预 ===
+2025-08-14 14:43:01,169 - src.scenarios.frustration_scenario - INFO - 开始智能体干预...
+2025-08-14 14:43:01,169 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 连续攻城失败
+2025-08-14 14:43:06,170 - src.scenarios.frustration_scenario - ERROR - 处理触发事件时出错: SmartGameAgent.process_trigger_event() missing 1 required positional argument: 'trigger_context'
+2025-08-14 14:43:06,170 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 高价值玩家受挫
+2025-08-14 14:43:11,171 - src.scenarios.frustration_scenario - ERROR - 处理触发事件时出错: SmartGameAgent.process_trigger_event() missing 1 required positional argument: 'trigger_context'
+2025-08-14 14:43:11,171 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 寻求帮助信号
+2025-08-14 14:43:16,172 - src.scenarios.frustration_scenario - ERROR - 处理触发事件时出错: SmartGameAgent.process_trigger_event() missing 1 required positional argument: 'trigger_context'
+2025-08-14 14:43:16,172 - src.scenarios.frustration_scenario - INFO - 智能体干预完成，处理了 3 个事件
+2025-08-14 14:43:16,172 - src.scenarios.frustration_scenario - INFO - === 第四幕：效果评估 ===
+2025-08-14 14:43:16,172 - src.scenarios.frustration_scenario - INFO - 开始评估场景结果...
+2025-08-14 14:43:16,173 - src.scenarios.frustration_scenario - ERROR - 运行受挫场景时出错: 'Player' object has no attribute 'status'
+Traceback (most recent call last):
+  File "D:\Project\Agent-demo\src\scenarios\frustration_scenario.py", line 85, in run_complete_scenario
+    results = self._evaluate_results()
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project\Agent-demo\src\scenarios\frustration_scenario.py", line 279, in _evaluate_results
+    "success_indicators": self._evaluate_success_indicators(updated_player, mail_history)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project\Agent-demo\src\scenarios\frustration_scenario.py", line 347, in _evaluate_success_indicators
+    if player.status in [PlayerStatus.ACTIVE, PlayerStatus.SATISFIED]:
+       ^^^^^^^^^^^^^
+  File "D:\Project\Agent-demo\.venv\Lib\site-packages\pydantic\main.py", line 811, in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+AttributeError: 'Player' object has no attribute 'status'
+2025-08-14 14:44:12,494 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 14:44:12,494 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 14:44:12,498 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 3 个事件
+2025-08-14 14:44:14,677 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 14:44:14,685 - src.agent.smart_game_agent - INFO - 成功创建ReAct Agent执行器
+2025-08-14 14:44:14,687 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 14:44:14,687 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 14:44:14,687 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 14:44:14,688 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 14:44:14,688 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=41, VIP=3
+2025-08-14 14:44:14,692 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 14:44:14,692 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 10, 'triggers_fired': 3, 'consecutive_failures': 12, 'test_success': True, 'timestamp': '2025-08-14T14:44:14.692086'}
+2025-08-14 14:44:14,693 - src.scenarios.frustration_scenario - INFO - 开始运行受挫场景
+2025-08-14 14:44:14,693 - src.scenarios.frustration_scenario - INFO - === 第一幕：场景设置 ===
+2025-08-14 14:44:14,694 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=40, VIP=4
+2025-08-14 14:44:14,694 - src.scenarios.frustration_scenario - INFO - === 第二幕：触发受挫 ===
+2025-08-14 14:44:14,694 - src.scenarios.frustration_scenario - INFO - 开始触发受挫情况...
+2025-08-14 14:44:14,694 - src.scenarios.frustration_scenario - INFO - 行为 1/3: attack_city - 成功
+2025-08-14 14:44:15,195 - src.scenarios.frustration_scenario - INFO - 行为 2/3: battle_lose - 失败
+2025-08-14 14:44:15,695 - src.scenarios.frustration_scenario - INFO - 行为 3/3: battle_lose - 失败
+2025-08-14 14:44:16,199 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 14:44:16,199 - src.scenarios.frustration_scenario - INFO - 受挫触发完成: 连续失败=4, 触发事件数=3
+2025-08-14 14:44:16,199 - src.scenarios.frustration_scenario - INFO - === 第三幕：智能体干预 ===
+2025-08-14 14:44:16,200 - src.scenarios.frustration_scenario - INFO - 开始智能体干预...
+2025-08-14 14:44:16,200 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 连续攻城失败
+2025-08-14 14:44:21,200 - src.scenarios.frustration_scenario - ERROR - 处理触发事件时出错: SmartGameAgent.process_trigger_event() missing 1 required positional argument: 'trigger_context'
+2025-08-14 14:44:21,200 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 高价值玩家受挫
+2025-08-14 14:44:26,202 - src.scenarios.frustration_scenario - ERROR - 处理触发事件时出错: SmartGameAgent.process_trigger_event() missing 1 required positional argument: 'trigger_context'
+2025-08-14 14:44:26,202 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 寻求帮助信号
+2025-08-14 14:44:31,204 - src.scenarios.frustration_scenario - ERROR - 处理触发事件时出错: SmartGameAgent.process_trigger_event() missing 1 required positional argument: 'trigger_context'
+2025-08-14 14:44:31,204 - src.scenarios.frustration_scenario - INFO - 智能体干预完成，处理了 3 个事件
+2025-08-14 14:44:31,204 - src.scenarios.frustration_scenario - INFO - === 第四幕：效果评估 ===
+2025-08-14 14:44:31,205 - src.scenarios.frustration_scenario - INFO - 开始评估场景结果...
+2025-08-14 14:44:31,217 - src.scenarios.frustration_scenario - INFO - 场景报告已保存: data\reports\frustration_scenario_report_20250814_144431.json
+2025-08-14 14:44:31,217 - src.scenarios.frustration_scenario - INFO - 场景结果评估完成
+2025-08-14 14:44:31,218 - src.scenarios.frustration_scenario - INFO - 受挫场景运行完成
+2025-08-14 15:00:16,080 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 15:00:16,081 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 15:00:16,084 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 3 个事件
+2025-08-14 15:00:18,283 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 15:00:18,292 - src.agent.smart_game_agent - INFO - 成功创建ReAct Agent执行器
+2025-08-14 15:00:18,294 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 15:00:18,294 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 15:00:18,295 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 15:00:18,295 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 15:00:18,295 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=28, VIP=3
+2025-08-14 15:00:18,299 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 15:00:18,299 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 10, 'triggers_fired': 3, 'consecutive_failures': 2, 'test_success': True, 'timestamp': '2025-08-14T15:00:18.299656'}
+2025-08-14 15:00:18,300 - src.scenarios.frustration_scenario - INFO - 开始运行受挫场景
+2025-08-14 15:00:18,300 - src.scenarios.frustration_scenario - INFO - === 第一幕：场景设置 ===
+2025-08-14 15:00:18,301 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=44, VIP=4
+2025-08-14 15:00:18,301 - src.scenarios.frustration_scenario - INFO - === 第二幕：触发受挫 ===
+2025-08-14 15:00:18,301 - src.scenarios.frustration_scenario - INFO - 开始触发受挫情况...
+2025-08-14 15:00:18,301 - src.scenarios.frustration_scenario - INFO - 行为 1/3: attack_city - 失败
+2025-08-14 15:00:18,802 - src.scenarios.frustration_scenario - INFO - 行为 2/3: attack_city - 成功
+2025-08-14 15:00:19,302 - src.scenarios.frustration_scenario - INFO - 行为 3/3: battle_lose - 失败
+2025-08-14 15:00:19,807 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 15:00:19,807 - src.scenarios.frustration_scenario - INFO - 受挫触发完成: 连续失败=2, 触发事件数=3
+2025-08-14 15:00:19,807 - src.scenarios.frustration_scenario - INFO - === 第三幕：智能体干预 ===
+2025-08-14 15:00:19,807 - src.scenarios.frustration_scenario - INFO - 开始智能体干预...
+2025-08-14 15:00:19,807 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 连续攻城失败
+2025-08-14 15:00:24,808 - src.scenarios.frustration_scenario - ERROR - 处理触发事件时出错: SmartGameAgent.process_trigger_event() missing 1 required positional argument: 'trigger_context'
+2025-08-14 15:00:24,808 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 高价值玩家受挫
+2025-08-14 15:00:29,809 - src.scenarios.frustration_scenario - ERROR - 处理触发事件时出错: SmartGameAgent.process_trigger_event() missing 1 required positional argument: 'trigger_context'
+2025-08-14 15:00:29,810 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 寻求帮助信号
+2025-08-14 15:00:34,811 - src.scenarios.frustration_scenario - ERROR - 处理触发事件时出错: SmartGameAgent.process_trigger_event() missing 1 required positional argument: 'trigger_context'
+2025-08-14 15:00:34,811 - src.scenarios.frustration_scenario - INFO - 智能体干预完成，处理了 3 个事件
+2025-08-14 15:00:34,811 - src.scenarios.frustration_scenario - INFO - === 第四幕：效果评估 ===
+2025-08-14 15:00:34,811 - src.scenarios.frustration_scenario - INFO - 开始评估场景结果...
+2025-08-14 15:00:34,813 - src.scenarios.frustration_scenario - INFO - 场景报告已保存: data\reports\frustration_scenario_report_20250814_150034.json
+2025-08-14 15:00:34,813 - src.scenarios.frustration_scenario - INFO - 场景结果评估完成
+2025-08-14 15:00:34,814 - src.scenarios.frustration_scenario - INFO - 受挫场景运行完成
+2025-08-14 15:02:47,056 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 15:02:47,057 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 15:02:47,060 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 3 个事件
+2025-08-14 15:02:49,196 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 15:02:49,203 - src.agent.smart_game_agent - INFO - 成功创建ReAct Agent执行器
+2025-08-14 15:02:49,206 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 15:02:49,206 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 15:02:49,206 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 15:02:49,206 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 15:02:49,206 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=20, VIP=6
+2025-08-14 15:02:49,210 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 15:02:49,210 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 10, 'triggers_fired': 3, 'consecutive_failures': 8, 'test_success': True, 'timestamp': '2025-08-14T15:02:49.210715'}
+2025-08-14 15:02:49,211 - src.scenarios.frustration_scenario - INFO - 开始运行受挫场景
+2025-08-14 15:02:49,211 - src.scenarios.frustration_scenario - INFO - === 第一幕：场景设置 ===
+2025-08-14 15:02:49,212 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=24, VIP=7
+2025-08-14 15:02:49,212 - src.scenarios.frustration_scenario - INFO - === 第二幕：触发受挫 ===
+2025-08-14 15:02:49,212 - src.scenarios.frustration_scenario - INFO - 开始触发受挫情况...
+2025-08-14 15:02:49,212 - src.scenarios.frustration_scenario - INFO - 行为 1/3: login - 成功
+2025-08-14 15:02:49,713 - src.scenarios.frustration_scenario - INFO - 行为 2/3: battle_lose - 失败
+2025-08-14 15:02:50,215 - src.scenarios.frustration_scenario - INFO - 行为 3/3: attack_player - 失败
+2025-08-14 15:02:50,719 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 15:02:50,720 - src.scenarios.frustration_scenario - INFO - 受挫触发完成: 连续失败=4, 触发事件数=3
+2025-08-14 15:02:50,720 - src.scenarios.frustration_scenario - INFO - === 第三幕：智能体干预 ===
+2025-08-14 15:02:50,720 - src.scenarios.frustration_scenario - INFO - 开始智能体干预...
+2025-08-14 15:02:50,720 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 连续攻城失败
+2025-08-14 15:02:55,721 - src.scenarios.frustration_scenario - ERROR - 处理触发事件时出错: SmartGameAgent.process_trigger_event() missing 1 required positional argument: 'trigger_context'
+2025-08-14 15:02:55,721 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 高价值玩家受挫
+2025-08-14 15:03:00,722 - src.scenarios.frustration_scenario - ERROR - 处理触发事件时出错: SmartGameAgent.process_trigger_event() missing 1 required positional argument: 'trigger_context'
+2025-08-14 15:03:00,722 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 寻求帮助信号
+2025-08-14 15:03:05,723 - src.scenarios.frustration_scenario - ERROR - 处理触发事件时出错: SmartGameAgent.process_trigger_event() missing 1 required positional argument: 'trigger_context'
+2025-08-14 15:03:05,723 - src.scenarios.frustration_scenario - INFO - 智能体干预完成，处理了 3 个事件
+2025-08-14 15:03:05,724 - src.scenarios.frustration_scenario - INFO - === 第四幕：效果评估 ===
+2025-08-14 15:03:05,724 - src.scenarios.frustration_scenario - INFO - 开始评估场景结果...
+2025-08-14 15:03:05,737 - src.scenarios.frustration_scenario - INFO - 场景报告已保存: data\reports\frustration_scenario_report_20250814_150305.json
+2025-08-14 15:03:05,737 - src.scenarios.frustration_scenario - INFO - 场景结果评估完成
+2025-08-14 15:03:05,737 - src.scenarios.frustration_scenario - INFO - 受挫场景运行完成
+2025-08-14 15:10:34,165 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 15:10:34,166 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 15:10:34,169 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 3 个事件
+2025-08-14 15:10:36,404 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 15:10:36,412 - src.agent.smart_game_agent - INFO - 成功创建ReAct Agent执行器
+2025-08-14 15:10:36,414 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 15:10:36,414 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 15:10:36,414 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 15:10:36,415 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 15:10:36,415 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=33, VIP=4
+2025-08-14 15:10:36,419 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 15:10:36,419 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 10, 'triggers_fired': 3, 'consecutive_failures': 2, 'test_success': True, 'timestamp': '2025-08-14T15:10:36.419512'}
+2025-08-14 15:10:36,420 - src.scenarios.frustration_scenario - INFO - 开始运行受挫场景
+2025-08-14 15:10:36,420 - src.scenarios.frustration_scenario - INFO - === 第一幕：场景设置 ===
+2025-08-14 15:10:36,420 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=29, VIP=8
+2025-08-14 15:10:36,421 - src.scenarios.frustration_scenario - INFO - === 第二幕：触发受挫 ===
+2025-08-14 15:10:36,421 - src.scenarios.frustration_scenario - INFO - 开始触发受挫情况...
+2025-08-14 15:10:36,421 - src.scenarios.frustration_scenario - INFO - 行为 1/3: open_inventory - 成功
+2025-08-14 15:10:36,923 - src.scenarios.frustration_scenario - INFO - 行为 2/3: battle_lose - 失败
+2025-08-14 15:10:37,423 - src.scenarios.frustration_scenario - INFO - 行为 3/3: battle_lose - 失败
+2025-08-14 15:10:37,928 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 15:10:37,928 - src.scenarios.frustration_scenario - INFO - 受挫触发完成: 连续失败=4, 触发事件数=3
+2025-08-14 15:10:37,928 - src.scenarios.frustration_scenario - INFO - === 第三幕：智能体干预 ===
+2025-08-14 15:10:37,928 - src.scenarios.frustration_scenario - INFO - 开始智能体干预...
+2025-08-14 15:10:37,928 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 连续攻城失败
+2025-08-14 15:10:42,930 - src.scenarios.frustration_scenario - ERROR - 处理触发事件时出错: SmartGameAgent.process_trigger_event() missing 1 required positional argument: 'trigger_context'
+2025-08-14 15:10:42,930 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 高价值玩家受挫
+2025-08-14 15:10:47,932 - src.scenarios.frustration_scenario - ERROR - 处理触发事件时出错: SmartGameAgent.process_trigger_event() missing 1 required positional argument: 'trigger_context'
+2025-08-14 15:10:47,932 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 寻求帮助信号
+2025-08-14 15:10:52,933 - src.scenarios.frustration_scenario - ERROR - 处理触发事件时出错: SmartGameAgent.process_trigger_event() missing 1 required positional argument: 'trigger_context'
+2025-08-14 15:10:52,933 - src.scenarios.frustration_scenario - INFO - 智能体干预完成，处理了 3 个事件
+2025-08-14 15:10:52,933 - src.scenarios.frustration_scenario - INFO - === 第四幕：效果评估 ===
+2025-08-14 15:10:52,933 - src.scenarios.frustration_scenario - INFO - 开始评估场景结果...
+2025-08-14 15:10:52,935 - src.scenarios.frustration_scenario - INFO - 场景报告已保存: data\reports\frustration_scenario_report_20250814_151052.json
+2025-08-14 15:10:52,936 - src.scenarios.frustration_scenario - INFO - 场景结果评估完成
+2025-08-14 15:10:52,936 - src.scenarios.frustration_scenario - INFO - 受挫场景运行完成
+2025-08-14 15:14:54,120 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 15:14:54,120 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 15:14:54,125 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 3 个事件
+2025-08-14 15:14:56,335 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 15:14:56,342 - src.agent.smart_game_agent - INFO - 成功创建ReAct Agent执行器
+2025-08-14 15:14:56,344 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 15:14:56,344 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 15:14:56,345 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 15:14:56,345 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 15:14:56,346 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=45, VIP=3
+2025-08-14 15:14:56,353 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 15:14:56,353 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 10, 'triggers_fired': 3, 'consecutive_failures': 12, 'test_success': True, 'timestamp': '2025-08-14T15:14:56.353997'}
+2025-08-14 15:14:56,354 - src.scenarios.frustration_scenario - INFO - 开始运行受挫场景
+2025-08-14 15:14:56,354 - src.scenarios.frustration_scenario - INFO - === 第一幕：场景设置 ===
+2025-08-14 15:14:56,355 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=39, VIP=6
+2025-08-14 15:14:56,355 - src.scenarios.frustration_scenario - INFO - === 第二幕：触发受挫 ===
+2025-08-14 15:14:56,355 - src.scenarios.frustration_scenario - INFO - 开始触发受挫情况...
+2025-08-14 15:14:56,355 - src.scenarios.frustration_scenario - INFO - 行为 1/3: attack_city - 失败
+2025-08-14 15:14:56,857 - src.scenarios.frustration_scenario - INFO - 行为 2/3: attack_city - 失败
+2025-08-14 15:14:57,359 - src.scenarios.frustration_scenario - INFO - 行为 3/3: attack_player - 失败
+2025-08-14 15:14:57,870 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 15:14:57,870 - src.scenarios.frustration_scenario - INFO - 受挫触发完成: 连续失败=6, 触发事件数=3
+2025-08-14 15:14:57,870 - src.scenarios.frustration_scenario - INFO - === 第三幕：智能体干预 ===
+2025-08-14 15:14:57,870 - src.scenarios.frustration_scenario - INFO - 开始智能体干预...
+2025-08-14 15:14:57,871 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 连续攻城失败
+2025-08-14 15:15:02,871 - src.scenarios.frustration_scenario - ERROR - 处理触发事件时出错: SmartGameAgent.process_trigger_event() missing 1 required positional argument: 'trigger_context'
+2025-08-14 15:15:02,871 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 高价值玩家受挫
+2025-08-14 15:15:07,872 - src.scenarios.frustration_scenario - ERROR - 处理触发事件时出错: SmartGameAgent.process_trigger_event() missing 1 required positional argument: 'trigger_context'
+2025-08-14 15:15:07,872 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 寻求帮助信号
+2025-08-14 15:15:12,874 - src.scenarios.frustration_scenario - ERROR - 处理触发事件时出错: SmartGameAgent.process_trigger_event() missing 1 required positional argument: 'trigger_context'
+2025-08-14 15:15:12,874 - src.scenarios.frustration_scenario - INFO - 智能体干预完成，处理了 3 个事件
+2025-08-14 15:15:12,874 - src.scenarios.frustration_scenario - INFO - === 第四幕：效果评估 ===
+2025-08-14 15:15:12,874 - src.scenarios.frustration_scenario - INFO - 开始评估场景结果...
+2025-08-14 15:15:12,876 - src.scenarios.frustration_scenario - INFO - 场景报告已保存: data\reports\frustration_scenario_report_20250814_151512.json
+2025-08-14 15:15:12,876 - src.scenarios.frustration_scenario - INFO - 场景结果评估完成
+2025-08-14 15:15:12,876 - src.scenarios.frustration_scenario - INFO - 受挫场景运行完成
+2025-08-14 15:17:31,978 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 15:17:31,978 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 15:17:31,985 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 3 个事件
+2025-08-14 15:17:34,176 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 15:17:34,184 - src.agent.smart_game_agent - INFO - 成功创建ReAct Agent执行器
+2025-08-14 15:17:34,187 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 15:17:34,187 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 15:17:34,187 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 15:17:34,187 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 15:17:34,188 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=46, VIP=6
+2025-08-14 15:17:34,196 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 15:17:34,196 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 10, 'triggers_fired': 3, 'consecutive_failures': 14, 'test_success': True, 'timestamp': '2025-08-14T15:17:34.196730'}
+2025-08-14 15:17:34,196 - src.scenarios.frustration_scenario - INFO - 开始运行受挫场景
+2025-08-14 15:17:34,197 - src.scenarios.frustration_scenario - INFO - === 第一幕：场景设置 ===
+2025-08-14 15:17:34,197 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=47, VIP=8
+2025-08-14 15:17:34,197 - src.scenarios.frustration_scenario - INFO - === 第二幕：触发受挫 ===
+2025-08-14 15:17:34,197 - src.scenarios.frustration_scenario - INFO - 开始触发受挫情况...
+2025-08-14 15:17:34,198 - src.scenarios.frustration_scenario - INFO - 行为 1/3: attack_city - 失败
+2025-08-14 15:17:34,699 - src.scenarios.frustration_scenario - INFO - 行为 2/3: battle_lose - 失败
+2025-08-14 15:17:35,200 - src.scenarios.frustration_scenario - INFO - 行为 3/3: battle_lose - 失败
+2025-08-14 15:17:35,711 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 15:17:35,711 - src.scenarios.frustration_scenario - INFO - 受挫触发完成: 连续失败=6, 触发事件数=3
+2025-08-14 15:17:35,712 - src.scenarios.frustration_scenario - INFO - === 第三幕：智能体干预 ===
+2025-08-14 15:17:35,712 - src.scenarios.frustration_scenario - INFO - 开始智能体干预...
+2025-08-14 15:17:35,712 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 连续攻城失败
+2025-08-14 15:17:40,713 - src.scenarios.frustration_scenario - ERROR - 处理触发事件时出错: SmartGameAgent.process_trigger_event() missing 1 required positional argument: 'trigger_context'
+2025-08-14 15:17:40,714 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 高价值玩家受挫
+2025-08-14 15:17:45,714 - src.scenarios.frustration_scenario - ERROR - 处理触发事件时出错: SmartGameAgent.process_trigger_event() missing 1 required positional argument: 'trigger_context'
+2025-08-14 15:17:45,714 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 寻求帮助信号
+2025-08-14 15:17:50,716 - src.scenarios.frustration_scenario - ERROR - 处理触发事件时出错: SmartGameAgent.process_trigger_event() missing 1 required positional argument: 'trigger_context'
+2025-08-14 15:17:50,716 - src.scenarios.frustration_scenario - INFO - 智能体干预完成，处理了 3 个事件
+2025-08-14 15:17:50,716 - src.scenarios.frustration_scenario - INFO - === 第四幕：效果评估 ===
+2025-08-14 15:17:50,716 - src.scenarios.frustration_scenario - INFO - 开始评估场景结果...
+2025-08-14 15:17:50,718 - src.scenarios.frustration_scenario - INFO - 场景报告已保存: data\reports\frustration_scenario_report_20250814_151750.json
+2025-08-14 15:17:50,718 - src.scenarios.frustration_scenario - INFO - 场景结果评估完成
+2025-08-14 15:17:50,718 - src.scenarios.frustration_scenario - INFO - 受挫场景运行完成
+2025-08-14 15:32:59,569 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 15:32:59,569 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 15:32:59,575 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 3 个事件
+2025-08-14 15:33:01,784 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 15:33:01,792 - src.agent.smart_game_agent - INFO - 成功创建ReAct Agent执行器
+2025-08-14 15:33:01,795 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 15:33:01,795 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 15:33:01,795 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 15:33:01,795 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 15:33:01,796 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=20, VIP=3
+2025-08-14 15:33:01,804 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 15:33:01,804 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 10, 'triggers_fired': 3, 'consecutive_failures': 17, 'test_success': True, 'timestamp': '2025-08-14T15:33:01.804750'}
+2025-08-14 15:33:01,805 - src.scenarios.frustration_scenario - INFO - 开始运行受挫场景
+2025-08-14 15:33:01,805 - src.scenarios.frustration_scenario - INFO - === 第一幕：场景设置 ===
+2025-08-14 15:33:01,806 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=23, VIP=8
+2025-08-14 15:33:01,806 - src.scenarios.frustration_scenario - INFO - === 第二幕：触发受挫 ===
+2025-08-14 15:33:01,806 - src.scenarios.frustration_scenario - INFO - 开始触发受挫情况...
+2025-08-14 15:33:01,806 - src.scenarios.frustration_scenario - INFO - 行为 1/3: login - 成功
+2025-08-14 15:33:02,308 - src.scenarios.frustration_scenario - INFO - 行为 2/3: attack_city - 失败
+2025-08-14 15:33:02,808 - src.scenarios.frustration_scenario - INFO - 行为 3/3: attack_player - 失败
+2025-08-14 15:33:03,319 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 15:33:03,319 - src.scenarios.frustration_scenario - INFO - 受挫触发完成: 连续失败=6, 触发事件数=3
+2025-08-14 15:33:03,320 - src.scenarios.frustration_scenario - INFO - === 第三幕：智能体干预 ===
+2025-08-14 15:33:03,320 - src.scenarios.frustration_scenario - INFO - 开始智能体干预...
+2025-08-14 15:33:03,320 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 连续攻城失败
+2025-08-14 15:33:08,321 - src.scenarios.frustration_scenario - ERROR - 处理触发事件时出错: SmartGameAgent.process_trigger_event() missing 1 required positional argument: 'trigger_context'
+2025-08-14 15:33:08,321 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 高价值玩家受挫
+2025-08-14 15:33:13,322 - src.scenarios.frustration_scenario - ERROR - 处理触发事件时出错: SmartGameAgent.process_trigger_event() missing 1 required positional argument: 'trigger_context'
+2025-08-14 15:33:13,322 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 寻求帮助信号
+2025-08-14 15:33:18,323 - src.scenarios.frustration_scenario - ERROR - 处理触发事件时出错: SmartGameAgent.process_trigger_event() missing 1 required positional argument: 'trigger_context'
+2025-08-14 15:33:18,324 - src.scenarios.frustration_scenario - INFO - 智能体干预完成，处理了 3 个事件
+2025-08-14 15:33:18,324 - src.scenarios.frustration_scenario - INFO - === 第四幕：效果评估 ===
+2025-08-14 15:33:18,325 - src.scenarios.frustration_scenario - INFO - 开始评估场景结果...
+2025-08-14 15:33:18,326 - src.scenarios.frustration_scenario - INFO - 场景报告已保存: data\reports\frustration_scenario_report_20250814_153318.json
+2025-08-14 15:33:18,327 - src.scenarios.frustration_scenario - INFO - 场景结果评估完成
+2025-08-14 15:33:18,327 - src.scenarios.frustration_scenario - INFO - 受挫场景运行完成
+2025-08-14 15:40:27,086 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 15:40:27,086 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 15:40:27,090 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 3 个事件
+2025-08-14 15:40:29,295 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 15:40:29,303 - src.agent.smart_game_agent - INFO - 成功创建ReAct Agent执行器
+2025-08-14 15:40:29,305 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 15:40:29,305 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 15:40:29,306 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 15:40:29,306 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 15:40:29,306 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=33, VIP=7
+2025-08-14 15:40:29,310 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 15:40:29,310 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 10, 'triggers_fired': 3, 'consecutive_failures': 4, 'test_success': True, 'timestamp': '2025-08-14T15:40:29.310315'}
+2025-08-14 15:40:29,311 - src.scenarios.frustration_scenario - INFO - 开始运行受挫场景
+2025-08-14 15:40:29,311 - src.scenarios.frustration_scenario - INFO - === 第一幕：场景设置 ===
+2025-08-14 15:40:29,311 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=45, VIP=4
+2025-08-14 15:40:29,312 - src.scenarios.frustration_scenario - INFO - === 第二幕：触发受挫 ===
+2025-08-14 15:40:29,312 - src.scenarios.frustration_scenario - INFO - 开始触发受挫情况...
+2025-08-14 15:40:29,312 - src.scenarios.frustration_scenario - INFO - 行为 1/3: login - 成功
+2025-08-14 15:40:29,813 - src.scenarios.frustration_scenario - INFO - 行为 2/3: attack_player - 失败
+2025-08-14 15:40:30,314 - src.scenarios.frustration_scenario - INFO - 行为 3/3: attack_player - 失败
+2025-08-14 15:40:30,817 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 15:40:30,818 - src.scenarios.frustration_scenario - INFO - 受挫触发完成: 连续失败=7, 触发事件数=3
+2025-08-14 15:40:30,818 - src.scenarios.frustration_scenario - INFO - === 第三幕：智能体干预 ===
+2025-08-14 15:40:30,818 - src.scenarios.frustration_scenario - INFO - 开始智能体干预...
+2025-08-14 15:40:30,818 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 连续攻城失败
+2025-08-14 15:40:35,820 - src.scenarios.frustration_scenario - ERROR - 处理触发事件时出错: SmartGameAgent.process_trigger_event() missing 1 required positional argument: 'trigger_context'
+2025-08-14 15:40:35,820 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 高价值玩家受挫
+2025-08-14 15:40:40,821 - src.scenarios.frustration_scenario - ERROR - 处理触发事件时出错: SmartGameAgent.process_trigger_event() missing 1 required positional argument: 'trigger_context'
+2025-08-14 15:40:40,821 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 寻求帮助信号
+2025-08-14 15:40:45,823 - src.scenarios.frustration_scenario - ERROR - 处理触发事件时出错: SmartGameAgent.process_trigger_event() missing 1 required positional argument: 'trigger_context'
+2025-08-14 15:40:45,823 - src.scenarios.frustration_scenario - INFO - 智能体干预完成，处理了 3 个事件
+2025-08-14 15:40:45,823 - src.scenarios.frustration_scenario - INFO - === 第四幕：效果评估 ===
+2025-08-14 15:40:45,824 - src.scenarios.frustration_scenario - INFO - 开始评估场景结果...
+2025-08-14 15:40:45,825 - src.scenarios.frustration_scenario - INFO - 场景报告已保存: data\reports\frustration_scenario_report_20250814_154045.json
+2025-08-14 15:40:45,826 - src.scenarios.frustration_scenario - INFO - 场景结果评估完成
+2025-08-14 15:40:45,826 - src.scenarios.frustration_scenario - INFO - 受挫场景运行完成
+2025-08-14 16:02:09,663 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 16:02:09,664 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 16:02:09,668 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 3 个事件
+2025-08-14 16:02:11,912 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 16:02:11,919 - src.agent.smart_game_agent - INFO - 成功创建ReAct Agent执行器
+2025-08-14 16:02:11,922 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 16:02:11,922 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 16:02:11,922 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 16:02:11,923 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 16:02:11,923 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=44, VIP=5
+2025-08-14 16:02:11,927 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 16:02:11,927 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 10, 'triggers_fired': 3, 'consecutive_failures': 4, 'test_success': True, 'timestamp': '2025-08-14T16:02:11.927213'}
+2025-08-14 16:02:11,928 - src.scenarios.frustration_scenario - INFO - 开始运行受挫场景
+2025-08-14 16:02:11,928 - src.scenarios.frustration_scenario - INFO - === 第一幕：场景设置 ===
+2025-08-14 16:02:11,928 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=33, VIP=5
+2025-08-14 16:02:11,929 - src.scenarios.frustration_scenario - INFO - === 第二幕：触发受挫 ===
+2025-08-14 16:02:11,929 - src.scenarios.frustration_scenario - INFO - 开始触发受挫情况...
+2025-08-14 16:02:11,929 - src.scenarios.frustration_scenario - INFO - 行为 1/3: open_inventory - 成功
+2025-08-14 16:02:12,430 - src.scenarios.frustration_scenario - INFO - 行为 2/3: attack_player - 失败
+2025-08-14 16:02:12,931 - src.scenarios.frustration_scenario - INFO - 行为 3/3: attack_city - 失败
+2025-08-14 16:02:13,435 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 16:02:13,435 - src.scenarios.frustration_scenario - INFO - 受挫触发完成: 连续失败=6, 触发事件数=3
+2025-08-14 16:02:13,435 - src.scenarios.frustration_scenario - INFO - === 第三幕：智能体干预 ===
+2025-08-14 16:02:13,435 - src.scenarios.frustration_scenario - INFO - 开始智能体干预...
+2025-08-14 16:02:13,435 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 连续攻城失败
+2025-08-14 16:02:18,436 - src.agent.smart_game_agent - INFO - 开始处理玩家 test_player_001 的触发事件
+2025-08-14 16:02:18,436 - src.agent.smart_game_agent - ERROR - 处理触发事件时出错: 'TriggerEvent' object has no attribute 'items'
+2025-08-14 16:02:18,436 - src.scenarios.frustration_scenario - INFO - 干预结果: unknown
+2025-08-14 16:02:18,437 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 高价值玩家受挫
+2025-08-14 16:02:23,438 - src.agent.smart_game_agent - INFO - 开始处理玩家 test_player_001 的触发事件
+2025-08-14 16:02:23,438 - src.agent.smart_game_agent - ERROR - 处理触发事件时出错: 'TriggerEvent' object has no attribute 'items'
+2025-08-14 16:02:23,438 - src.scenarios.frustration_scenario - INFO - 干预结果: unknown
+2025-08-14 16:02:23,439 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 寻求帮助信号
+2025-08-14 16:02:28,440 - src.agent.smart_game_agent - INFO - 开始处理玩家 test_player_001 的触发事件
+2025-08-14 16:02:28,440 - src.agent.smart_game_agent - ERROR - 处理触发事件时出错: 'TriggerEvent' object has no attribute 'items'
+2025-08-14 16:02:28,440 - src.scenarios.frustration_scenario - INFO - 干预结果: unknown
+2025-08-14 16:02:28,441 - src.scenarios.frustration_scenario - INFO - 智能体干预完成，处理了 3 个事件
+2025-08-14 16:02:28,441 - src.scenarios.frustration_scenario - INFO - === 第四幕：效果评估 ===
+2025-08-14 16:02:28,441 - src.scenarios.frustration_scenario - INFO - 开始评估场景结果...
+2025-08-14 16:02:28,443 - src.scenarios.frustration_scenario - INFO - 场景报告已保存: data\reports\frustration_scenario_report_20250814_160228.json
+2025-08-14 16:02:28,443 - src.scenarios.frustration_scenario - INFO - 场景结果评估完成
+2025-08-14 16:02:28,443 - src.scenarios.frustration_scenario - INFO - 受挫场景运行完成
+2025-08-14 16:04:16,118 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 16:04:16,118 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 16:04:16,122 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 3 个事件
+2025-08-14 16:04:18,291 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 16:04:18,298 - src.agent.smart_game_agent - INFO - 成功创建ReAct Agent执行器
+2025-08-14 16:04:18,300 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 16:04:18,300 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 16:04:18,300 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 16:04:18,301 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 16:04:18,301 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=45, VIP=6
+2025-08-14 16:04:18,305 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 16:04:18,305 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 10, 'triggers_fired': 3, 'consecutive_failures': 14, 'test_success': True, 'timestamp': '2025-08-14T16:04:18.305951'}
+2025-08-14 16:04:18,306 - src.scenarios.frustration_scenario - INFO - 开始运行受挫场景
+2025-08-14 16:04:18,306 - src.scenarios.frustration_scenario - INFO - === 第一幕：场景设置 ===
+2025-08-14 16:04:18,306 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=32, VIP=7
+2025-08-14 16:04:18,307 - src.scenarios.frustration_scenario - INFO - === 第二幕：触发受挫 ===
+2025-08-14 16:04:18,307 - src.scenarios.frustration_scenario - INFO - 开始触发受挫情况...
+2025-08-14 16:04:18,307 - src.scenarios.frustration_scenario - INFO - 行为 1/3: open_inventory - 成功
+2025-08-14 16:04:18,808 - src.scenarios.frustration_scenario - INFO - 行为 2/3: attack_city - 失败
+2025-08-14 16:04:19,309 - src.scenarios.frustration_scenario - INFO - 行为 3/3: attack_player - 失败
+2025-08-14 16:04:19,812 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 16:04:19,812 - src.scenarios.frustration_scenario - INFO - 受挫触发完成: 连续失败=5, 触发事件数=3
+2025-08-14 16:04:19,813 - src.scenarios.frustration_scenario - INFO - === 第三幕：智能体干预 ===
+2025-08-14 16:04:19,813 - src.scenarios.frustration_scenario - INFO - 开始智能体干预...
+2025-08-14 16:04:19,813 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 连续攻城失败
+2025-08-14 16:04:24,814 - src.agent.smart_game_agent - INFO - 开始处理玩家 test_player_001 的触发事件
+2025-08-14 16:04:24,814 - src.agent.smart_game_agent - ERROR - 处理触发事件时出错: 'TriggerEvent' object has no attribute 'items'
+2025-08-14 16:04:24,828 - src.scenarios.frustration_scenario - INFO - 干预结果: unknown
+2025-08-14 16:04:24,828 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 高价值玩家受挫
+2025-08-14 16:04:29,829 - src.agent.smart_game_agent - INFO - 开始处理玩家 test_player_001 的触发事件
+2025-08-14 16:04:29,829 - src.agent.smart_game_agent - ERROR - 处理触发事件时出错: 'TriggerEvent' object has no attribute 'items'
+2025-08-14 16:04:29,831 - src.scenarios.frustration_scenario - INFO - 干预结果: unknown
+2025-08-14 16:04:29,831 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 寻求帮助信号
+2025-08-14 16:04:34,832 - src.agent.smart_game_agent - INFO - 开始处理玩家 test_player_001 的触发事件
+2025-08-14 16:04:34,832 - src.agent.smart_game_agent - ERROR - 处理触发事件时出错: 'TriggerEvent' object has no attribute 'items'
+2025-08-14 16:04:34,834 - src.scenarios.frustration_scenario - INFO - 干预结果: unknown
+2025-08-14 16:04:34,834 - src.scenarios.frustration_scenario - INFO - 智能体干预完成，处理了 3 个事件
+2025-08-14 16:04:34,834 - src.scenarios.frustration_scenario - INFO - === 第四幕：效果评估 ===
+2025-08-14 16:04:34,834 - src.scenarios.frustration_scenario - INFO - 开始评估场景结果...
+2025-08-14 16:04:34,837 - src.scenarios.frustration_scenario - INFO - 场景报告已保存: data\reports\frustration_scenario_report_20250814_160434.json
+2025-08-14 16:04:34,837 - src.scenarios.frustration_scenario - INFO - 场景结果评估完成
+2025-08-14 16:04:34,837 - src.scenarios.frustration_scenario - INFO - 受挫场景运行完成
+2025-08-14 16:09:08,407 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 16:09:08,408 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 16:09:08,412 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 3 个事件
+2025-08-14 16:09:10,602 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 16:09:10,609 - src.agent.smart_game_agent - INFO - 成功创建ReAct Agent执行器
+2025-08-14 16:09:10,612 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 16:09:10,612 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 16:09:10,612 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 16:09:10,613 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 16:09:10,613 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=40, VIP=5
+2025-08-14 16:09:10,617 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 16:09:10,617 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 10, 'triggers_fired': 3, 'consecutive_failures': 16, 'test_success': True, 'timestamp': '2025-08-14T16:09:10.617485'}
+2025-08-14 16:09:10,618 - src.scenarios.frustration_scenario - INFO - 开始运行受挫场景
+2025-08-14 16:09:10,619 - src.scenarios.frustration_scenario - INFO - === 第一幕：场景设置 ===
+2025-08-14 16:09:10,619 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=37, VIP=4
+2025-08-14 16:09:10,619 - src.scenarios.frustration_scenario - INFO - === 第二幕：触发受挫 ===
+2025-08-14 16:09:10,619 - src.scenarios.frustration_scenario - INFO - 开始触发受挫情况...
+2025-08-14 16:09:10,620 - src.scenarios.frustration_scenario - INFO - 行为 1/3: login - 成功
+2025-08-14 16:09:11,121 - src.scenarios.frustration_scenario - INFO - 行为 2/3: battle_lose - 失败
+2025-08-14 16:09:11,621 - src.scenarios.frustration_scenario - INFO - 行为 3/3: attack_player - 成功
+2025-08-14 16:09:12,125 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 16:09:12,125 - src.scenarios.frustration_scenario - INFO - 受挫触发完成: 连续失败=0, 触发事件数=3
+2025-08-14 16:09:12,126 - src.scenarios.frustration_scenario - INFO - === 第三幕：智能体干预 ===
+2025-08-14 16:09:12,126 - src.scenarios.frustration_scenario - INFO - 开始智能体干预...
+2025-08-14 16:09:12,126 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 连续攻城失败
+2025-08-14 16:09:17,128 - src.agent.smart_game_agent - INFO - 开始处理玩家 test_player_001 的触发事件
+2025-08-14 16:09:17,129 - src.agent.smart_game_agent - ERROR - 处理触发事件时出错: 'TriggerEvent' object has no attribute 'items'
+2025-08-14 16:09:17,132 - src.scenarios.frustration_scenario - INFO - 干预结果: unknown
+2025-08-14 16:09:17,132 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 高价值玩家受挫
+2025-08-14 16:09:22,133 - src.agent.smart_game_agent - INFO - 开始处理玩家 test_player_001 的触发事件
+2025-08-14 16:09:22,135 - src.agent.smart_game_agent - ERROR - 处理触发事件时出错: 'TriggerEvent' object has no attribute 'items'
+2025-08-14 16:09:22,136 - src.scenarios.frustration_scenario - INFO - 干预结果: unknown
+2025-08-14 16:09:22,136 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 寻求帮助信号
+2025-08-14 16:09:27,137 - src.agent.smart_game_agent - INFO - 开始处理玩家 test_player_001 的触发事件
+2025-08-14 16:09:27,138 - src.agent.smart_game_agent - ERROR - 处理触发事件时出错: 'TriggerEvent' object has no attribute 'items'
+2025-08-14 16:09:27,140 - src.scenarios.frustration_scenario - INFO - 干预结果: unknown
+2025-08-14 16:09:27,140 - src.scenarios.frustration_scenario - INFO - 智能体干预完成，处理了 3 个事件
+2025-08-14 16:09:27,140 - src.scenarios.frustration_scenario - INFO - === 第四幕：效果评估 ===
+2025-08-14 16:09:27,141 - src.scenarios.frustration_scenario - INFO - 开始评估场景结果...
+2025-08-14 16:09:27,143 - src.scenarios.frustration_scenario - INFO - 场景报告已保存: data\reports\frustration_scenario_report_20250814_160927.json
+2025-08-14 16:09:27,143 - src.scenarios.frustration_scenario - INFO - 场景结果评估完成
+2025-08-14 16:09:27,143 - src.scenarios.frustration_scenario - INFO - 受挫场景运行完成
+2025-08-14 16:20:21,021 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 16:20:21,022 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 16:20:21,027 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 3 个事件
+2025-08-14 16:20:23,298 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 16:20:23,305 - src.agent.smart_game_agent - INFO - 成功创建ReAct Agent执行器
+2025-08-14 16:20:23,307 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 16:20:23,308 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 16:20:23,308 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 16:20:23,308 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 16:20:23,309 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=26, VIP=8
+2025-08-14 16:20:23,313 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 16:20:23,313 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 10, 'triggers_fired': 3, 'consecutive_failures': 8, 'test_success': True, 'timestamp': '2025-08-14T16:20:23.313472'}
+2025-08-14 16:20:23,314 - src.scenarios.frustration_scenario - INFO - 开始运行受挫场景
+2025-08-14 16:20:23,315 - src.scenarios.frustration_scenario - INFO - === 第一幕：场景设置 ===
+2025-08-14 16:20:23,315 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=34, VIP=3
+2025-08-14 16:20:23,315 - src.scenarios.frustration_scenario - INFO - === 第二幕：触发受挫 ===
+2025-08-14 16:20:23,315 - src.scenarios.frustration_scenario - INFO - 开始触发受挫情况...
+2025-08-14 16:20:23,316 - src.scenarios.frustration_scenario - INFO - 行为 1/3: open_inventory - 成功
+2025-08-14 16:20:23,816 - src.scenarios.frustration_scenario - INFO - 行为 2/3: attack_player - 成功
+2025-08-14 16:20:24,317 - src.scenarios.frustration_scenario - INFO - 行为 3/3: attack_city - 失败
+2025-08-14 16:20:24,820 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 16:20:24,820 - src.scenarios.frustration_scenario - INFO - 受挫触发完成: 连续失败=2, 触发事件数=3
+2025-08-14 16:20:24,821 - src.scenarios.frustration_scenario - INFO - === 第三幕：智能体干预 ===
+2025-08-14 16:20:24,821 - src.scenarios.frustration_scenario - INFO - 开始智能体干预...
+2025-08-14 16:20:24,821 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 连续攻城失败
+2025-08-14 16:20:29,822 - src.agent.smart_game_agent - INFO - 开始处理玩家 test_player_001 的触发事件
+2025-08-14 16:20:29,823 - src.agent.smart_game_agent - ERROR - 处理触发事件时出错: 'TriggerEvent' object has no attribute 'items'
+2025-08-14 16:20:29,826 - src.scenarios.frustration_scenario - INFO - 干预结果: unknown
+2025-08-14 16:20:29,826 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 高价值玩家受挫
+2025-08-14 16:20:34,827 - src.agent.smart_game_agent - INFO - 开始处理玩家 test_player_001 的触发事件
+2025-08-14 16:20:34,829 - src.agent.smart_game_agent - ERROR - 处理触发事件时出错: 'TriggerEvent' object has no attribute 'items'
+2025-08-14 16:20:34,830 - src.scenarios.frustration_scenario - INFO - 干预结果: unknown
+2025-08-14 16:20:34,831 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 寻求帮助信号
+2025-08-14 16:20:39,832 - src.agent.smart_game_agent - INFO - 开始处理玩家 test_player_001 的触发事件
+2025-08-14 16:20:39,833 - src.agent.smart_game_agent - ERROR - 处理触发事件时出错: 'TriggerEvent' object has no attribute 'items'
+2025-08-14 16:20:39,835 - src.scenarios.frustration_scenario - INFO - 干预结果: unknown
+2025-08-14 16:20:39,835 - src.scenarios.frustration_scenario - INFO - 智能体干预完成，处理了 3 个事件
+2025-08-14 16:20:39,835 - src.scenarios.frustration_scenario - INFO - === 第四幕：效果评估 ===
+2025-08-14 16:20:39,835 - src.scenarios.frustration_scenario - INFO - 开始评估场景结果...
+2025-08-14 16:20:39,837 - src.scenarios.frustration_scenario - INFO - 场景报告已保存: data\reports\frustration_scenario_report_20250814_162039.json
+2025-08-14 16:20:39,837 - src.scenarios.frustration_scenario - INFO - 场景结果评估完成
+2025-08-14 16:20:39,838 - src.scenarios.frustration_scenario - INFO - 受挫场景运行完成
+2025-08-14 16:26:22,717 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 16:26:22,717 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 16:26:22,721 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 3 个事件
+2025-08-14 16:26:24,889 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 16:26:24,896 - src.agent.smart_game_agent - INFO - 成功创建ReAct Agent执行器
+2025-08-14 16:26:24,899 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 16:26:24,899 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 16:26:24,899 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 16:26:24,899 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 16:26:24,900 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=48, VIP=3
+2025-08-14 16:26:24,903 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 16:26:24,904 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 10, 'triggers_fired': 3, 'consecutive_failures': 12, 'test_success': True, 'timestamp': '2025-08-14T16:26:24.904462'}
+2025-08-14 16:26:24,904 - src.scenarios.frustration_scenario - INFO - 开始运行受挫场景
+2025-08-14 16:26:24,905 - src.scenarios.frustration_scenario - INFO - === 第一幕：场景设置 ===
+2025-08-14 16:26:24,905 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=23, VIP=6
+2025-08-14 16:26:24,906 - src.scenarios.frustration_scenario - INFO - === 第二幕：触发受挫 ===
+2025-08-14 16:26:24,906 - src.scenarios.frustration_scenario - INFO - 开始触发受挫情况...
+2025-08-14 16:26:24,906 - src.scenarios.frustration_scenario - INFO - 行为 1/3: login - 成功
+2025-08-14 16:26:25,406 - src.scenarios.frustration_scenario - INFO - 行为 2/3: attack_city - 失败
+2025-08-14 16:26:25,908 - src.scenarios.frustration_scenario - INFO - 行为 3/3: battle_lose - 失败
+2025-08-14 16:26:26,412 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 16:26:26,412 - src.scenarios.frustration_scenario - INFO - 受挫触发完成: 连续失败=5, 触发事件数=3
+2025-08-14 16:26:26,412 - src.scenarios.frustration_scenario - INFO - === 第三幕：智能体干预 ===
+2025-08-14 16:26:26,412 - src.scenarios.frustration_scenario - INFO - 开始智能体干预...
+2025-08-14 16:26:26,413 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 连续攻城失败
+2025-08-14 16:26:31,414 - src.agent.smart_game_agent - INFO - 开始处理玩家 test_player_001 的触发事件
+2025-08-14 16:27:06,020 - src.agent.smart_game_agent - INFO - 完成处理玩家 test_player_001 的事件，耗时 34.61 秒
+2025-08-14 16:27:06,020 - src.scenarios.frustration_scenario - INFO - 干预结果: unknown
+2025-08-14 16:27:06,020 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 高价值玩家受挫
+2025-08-14 16:27:11,021 - src.agent.smart_game_agent - INFO - 开始处理玩家 test_player_001 的触发事件
+2025-08-14 16:28:26,105 - src.agent.smart_game_agent - INFO - 完成处理玩家 test_player_001 的事件，耗时 75.08 秒
+2025-08-14 16:28:26,105 - src.scenarios.frustration_scenario - INFO - 干预结果: unknown
+2025-08-14 16:28:26,106 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 寻求帮助信号
+2025-08-14 16:28:31,107 - src.agent.smart_game_agent - INFO - 开始处理玩家 test_player_001 的触发事件
+2025-08-14 16:28:36,891 - __main__ - INFO - 演示被用户中断
+2025-08-14 16:33:32,863 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 16:33:32,863 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 16:33:32,867 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 3 个事件
+2025-08-14 16:33:35,063 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 16:33:35,070 - src.agent.smart_game_agent - INFO - 成功创建ReAct Agent执行器
+2025-08-14 16:33:35,072 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 16:33:35,073 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 16:33:35,073 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 16:33:35,073 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 16:33:35,074 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=20, VIP=5
+2025-08-14 16:33:35,077 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 16:33:35,077 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 10, 'triggers_fired': 3, 'consecutive_failures': 4, 'test_success': True, 'timestamp': '2025-08-14T16:33:35.077022'}
+2025-08-14 16:33:35,078 - src.scenarios.frustration_scenario - INFO - 开始运行受挫场景
+2025-08-14 16:33:35,078 - src.scenarios.frustration_scenario - INFO - === 第一幕：场景设置 ===
+2025-08-14 16:33:35,079 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=22, VIP=6
+2025-08-14 16:33:35,079 - src.scenarios.frustration_scenario - INFO - === 第二幕：触发受挫 ===
+2025-08-14 16:33:35,079 - src.scenarios.frustration_scenario - INFO - 开始触发受挫情况...
+2025-08-14 16:33:35,079 - src.scenarios.frustration_scenario - INFO - 行为 1/3: open_inventory - 成功
+2025-08-14 16:33:35,580 - src.scenarios.frustration_scenario - INFO - 行为 2/3: attack_city - 失败
+2025-08-14 16:33:36,080 - src.scenarios.frustration_scenario - INFO - 行为 3/3: attack_player - 失败
+2025-08-14 16:33:36,584 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 16:33:36,585 - src.scenarios.frustration_scenario - INFO - 受挫触发完成: 连续失败=5, 触发事件数=3
+2025-08-14 16:33:36,585 - src.scenarios.frustration_scenario - INFO - === 第三幕：智能体干预 ===
+2025-08-14 16:33:36,585 - src.scenarios.frustration_scenario - INFO - 开始智能体干预...
+2025-08-14 16:33:36,585 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 连续攻城失败
+2025-08-14 16:33:41,586 - src.agent.smart_game_agent - INFO - 开始处理玩家 test_player_001 的触发事件
+2025-08-14 16:34:07,783 - __main__ - INFO - 演示被用户中断
+2025-08-14 16:34:44,617 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 16:34:44,617 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 16:34:44,620 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 3 个事件
+2025-08-14 16:34:46,771 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 16:34:46,779 - src.agent.smart_game_agent - INFO - 成功创建ReAct Agent执行器
+2025-08-14 16:34:46,781 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 16:34:46,781 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 16:34:46,781 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 16:34:46,782 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 16:34:46,782 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=42, VIP=8
+2025-08-14 16:34:46,786 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 16:34:46,786 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 10, 'triggers_fired': 3, 'consecutive_failures': 6, 'test_success': True, 'timestamp': '2025-08-14T16:34:46.786947'}
+2025-08-14 16:34:46,788 - src.scenarios.frustration_scenario - INFO - 开始运行受挫场景
+2025-08-14 16:34:46,788 - src.scenarios.frustration_scenario - INFO - === 第一幕：场景设置 ===
+2025-08-14 16:34:46,788 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=37, VIP=6
+2025-08-14 16:34:46,788 - src.scenarios.frustration_scenario - INFO - === 第二幕：触发受挫 ===
+2025-08-14 16:34:46,789 - src.scenarios.frustration_scenario - INFO - 开始触发受挫情况...
+2025-08-14 16:34:46,789 - src.scenarios.frustration_scenario - INFO - 行为 1/3: attack_city - 失败
+2025-08-14 16:34:47,290 - src.scenarios.frustration_scenario - INFO - 行为 2/3: attack_player - 失败
+2025-08-14 16:34:47,791 - src.scenarios.frustration_scenario - INFO - 行为 3/3: attack_player - 失败
+2025-08-14 16:34:48,294 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 16:34:48,295 - src.scenarios.frustration_scenario - INFO - 受挫触发完成: 连续失败=7, 触发事件数=3
+2025-08-14 16:34:48,295 - src.scenarios.frustration_scenario - INFO - === 第三幕：智能体干预 ===
+2025-08-14 16:34:48,295 - src.scenarios.frustration_scenario - INFO - 开始智能体干预...
+2025-08-14 16:34:48,295 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 连续攻城失败
+2025-08-14 16:34:53,296 - src.agent.smart_game_agent - INFO - 开始处理玩家 test_player_001 的触发事件
+2025-08-14 16:34:53,297 - src.agent.smart_game_agent - ERROR - 处理触发事件时出错: 'ConversationBufferWindowMemory' object has no attribute 'content'
+2025-08-14 16:34:53,300 - src.scenarios.frustration_scenario - INFO - 干预结果: unknown
+2025-08-14 16:34:53,300 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 高价值玩家受挫
+2025-08-14 16:34:58,301 - src.agent.smart_game_agent - INFO - 开始处理玩家 test_player_001 的触发事件
+2025-08-14 16:34:58,301 - src.agent.smart_game_agent - ERROR - 处理触发事件时出错: 'ConversationBufferWindowMemory' object has no attribute 'content'
+2025-08-14 16:34:58,303 - src.scenarios.frustration_scenario - INFO - 干预结果: unknown
+2025-08-14 16:34:58,303 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 寻求帮助信号
+2025-08-14 16:35:03,305 - src.agent.smart_game_agent - INFO - 开始处理玩家 test_player_001 的触发事件
+2025-08-14 16:35:03,306 - src.agent.smart_game_agent - ERROR - 处理触发事件时出错: 'ConversationBufferWindowMemory' object has no attribute 'content'
+2025-08-14 16:35:03,308 - src.scenarios.frustration_scenario - INFO - 干预结果: unknown
+2025-08-14 16:35:03,308 - src.scenarios.frustration_scenario - INFO - 智能体干预完成，处理了 3 个事件
+2025-08-14 16:35:03,309 - src.scenarios.frustration_scenario - INFO - === 第四幕：效果评估 ===
+2025-08-14 16:35:03,309 - src.scenarios.frustration_scenario - INFO - 开始评估场景结果...
+2025-08-14 16:35:03,311 - src.scenarios.frustration_scenario - INFO - 场景报告已保存: data\reports\frustration_scenario_report_20250814_163503.json
+2025-08-14 16:35:03,311 - src.scenarios.frustration_scenario - INFO - 场景结果评估完成
+2025-08-14 16:35:03,311 - src.scenarios.frustration_scenario - INFO - 受挫场景运行完成
+2025-08-14 16:38:13,471 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 16:38:13,471 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 16:38:13,474 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 3 个事件
+2025-08-14 16:38:15,640 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 16:38:15,649 - src.agent.smart_game_agent - INFO - 成功创建ReAct Agent执行器
+2025-08-14 16:38:15,652 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 16:38:15,652 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 16:38:15,652 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 16:38:15,652 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 16:38:15,653 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=40, VIP=7
+2025-08-14 16:38:15,656 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 16:38:15,656 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 10, 'triggers_fired': 3, 'consecutive_failures': 12, 'test_success': True, 'timestamp': '2025-08-14T16:38:15.656740'}
+2025-08-14 16:38:15,657 - src.scenarios.frustration_scenario - INFO - 开始运行受挫场景
+2025-08-14 16:38:15,657 - src.scenarios.frustration_scenario - INFO - === 第一幕：场景设置 ===
+2025-08-14 16:38:15,658 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=25, VIP=8
+2025-08-14 16:38:15,658 - src.scenarios.frustration_scenario - INFO - === 第二幕：触发受挫 ===
+2025-08-14 16:38:15,658 - src.scenarios.frustration_scenario - INFO - 开始触发受挫情况...
+2025-08-14 16:38:15,658 - src.scenarios.frustration_scenario - INFO - 行为 1/3: attack_city - 失败
+2025-08-14 16:38:16,160 - src.scenarios.frustration_scenario - INFO - 行为 2/3: attack_player - 失败
+2025-08-14 16:38:16,660 - src.scenarios.frustration_scenario - INFO - 行为 3/3: attack_player - 失败
+2025-08-14 16:38:17,165 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 16:38:17,165 - src.scenarios.frustration_scenario - INFO - 受挫触发完成: 连续失败=6, 触发事件数=3
+2025-08-14 16:38:17,165 - src.scenarios.frustration_scenario - INFO - === 第三幕：智能体干预 ===
+2025-08-14 16:38:17,165 - src.scenarios.frustration_scenario - INFO - 开始智能体干预...
+2025-08-14 16:38:17,165 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 连续攻城失败
+2025-08-14 16:38:22,166 - src.agent.smart_game_agent - INFO - 开始处理玩家 test_player_001 的触发事件
+2025-08-14 16:38:52,467 - __main__ - INFO - 演示被用户中断
+2025-08-14 16:39:16,128 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 16:39:16,128 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 16:39:16,132 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 3 个事件
+2025-08-14 16:39:18,337 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 16:39:18,344 - src.agent.smart_game_agent - INFO - 成功创建ReAct Agent执行器
+2025-08-14 16:39:18,346 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 16:39:18,346 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 16:39:18,346 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 16:39:18,347 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 16:39:18,347 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=43, VIP=6
+2025-08-14 16:39:18,350 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 16:39:18,351 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 10, 'triggers_fired': 3, 'consecutive_failures': 2, 'test_success': True, 'timestamp': '2025-08-14T16:39:18.351537'}
+2025-08-14 16:39:18,351 - src.scenarios.frustration_scenario - INFO - 开始运行受挫场景
+2025-08-14 16:39:18,352 - src.scenarios.frustration_scenario - INFO - === 第一幕：场景设置 ===
+2025-08-14 16:39:18,352 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=40, VIP=3
+2025-08-14 16:39:18,352 - src.scenarios.frustration_scenario - INFO - === 第二幕：触发受挫 ===
+2025-08-14 16:39:18,352 - src.scenarios.frustration_scenario - INFO - 开始触发受挫情况...
+2025-08-14 16:39:18,353 - src.scenarios.frustration_scenario - INFO - 行为 1/3: attack_city - 失败
+2025-08-14 16:39:18,853 - src.scenarios.frustration_scenario - INFO - 行为 2/3: battle_lose - 失败
+2025-08-14 16:39:19,354 - src.scenarios.frustration_scenario - INFO - 行为 3/3: attack_player - 成功
+2025-08-14 16:39:19,857 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 16:39:19,857 - src.scenarios.frustration_scenario - INFO - 受挫触发完成: 连续失败=0, 触发事件数=3
+2025-08-14 16:39:19,858 - src.scenarios.frustration_scenario - INFO - === 第三幕：智能体干预 ===
+2025-08-14 16:39:19,858 - src.scenarios.frustration_scenario - INFO - 开始智能体干预...
+2025-08-14 16:39:19,858 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 连续攻城失败
+2025-08-14 16:39:24,859 - src.agent.smart_game_agent - INFO - 开始处理玩家 test_player_001 的触发事件
+2025-08-14 16:39:24,860 - src.agent.smart_game_agent - ERROR - 处理触发事件时出错: 'ConversationBufferWindowMemory' object has no attribute 'get_player_context'
+2025-08-14 16:39:24,865 - src.scenarios.frustration_scenario - INFO - 干预结果: unknown
+2025-08-14 16:39:24,866 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 高价值玩家受挫
+2025-08-14 16:39:29,866 - src.agent.smart_game_agent - INFO - 开始处理玩家 test_player_001 的触发事件
+2025-08-14 16:39:29,867 - src.agent.smart_game_agent - ERROR - 处理触发事件时出错: 'ConversationBufferWindowMemory' object has no attribute 'get_player_context'
+2025-08-14 16:39:29,871 - src.scenarios.frustration_scenario - INFO - 干预结果: unknown
+2025-08-14 16:39:29,872 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 寻求帮助信号
+2025-08-14 16:39:34,873 - src.agent.smart_game_agent - INFO - 开始处理玩家 test_player_001 的触发事件
+2025-08-14 16:39:34,873 - src.agent.smart_game_agent - ERROR - 处理触发事件时出错: 'ConversationBufferWindowMemory' object has no attribute 'get_player_context'
+2025-08-14 16:39:34,878 - src.scenarios.frustration_scenario - INFO - 干预结果: unknown
+2025-08-14 16:39:34,878 - src.scenarios.frustration_scenario - INFO - 智能体干预完成，处理了 3 个事件
+2025-08-14 16:39:34,879 - src.scenarios.frustration_scenario - INFO - === 第四幕：效果评估 ===
+2025-08-14 16:39:34,879 - src.scenarios.frustration_scenario - INFO - 开始评估场景结果...
+2025-08-14 16:39:34,880 - src.scenarios.frustration_scenario - INFO - 场景报告已保存: data\reports\frustration_scenario_report_20250814_163934.json
+2025-08-14 16:39:34,880 - src.scenarios.frustration_scenario - INFO - 场景结果评估完成
+2025-08-14 16:39:34,881 - src.scenarios.frustration_scenario - INFO - 受挫场景运行完成
+2025-08-14 16:41:40,114 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 16:41:40,114 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 16:41:40,118 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 3 个事件
+2025-08-14 16:41:42,320 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 16:41:42,327 - src.agent.smart_game_agent - INFO - 成功创建ReAct Agent执行器
+2025-08-14 16:41:42,330 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 16:41:42,330 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 16:41:42,330 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 16:41:42,330 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 16:41:42,331 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=36, VIP=7
+2025-08-14 16:41:42,335 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 16:41:42,335 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 10, 'triggers_fired': 3, 'consecutive_failures': 16, 'test_success': True, 'timestamp': '2025-08-14T16:41:42.335421'}
+2025-08-14 16:41:42,335 - src.scenarios.frustration_scenario - INFO - 开始运行受挫场景
+2025-08-14 16:41:42,335 - src.scenarios.frustration_scenario - INFO - === 第一幕：场景设置 ===
+2025-08-14 16:41:42,336 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=29, VIP=3
+2025-08-14 16:41:42,336 - src.scenarios.frustration_scenario - INFO - === 第二幕：触发受挫 ===
+2025-08-14 16:41:42,336 - src.scenarios.frustration_scenario - INFO - 开始触发受挫情况...
+2025-08-14 16:41:42,337 - src.scenarios.frustration_scenario - INFO - 行为 1/3: login - 成功
+2025-08-14 16:41:42,838 - src.scenarios.frustration_scenario - INFO - 行为 2/3: battle_lose - 失败
+2025-08-14 16:41:43,338 - src.scenarios.frustration_scenario - INFO - 行为 3/3: attack_city - 失败
+2025-08-14 16:41:43,843 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 16:41:43,843 - src.scenarios.frustration_scenario - INFO - 受挫触发完成: 连续失败=4, 触发事件数=3
+2025-08-14 16:41:43,843 - src.scenarios.frustration_scenario - INFO - === 第三幕：智能体干预 ===
+2025-08-14 16:41:43,843 - src.scenarios.frustration_scenario - INFO - 开始智能体干预...
+2025-08-14 16:41:43,844 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 连续攻城失败
+2025-08-14 16:41:48,844 - src.agent.smart_game_agent - INFO - 开始处理玩家 test_player_001 的触发事件
+2025-08-14 16:42:01,940 - __main__ - INFO - 演示被用户中断
+2025-08-14 16:46:19,189 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 16:46:19,190 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 16:46:19,193 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 3 个事件
+2025-08-14 16:46:21,390 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 16:46:21,398 - src.agent.smart_game_agent - INFO - 成功创建ReAct Agent执行器
+2025-08-14 16:46:21,400 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 16:46:21,400 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 16:46:21,401 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 16:46:21,401 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 16:46:21,401 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=34, VIP=4
+2025-08-14 16:46:21,405 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 16:46:21,405 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 10, 'triggers_fired': 3, 'consecutive_failures': 12, 'test_success': True, 'timestamp': '2025-08-14T16:46:21.405705'}
+2025-08-14 16:46:21,406 - src.scenarios.frustration_scenario - INFO - 开始运行受挫场景
+2025-08-14 16:46:21,406 - src.scenarios.frustration_scenario - INFO - === 第一幕：场景设置 ===
+2025-08-14 16:46:21,406 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=21, VIP=7
+2025-08-14 16:46:21,406 - src.scenarios.frustration_scenario - INFO - === 第二幕：触发受挫 ===
+2025-08-14 16:46:21,407 - src.scenarios.frustration_scenario - INFO - 开始触发受挫情况...
+2025-08-14 16:46:21,407 - src.scenarios.frustration_scenario - INFO - 行为 1/3: attack_city - 失败
+2025-08-14 16:46:21,908 - src.scenarios.frustration_scenario - INFO - 行为 2/3: attack_player - 成功
+2025-08-14 16:46:22,409 - src.scenarios.frustration_scenario - INFO - 行为 3/3: battle_lose - 失败
+2025-08-14 16:46:22,915 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 16:46:22,915 - src.scenarios.frustration_scenario - INFO - 受挫触发完成: 连续失败=2, 触发事件数=3
+2025-08-14 16:46:22,916 - src.scenarios.frustration_scenario - INFO - === 第三幕：智能体干预 ===
+2025-08-14 16:46:22,916 - src.scenarios.frustration_scenario - INFO - 开始智能体干预...
+2025-08-14 16:46:22,916 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 连续攻城失败
+2025-08-14 16:46:27,917 - src.agent.smart_game_agent - INFO - 开始处理玩家 test_player_001 的触发事件
+2025-08-14 16:46:50,156 - src.agent.smart_game_agent - INFO - 完成处理玩家 test_player_001 的事件，耗时 22.24 秒
+2025-08-14 16:46:50,156 - src.scenarios.frustration_scenario - INFO - 干预结果: unknown
+2025-08-14 16:46:50,156 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 高价值玩家受挫
+2025-08-14 16:46:55,158 - src.agent.smart_game_agent - INFO - 开始处理玩家 test_player_001 的触发事件
+2025-08-14 16:47:46,499 - __main__ - INFO - 演示被用户中断
+2025-08-14 16:54:42,389 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 16:54:42,389 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 16:54:42,393 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 3 个事件
+2025-08-14 16:54:44,540 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 16:54:44,548 - src.agent.smart_game_agent - INFO - 成功创建ReAct Agent执行器
+2025-08-14 16:54:44,550 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 16:54:44,551 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 16:54:44,551 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 16:54:44,551 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 16:54:44,552 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=50, VIP=8
+2025-08-14 16:54:44,555 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 16:54:44,555 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 10, 'triggers_fired': 3, 'consecutive_failures': 16, 'test_success': True, 'timestamp': '2025-08-14T16:54:44.555357'}
+2025-08-14 16:54:44,556 - src.scenarios.frustration_scenario - INFO - 开始运行受挫场景
+2025-08-14 16:54:44,556 - src.scenarios.frustration_scenario - INFO - === 第一幕：场景设置 ===
+2025-08-14 16:54:44,557 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=20, VIP=5
+2025-08-14 16:54:44,557 - src.scenarios.frustration_scenario - INFO - === 第二幕：触发受挫 ===
+2025-08-14 16:54:44,557 - src.scenarios.frustration_scenario - INFO - 开始触发受挫情况...
+2025-08-14 16:54:44,557 - src.scenarios.frustration_scenario - INFO - 行为 1/3: open_inventory - 成功
+2025-08-14 16:54:45,058 - src.scenarios.frustration_scenario - INFO - 行为 2/3: attack_city - 失败
+2025-08-14 16:54:45,558 - src.scenarios.frustration_scenario - INFO - 行为 3/3: attack_city - 失败
+2025-08-14 16:54:46,063 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 16:54:46,063 - src.scenarios.frustration_scenario - INFO - 受挫触发完成: 连续失败=4, 触发事件数=3
+2025-08-14 16:54:46,063 - src.scenarios.frustration_scenario - INFO - === 第三幕：智能体干预 ===
+2025-08-14 16:54:46,063 - src.scenarios.frustration_scenario - INFO - 开始智能体干预...
+2025-08-14 16:54:46,064 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 连续攻城失败
+2025-08-14 16:54:51,064 - src.agent.smart_game_agent - INFO - 开始处理玩家 test_player_001 的触发事件
+2025-08-14 16:56:34,546 - src.agent.smart_game_agent - INFO - 完成处理玩家 test_player_001 的事件，耗时 103.48 秒
+2025-08-14 16:56:34,546 - src.scenarios.frustration_scenario - INFO - 干预结果: unknown
+2025-08-14 16:56:34,546 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 高价值玩家受挫
+2025-08-14 16:56:39,548 - src.agent.smart_game_agent - INFO - 开始处理玩家 test_player_001 的触发事件
+2025-08-14 16:58:46,709 - src.agent.smart_game_agent - INFO - 完成处理玩家 test_player_001 的事件，耗时 127.16 秒
+2025-08-14 16:58:46,710 - src.scenarios.frustration_scenario - INFO - 干预结果: unknown
+2025-08-14 16:58:46,710 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 寻求帮助信号
+2025-08-14 16:58:51,711 - src.agent.smart_game_agent - INFO - 开始处理玩家 test_player_001 的触发事件
+2025-08-14 17:03:49,131 - src.agent.smart_game_agent - INFO - 完成处理玩家 test_player_001 的事件，耗时 297.42 秒
+2025-08-14 17:03:49,131 - src.scenarios.frustration_scenario - INFO - 干预结果: unknown
+2025-08-14 17:03:49,131 - src.scenarios.frustration_scenario - INFO - 智能体干预完成，处理了 3 个事件
+2025-08-14 17:03:49,132 - src.scenarios.frustration_scenario - INFO - === 第四幕：效果评估 ===
+2025-08-14 17:03:49,132 - src.scenarios.frustration_scenario - INFO - 开始评估场景结果...
+2025-08-14 17:03:49,135 - src.scenarios.frustration_scenario - INFO - 场景报告已保存: data\reports\frustration_scenario_report_20250814_170349.json
+2025-08-14 17:03:49,135 - src.scenarios.frustration_scenario - INFO - 场景结果评估完成
+2025-08-14 17:03:49,136 - src.scenarios.frustration_scenario - INFO - 受挫场景运行完成
+2025-08-14 17:04:50,257 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 17:04:50,258 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 17:04:50,261 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 3 个事件
+2025-08-14 17:04:52,418 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 17:04:52,426 - src.agent.smart_game_agent - INFO - 成功创建ReAct Agent执行器
+2025-08-14 17:04:52,429 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 17:04:52,429 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 17:04:52,429 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 17:04:52,430 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 17:04:52,430 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=23, VIP=7
+2025-08-14 17:04:52,433 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 17:04:52,434 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 10, 'triggers_fired': 3, 'consecutive_failures': 13, 'test_success': True, 'timestamp': '2025-08-14T17:04:52.434303'}
+2025-08-14 17:04:52,434 - src.scenarios.frustration_scenario - INFO - 开始运行受挫场景
+2025-08-14 17:04:52,435 - src.scenarios.frustration_scenario - INFO - === 第一幕：场景设置 ===
+2025-08-14 17:04:52,435 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=49, VIP=4
+2025-08-14 17:04:52,435 - src.scenarios.frustration_scenario - INFO - === 第二幕：触发受挫 ===
+2025-08-14 17:04:52,435 - src.scenarios.frustration_scenario - INFO - 开始触发受挫情况...
+2025-08-14 17:04:52,436 - src.scenarios.frustration_scenario - INFO - 行为 1/3: login - 成功
+2025-08-14 17:04:52,936 - src.scenarios.frustration_scenario - INFO - 行为 2/3: attack_city - 失败
+2025-08-14 17:04:53,437 - src.scenarios.frustration_scenario - INFO - 行为 3/3: attack_city - 失败
+2025-08-14 17:04:53,940 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 17:04:53,940 - src.scenarios.frustration_scenario - INFO - 受挫触发完成: 连续失败=4, 触发事件数=3
+2025-08-14 17:04:53,940 - src.scenarios.frustration_scenario - INFO - === 第三幕：智能体干预 ===
+2025-08-14 17:04:53,941 - src.scenarios.frustration_scenario - INFO - 开始智能体干预...
+2025-08-14 17:04:53,941 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 连续攻城失败
+2025-08-14 17:04:58,942 - src.agent.smart_game_agent - INFO - 开始处理玩家 test_player_001 的触发事件
+2025-08-14 17:07:15,828 - src.agent.smart_game_agent - INFO - 完成处理玩家 test_player_001 的事件，耗时 136.89 秒
+2025-08-14 17:07:15,828 - src.scenarios.frustration_scenario - INFO - 干预结果: unknown
+2025-08-14 17:07:15,828 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 高价值玩家受挫
+2025-08-14 17:07:20,829 - src.agent.smart_game_agent - INFO - 开始处理玩家 test_player_001 的触发事件
+2025-08-14 17:11:31,529 - src.agent.smart_game_agent - INFO - 完成处理玩家 test_player_001 的事件，耗时 250.70 秒
+2025-08-14 17:11:31,529 - src.scenarios.frustration_scenario - INFO - 干预结果: unknown
+2025-08-14 17:11:31,530 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 寻求帮助信号
+2025-08-14 17:11:36,530 - src.agent.smart_game_agent - INFO - 开始处理玩家 test_player_001 的触发事件
+2025-08-14 17:14:32,963 - src.agent.smart_game_agent - INFO - 完成处理玩家 test_player_001 的事件，耗时 176.43 秒
+2025-08-14 17:14:32,963 - src.scenarios.frustration_scenario - INFO - 干预结果: unknown
+2025-08-14 17:14:32,963 - src.scenarios.frustration_scenario - INFO - 智能体干预完成，处理了 3 个事件
+2025-08-14 17:14:32,964 - src.scenarios.frustration_scenario - INFO - === 第四幕：效果评估 ===
+2025-08-14 17:14:32,964 - src.scenarios.frustration_scenario - INFO - 开始评估场景结果...
+2025-08-14 17:14:32,966 - src.scenarios.frustration_scenario - INFO - 场景报告已保存: data\reports\frustration_scenario_report_20250814_171432.json
+2025-08-14 17:14:32,967 - src.scenarios.frustration_scenario - INFO - 场景结果评估完成
+2025-08-14 17:14:32,967 - src.scenarios.frustration_scenario - INFO - 受挫场景运行完成
+2025-08-14 17:28:21,810 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 17:28:21,810 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 17:28:21,814 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 3 个事件
+2025-08-14 17:28:24,032 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 17:28:24,041 - src.agent.smart_game_agent - INFO - 成功创建ReAct Agent执行器
+2025-08-14 17:28:24,043 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 17:28:24,043 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 17:28:24,044 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 17:28:24,044 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 17:28:24,044 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=41, VIP=4
+2025-08-14 17:28:24,048 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 17:28:24,048 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 10, 'triggers_fired': 3, 'consecutive_failures': 10, 'test_success': True, 'timestamp': '2025-08-14T17:28:24.048266'}
+2025-08-14 17:28:24,049 - src.scenarios.frustration_scenario - INFO - 开始运行受挫场景
+2025-08-14 17:28:24,049 - src.scenarios.frustration_scenario - INFO - === 第一幕：场景设置 ===
+2025-08-14 17:28:24,049 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=41, VIP=5
+2025-08-14 17:28:24,050 - src.scenarios.frustration_scenario - INFO - === 第二幕：触发受挫 ===
+2025-08-14 17:28:24,050 - src.scenarios.frustration_scenario - INFO - 开始触发受挫情况...
+2025-08-14 17:28:24,050 - src.scenarios.frustration_scenario - INFO - 行为 1/3: login - 成功
+2025-08-14 17:28:24,551 - src.scenarios.frustration_scenario - INFO - 行为 2/3: battle_lose - 失败
+2025-08-14 17:28:25,052 - src.scenarios.frustration_scenario - INFO - 行为 3/3: battle_lose - 失败
+2025-08-14 17:28:25,556 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 17:28:25,556 - src.scenarios.frustration_scenario - INFO - 受挫触发完成: 连续失败=4, 触发事件数=3
+2025-08-14 17:28:25,557 - src.scenarios.frustration_scenario - INFO - === 第三幕：智能体干预 ===
+2025-08-14 17:28:25,557 - src.scenarios.frustration_scenario - INFO - 开始智能体干预...
+2025-08-14 17:28:25,557 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 连续攻城失败
+2025-08-14 17:28:30,557 - src.agent.smart_game_agent - INFO - 开始处理玩家 test_player_001 的触发事件
+2025-08-14 17:30:38,329 - __main__ - INFO - 演示被用户中断
+2025-08-14 17:34:47,216 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 17:34:47,216 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 17:34:47,219 - src.triggers.trigger_engine - INFO - 强制检查玩家 player_001，触发了 3 个事件
+2025-08-14 17:34:49,421 - src.agent.smart_game_agent - INFO - 初始化了 5 个工具
+2025-08-14 17:34:49,428 - src.agent.smart_game_agent - INFO - 成功创建ReAct Agent执行器
+2025-08-14 17:34:49,431 - src.triggers.trigger_engine - INFO - 加载了 3 个默认触发条件
+2025-08-14 17:34:49,431 - src.triggers.trigger_engine - INFO - 触发引擎初始化完成
+2025-08-14 17:34:49,431 - src.scenarios.frustration_scenario - INFO - 受挫场景初始化完成
+2025-08-14 17:34:49,431 - src.scenarios.frustration_scenario - INFO - 开始快速测试
+2025-08-14 17:34:49,432 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=42, VIP=7
+2025-08-14 17:34:49,435 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 17:34:49,435 - src.scenarios.frustration_scenario - INFO - 快速测试完成: {'test_type': 'quick_test', 'player_id': 'test_player_001', 'actions_generated': 10, 'triggers_fired': 3, 'consecutive_failures': 13, 'test_success': True, 'timestamp': '2025-08-14T17:34:49.435494'}
+2025-08-14 17:34:49,436 - src.scenarios.frustration_scenario - INFO - 开始运行受挫场景
+2025-08-14 17:34:49,436 - src.scenarios.frustration_scenario - INFO - === 第一幕：场景设置 ===
+2025-08-14 17:34:49,437 - src.scenarios.frustration_scenario - INFO - 场景设置完成: 玩家=张三, 等级=41, VIP=3
+2025-08-14 17:34:49,437 - src.scenarios.frustration_scenario - INFO - === 第二幕：触发受挫 ===
+2025-08-14 17:34:49,437 - src.scenarios.frustration_scenario - INFO - 开始触发受挫情况...
+2025-08-14 17:34:49,437 - src.scenarios.frustration_scenario - INFO - 行为 1/3: login - 成功
+2025-08-14 17:34:49,939 - src.scenarios.frustration_scenario - INFO - 行为 2/3: attack_player - 失败
+2025-08-14 17:34:50,439 - src.scenarios.frustration_scenario - INFO - 行为 3/3: battle_lose - 失败
+2025-08-14 17:34:50,943 - src.triggers.trigger_engine - INFO - 强制检查玩家 test_player_001，触发了 3 个事件
+2025-08-14 17:34:50,943 - src.scenarios.frustration_scenario - INFO - 受挫触发完成: 连续失败=5, 触发事件数=3
+2025-08-14 17:34:50,943 - src.scenarios.frustration_scenario - INFO - === 第三幕：智能体干预 ===
+2025-08-14 17:34:50,943 - src.scenarios.frustration_scenario - INFO - 开始智能体干预...
+2025-08-14 17:34:50,944 - src.scenarios.frustration_scenario - INFO - 处理触发事件: 连续攻城失败
+2025-08-14 17:34:55,945 - src.agent.smart_game_agent - INFO - 开始处理玩家 test_player_001 的触发事件
+2025-08-14 17:36:29,047 - __main__ - INFO - 演示被用户中断
