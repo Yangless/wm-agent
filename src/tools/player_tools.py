@@ -22,7 +22,7 @@ class GetPlayerStatusTool(BaseTool):
     输入参数：player_id (玩家ID)
     返回：JSON格式的玩家状态信息"""
     args_schema: type = GetPlayerStatusInput
-    data_manager: DataManager
+    data_manager: DataManager = Field(default_factory=DataManager)
     # def __init__(self, data_manager: DataManager):
     #     super().__init__()
     #     self.data_manager = data_manager

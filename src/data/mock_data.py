@@ -111,6 +111,8 @@ class MockDataGenerator:
             
             if sequence_type == "frustration":
                 action_type = self._get_frustration_action(i, count)
+            elif sequence_type == "satisfaction":
+                action_type = self._get_success_action(i, count)
             elif sequence_type == "success":
                 action_type = self._get_success_action(i, count)
             elif sequence_type == "mixed":
@@ -153,6 +155,16 @@ class MockDataGenerator:
             ActionType.COMPLETE_QUEST, ActionType.PURCHASE, ActionType.UPGRADE_EQUIPMENT
         ]
         return random.choice(success_actions)
+    
+    def _get_satisfaction_action(self, index: int, total: int) -> ActionType:
+        """获取满意序列的行为类型"""
+        # 满意序列：开始正常 -> 连续成功 -> 分享/反馈
+        if index < total * 0.3:
+            return random.choice([ActionType.LOGIN, ActionType.BATTLE_WIN, ActionType.LEVEL_UP])
+        elif index < total * 0.7:
+            return random.choice([ActionType.BATTLE_WIN, ActionType.COMPLETE_QUEST, ActionType.PURCHASE])
+        else:
+            return random.choice([ActionType.SHARE, ActionType.FEEDBACK, ActionType.CHAT_WORLD])
     
     def _get_mixed_action(self, index: int, total: int) -> ActionType:
         """获取混合序列的行为类型"""

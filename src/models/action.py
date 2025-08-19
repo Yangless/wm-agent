@@ -12,6 +12,7 @@ class ActionType(str, Enum):
     DEFEND = "defend"                     # 防守
     BATTLE_WIN = "battle_win"             # 战斗胜利
     BATTLE_LOSE = "battle_lose"           # 战斗失败
+    SKILL_USE = "skill_use"               # 使用技能
     
     # 社交相关
     CHAT_WORLD = "chat_world"             # 世界聊天
@@ -26,11 +27,13 @@ class ActionType(str, Enum):
     OPEN_SHOP = "open_shop"               # 打开商店
     OPEN_INVENTORY = "open_inventory"     # 打开背包
     OPEN_GUIDE = "open_guide"             # 打开攻略
+    GAME_EXIT = "game_exit"               # 退出游戏
     
     # 经济行为
     PURCHASE = "purchase"                 # 购买
     SELL = "sell"                         # 出售
     TRADE = "trade"                       # 交易
+    CARD_DRAW = "card_draw"               # 抽卡
     
     # 进度相关
     LEVEL_UP = "level_up"                 # 升级

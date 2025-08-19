@@ -28,7 +28,7 @@ from src.agent.smart_game_agent import SmartGameAgent
 from src.triggers.trigger_engine import TriggerEngine
 from src.triggers.behavior_analyzer import BehaviorAnalyzer
 from src.scenarios.frustration_scenario import FrustrationScenario
-
+from src.scenarios.satisfion_scenario import SatisfionScenario
 def setup_logging():
     """设置日志"""
     logging.basicConfig(
@@ -50,7 +50,7 @@ def print_banner():
 ╔══════════════════════════════════════════════════════════════╗
 ║                    智能游戏助手演示系统                        ║
 ║                                                              ║
-║  这个演示展示了AI智能体如何识别玩家受挫情况并提供个性化干预    ║
+║  这个演示展示了AI智能体如何识别玩家满意情况并提供个性化干预    ║
 ╚══════════════════════════════════════════════════════════════╝
     """
     print(banner)
@@ -112,14 +112,26 @@ def demo_basic_functionality():
         for action in normal_actions:
             data_manager.add_action(action)
         
-        # 为部分玩家生成异常行为（受挫、失败等）
-        if i < 2:  # 前两个玩家生成异常行为
-            frustration_actions = mock_generator.generate_action_sequence(
-                player.player_id, "frustration", count=5
+        # # 为部分玩家生成异常行为（受挫、失败等）
+        # if i < 2:  # 前两个玩家生成异常行为
+        #     frustration_actions = mock_generator.generate_action_sequence(
+        #         player.player_id, "frustration", count=5
+        #     )
+        #     for action in frustration_actions:
+        #         data_manager.add_action(action)
+        #     print(f"   ✅ 为 {player.username} 生成了 {len(normal_actions)} 个正常行为 + {len(frustration_actions)} 个异常行为")
+        # else:
+        #     print(f"   ✅ 为 {player.username} 生成了 {len(normal_actions)} 个正常行为")
+
+        
+               # 为部分玩家生成异常行为（受挫、失败等）
+        if i < 2:  # 前两个玩家生成满意行为
+            satisfaction_actions = mock_generator.generate_action_sequence(
+                player.player_id, "satisfaction", count=5
             )
-            for action in frustration_actions:
+            for action in satisfaction_actions:
                 data_manager.add_action(action)
-            print(f"   ✅ 为 {player.username} 生成了 {len(normal_actions)} 个正常行为 + {len(frustration_actions)} 个异常行为")
+            print(f"   ✅ 为 {player.username} 生成了 {len(normal_actions)} 个正常行为 + {len(satisfaction_actions)} 个满意行为")
         else:
             print(f"   ✅ 为 {player.username} 生成了 {len(normal_actions)} 个正常行为")
     
@@ -211,36 +223,27 @@ def demo_agent_system(data_manager: DataManager, settings: Settings):
     
     return agent
 
-def demo_frustration_scenario(data_manager: DataManager, settings: Settings, agent):
+def demo_satisfion_scenario(data_manager: DataManager, settings: Settings, agent):
     """演示受挫场景"""
-    print_section("第五部分：受挫场景完整演示")
+    print_section("第五部分：满意场景完整演示")
     
-    # 创建受挫场景
-    print_step("创建受挫场景测试")
-    scenario = FrustrationScenario(data_manager, settings, agent)
-    print(f"✅ 受挫场景初始化完成")
+    # 创建满意场景
+    print_step("创建满意场景测试")
+    scenario = SatisfionScenario(data_manager, settings, agent)
     
-    # 运行快速测试
-    print_step("运行快速测试")
-    quick_result = scenario.run_quick_test()
+    print(f"✅ 满意场景初始化完成")
     
-    if "error" not in quick_result:
-        print(f"✅ 快速测试完成")
-        print(f"   - 测试玩家: {quick_result['player_id']}")
-        print(f"   - 生成行为: {quick_result['actions_generated']} 个")
-        print(f"   - 触发事件: {quick_result['triggers_fired']} 个")
-        print(f"   - 连续失败: {quick_result['consecutive_failures']} 次")
-        print(f"   - 测试成功: {'是' if quick_result['test_success'] else '否'}")
-    else:
-        print(f"❌ 快速测试失败: {quick_result['error']}")
+
     
     # 如果有智能体，运行完整场景
-    if agent and quick_result.get('test_success'):
-        print_step("运行完整受挫场景")
+    if agent :
+        print_step("运行完整满意场景")
         print("⏳ 这可能需要几分钟时间...")
         
         try:
-            full_result = scenario.run_complete_scenario()
+            
+
+            full_result = scenario.run_satisfion_complete_scenario()
             
             if "error" not in full_result:
                 print(f"✅ 完整场景测试完成")
@@ -249,7 +252,7 @@ def demo_frustration_scenario(data_manager: DataManager, settings: Settings, age
                 success_indicators = full_result.get('success_indicators', {})
                 print(f"\n📈 成功指标:")
                 print(f"   - 玩家状态改善: {'是' if success_indicators.get('player_status_improved') else '否'}")
-                print(f"   - 受挫程度降低: {'是' if success_indicators.get('frustration_reduced') else '否'}")
+                print(f"   - 满意程度提高: {'是' if success_indicators.get('satisfaction_increased') else '否'}")
                 print(f"   - 收到干预措施: {'是' if success_indicators.get('received_intervention') else '否'}")
                 print(f"   - 继续游戏: {'是' if success_indicators.get('continued_playing') else '否'}")
                 print(f"   - 整体成功: {'是' if success_indicators.get('overall_success') else '否'}")
@@ -345,8 +348,8 @@ def main():
         # 演示智能体系统
         agent = demo_agent_system(data_manager, settings)
         
-        # 演示受挫场景
-        scenario = demo_frustration_scenario(data_manager, settings, agent)
+        # 演示满意场景
+        scenario = demo_satisfion_scenario(data_manager, settings, agent)
         
         # 演示系统统计
         demo_system_stats(data_manager, analyzer, trigger_engine, agent)
@@ -360,7 +363,7 @@ def main():
         print("   3. ✅ 行为分析和模式识别")
         print("   4. ✅ 触发条件检测")
         print("   5. ✅ 智能体干预决策")
-        print("   6. ✅ 受挫场景完整流程")
+        print("   6. ✅ 满意场景完整流程")
         print("   7. ✅ 系统性能统计")
         
         print("\n💡 提示:")

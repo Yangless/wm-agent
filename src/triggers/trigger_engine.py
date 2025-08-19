@@ -276,6 +276,15 @@ class TriggerEngine:
             elif condition.trigger_type == TriggerType.SOCIAL_ISOLATION:
                 return self._check_social_isolation(player, actions, condition)
             
+            elif condition.trigger_type == TriggerType.EMOTION_INTERVENTION:
+                return self._check_emotion_intervention(player, actions, condition)
+            
+            elif condition.trigger_type == TriggerType.BOT_DETECTION:
+                return self._check_bot_detection(player, actions, condition)
+            
+            elif condition.trigger_type == TriggerType.CHURN_RISK:
+                return self._check_churn_risk(player, actions, condition)
+            
             else:
                 self.logger.warning(f"未知的触发类型: {condition.trigger_type}")
                 return False
@@ -737,6 +746,108 @@ class TriggerEngine:
         else:
             self.trigger_history.clear()
             self.logger.info("清理所有触发历史")
+    
+    def _check_emotion_intervention(self, player: Player, actions: List[PlayerAction], condition: TriggerCondition) -> bool:
+        """检查情绪干预触发条件
+        
+        Args:
+            player: 玩家对象
+            actions: 行为列表
+            condition: 触发条件
+            
+        Returns:
+            bool: 是否需要情绪干预
+        """
+        try:
+            # 检查玩家是否有情绪分析结果
+            if not hasattr(player, 'current_emotions') or not player.current_emotions:
+                return False
+            
+            # 检查是否有足够的负面情绪（至少2个）- 触发安慰干预
+            negative_emotions = [emotion for emotion in player.current_emotions 
+                               if emotion in ['frustration', 'anger', 'disappointment', 'anxiety', 'sadness']]
+            
+            # 检查是否有足够的正面情绪（至少2个）- 触发奖励干预
+            positive_emotions = [emotion for emotion in player.current_emotions 
+                               if emotion in ['excitement', 'satisfaction', 'hope', 'curiosity', 'pride']]
+            
+            # 情绪干预条件：至少2个负面情绪（安慰干预）或至少2个正面情绪（奖励干预）
+            negative_intervention = len(negative_emotions) >= 2
+            positive_intervention = len(positive_emotions) >= 2
+            emotion_intervention_needed = negative_intervention or positive_intervention
+            
+            if emotion_intervention_needed:
+                intervention_type = "奖励" if positive_intervention else "安慰"
+                emotions = positive_emotions if positive_intervention else negative_emotions
+                self.logger.info(f"玩家 {player.player_id} 满足{intervention_type}干预条件: 情绪{emotions}")
+            
+            return emotion_intervention_needed
+            
+        except Exception as e:
+            self.logger.error(f"检查情绪干预条件时出错: {e}")
+            return False
+    
+    def _check_bot_detection(self, player: Player, actions: List[PlayerAction], condition: TriggerCondition) -> bool:
+        """检查机器人检测触发条件
+        
+        Args:
+            player: 玩家对象
+            actions: 行为列表
+            condition: 触发条件
+            
+        Returns:
+            bool: 是否检测到机器人行为
+        """
+        try:
+            # 检查玩家是否有机器人风险评估结果
+            if not hasattr(player, 'bot_risk_level'):
+                return False
+            
+            # 检查机器人风险等级
+            from ..models.player import BotRiskLevel
+            high_risk_levels = [BotRiskLevel.HIGH, BotRiskLevel.CONFIRMED]
+            
+            bot_detected = player.bot_risk_level in high_risk_levels
+            
+            if bot_detected:
+                self.logger.info(f"玩家 {player.player_id} 检测到机器人行为: 风险等级={player.bot_risk_level.value}")
+            
+            return bot_detected
+            
+        except Exception as e:
+            self.logger.error(f"检查机器人检测条件时出错: {e}")
+            return False
+    
+    def _check_churn_risk(self, player: Player, actions: List[PlayerAction], condition: TriggerCondition) -> bool:
+        """检查流失风险触发条件
+        
+        Args:
+            player: 玩家对象
+            actions: 行为列表
+            condition: 触发条件
+            
+        Returns:
+            bool: 是否有流失风险
+        """
+        try:
+            # 检查玩家是否有流失风险评估结果
+            if not hasattr(player, 'churn_risk_level'):
+                return False
+            
+            # 检查流失风险等级
+            from ..models.player import ChurnRiskLevel
+            high_risk_levels = [ChurnRiskLevel.HIGH, ChurnRiskLevel.CRITICAL]
+            
+            churn_risk_detected = player.churn_risk_level in high_risk_levels
+            
+            if churn_risk_detected:
+                self.logger.info(f"玩家 {player.player_id} 检测到流失风险: 风险等级={player.churn_risk_level.value}")
+            
+            return churn_risk_detected
+            
+        except Exception as e:
+            self.logger.error(f"检查流失风险条件时出错: {e}")
+            return False
     
     def __enter__(self):
         """上下文管理器入口"""

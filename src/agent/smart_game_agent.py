@@ -9,16 +9,20 @@ import logging
 from datetime import datetime
 import traceback
 
-from ..tools import (
+from src.tools import (
     GetPlayerStatusTool,
     GetPlayerActionHistoryTool,
     SendInGameMailTool,
     GenerateSoothingMessageTool,
     AnalyzePlayerBehaviorTool
 )
-from ..data.data_manager import DataManager
+from src.tools.emotion_analysis_tool import EmotionAnalysisTool
+from src.tools.bot_detection_tool import BotDetectionTool
+from src.tools.churn_risk_analysis_tool import ChurnRiskAnalysisTool
+from src.llm.llm_client import LLMClient
+from src.data.data_manager import DataManager
 from .memory_manager import MemoryManager
-from ..config.settings import Settings
+from src.config.settings import Settings
 import traceback
 
 
@@ -73,17 +77,34 @@ class SmartGameAgent:
                 self.logger.warning(f"无法初始化LLM ({self.settings.model_provider}): {e}，将使用模拟模式")
                 self.llm = None
         
+        # 初始化LLM客户端
+        self.llm_client = None
+        if self.llm:
+            try:
+                self.llm_client = LLMClient(
+                    model_name=self.settings.model_name if self.settings.model_provider == "volces" else self.settings.openai_model,
+                    api_key=self.settings.model_api_key if self.settings.model_provider == "volces" else self.settings.openai_api_key,
+                    base_url=self.settings.model_base_url if self.settings.model_provider == "volces" else None,
+                    timeout=self.settings.model_timeout,
+                    max_retries=self.settings.model_retry_count,
+                    provider=self.settings.model_provider
+                )
+                self.logger.info("LLM客户端初始化完成")
+            except Exception as e:
+                self.logger.warning(f"LLM客户端初始化失败: {e}")
+                self.llm_client = None
+        
         # 初始化记忆管理器
         self.memory_manager = MemoryManager(
             memory_window_size=self.settings.agent_memory_window
         )
         
         # 初始化工具
-        # print("初始化工具")
+        print("初始化工具")
         self.tools = self._initialize_tools()
         
         # 初始化Agent
-        # print("初始化Agent")
+        print("初始化Agent")
         self.agent_executor = self._create_agent_executor()
         
         # 统计信息
@@ -112,6 +133,36 @@ class SmartGameAgent:
             soothing_tool,
             AnalyzePlayerBehaviorTool(data_manager=self.data_manager)
         ]
+        
+        # 添加新的分析工具（如果LLM客户端可用）
+        if self.llm_client:
+            try:
+                # 情绪分析工具
+                emotion_tool = EmotionAnalysisTool(
+                    llm_client=self.llm_client,
+                    player_manager=getattr(self.data_manager, 'player_manager', None)
+                )
+                tools.append(emotion_tool)
+                
+                # 机器人检测工具
+                bot_detection_tool = BotDetectionTool(
+                    llm_client=self.llm_client,
+                    player_manager=getattr(self.data_manager, 'player_manager', None)
+                )
+                tools.append(bot_detection_tool)
+                
+                # 流失风险分析工具
+                churn_analysis_tool = ChurnRiskAnalysisTool(
+                    llm_client=self.llm_client,
+                    player_manager=getattr(self.data_manager, 'player_manager', None)
+                )
+                tools.append(churn_analysis_tool)
+                
+                self.logger.info("成功添加新的分析工具")
+            except Exception as e:
+                self.logger.warning(f"添加新分析工具失败: {e}")
+        else:
+            self.logger.warning("LLM客户端不可用，跳过新分析工具的初始化")
         
         self.logger.info(f"初始化了 {len(tools)} 个工具")
         return tools
@@ -170,7 +221,7 @@ Thought: {agent_scratchpad}
         try:
             # 创建ReAct Agent
             tool_names = [tool.__class__.__name__ for tool in self.tools]
-            print("tool_names:", tool_names)
+            # 框架会自动将 "generate_soothing_message, send_reward_tool" 这个字符串填充到提示词中 {tool_names} 的位置。
             agent = create_react_agent(
                 llm=self.llm,
                 tools=self.tools,
@@ -214,9 +265,15 @@ Thought: {agent_scratchpad}
         self.logger.info(f"开始处理玩家 {player_id} 的触发事件")
         import traceback
         try:
-            # 构建输入问题
-            input_question = self._build_input_question(player_id, trigger_context)
-            
+            # 执行新的分析流程
+            analysis_results = self._perform_comprehensive_analysis(player_id, trigger_context)
+            print("analysis_results:", analysis_results)
+            # 检查是否需要基于情绪的干预
+            emotion_intervention_needed = self._check_emotion_intervention_needed(player_id, analysis_results)
+            print("emotion_intervention_needed:", emotion_intervention_needed)
+            # 构建输入问题（包含分析结果）
+            input_question = self._build_input_question(player_id, trigger_context, analysis_results)
+            print("input_question:", input_question)
             # 获取玩家记忆
             memory = self.memory_manager.get_player_memory(player_id)
             print("memory:", memory)
@@ -224,10 +281,18 @@ Thought: {agent_scratchpad}
             if self.agent_executor:
                 # 使用LLM Agent处理
                 print("input_question:", input_question)
-                result = self._process_with_llm_agent(input_question, memory)
+                result = self._process_with_llm_agent(player_id, input_question, memory)
+                
+                # 如果需要情绪干预，添加特殊处理
+                if emotion_intervention_needed:
+                    result = self._enhance_result_with_emotion_intervention(result, analysis_results)
             else:
                 # 使用规则引擎处理
                 result = self._process_with_rule_engine(player_id, trigger_context)
+                
+                # 规则引擎也支持情绪干预
+                if emotion_intervention_needed:
+                    result = self._add_emotion_intervention_to_rule_result(result, analysis_results)
             
             # 记录交互
             self.memory_manager.add_interaction(
@@ -260,7 +325,7 @@ Thought: {agent_scratchpad}
                 "timestamp": datetime.now().isoformat()
             }
     
-    def _build_input_question(self, player_id: str, trigger_context: Dict[str, Any]) -> str:
+    def _build_input_question(self, player_id: str, trigger_context: Dict[str, Any], analysis_results: Dict[str, Any] = None) -> str:
         """构建输入问题
         
         Args:
@@ -272,8 +337,13 @@ Thought: {agent_scratchpad}
         """
         question = f"玩家 {player_id} 触发了干预条件。\n\n"
         question += "触发信息：\n"
+
+        if analysis_results:
+            question += "\n预分析结果：\n"
+            # 将 analysis_results 格式化为 JSON 字符串，喂给 LLM
+            question += json.dumps(analysis_results, ensure_ascii=False, indent=2)
         # 打印trigger_context    打印trigger_context的类型
-        import json
+        
 
         # 只迭代所需的字段
         required_keys = [
@@ -286,7 +356,8 @@ Thought: {agent_scratchpad}
         ]
 
         # 遍历 trigger_context 的属性
-        for key, value in vars(trigger_context).items():
+        # for key, value in vars(trigger_context).items():
+        for key, value in trigger_context.items():
         # 如果是我们需要的字段
             if key == "player_id":
                 question += f"- 玩家ID: {value}\n"
@@ -316,7 +387,7 @@ Thought: {agent_scratchpad}
         
         return question
 
-    def _process_with_llm_agent(self, input_question: str, memory) -> Dict[str, Any]:
+    def _process_with_llm_agent(self,player_id,input_question: str, memory) -> Dict[str, Any]:
         """使用LLM Agent处理
         
         Args:
@@ -327,11 +398,22 @@ Thought: {agent_scratchpad}
             Dict[str, Any]: 处理结果
         """
         try:
-            # 执行Agent
+            # 获取玩家状态
+            player = self.data_manager.get_player(player_id)
+
+            print("player_process_with_llm_agent:", player)
+            if not player:
+                return {
+                    "success": False,
+                    "error": "玩家不存在",
+                    "method": "rule_engine"
+                }
+       
             response = self.agent_executor.invoke({
-                "input": input_question,
-                "chat_history": memory.chat_memory.messages
+                "input": input_question
+                
             })
+
             
             return {
                 "success": True,
@@ -519,6 +601,295 @@ Thought: {agent_scratchpad}
             max_age_hours: 最大保留时间（小时）
         """
         self.memory_manager.cleanup_old_memories(max_age_hours)
+    
+    def process_player_action(self, player, action) -> Dict[str, Any]:
+        """处理玩家动作并触发分析
+        
+        Args:
+            player: 玩家对象
+            action: PlayerAction对象
+            
+        Returns:
+            Dict[str, Any]: 处理结果
+        """
+        try:
+            self.data_manager.add_action(action)
+
+            # 构建触发上下文
+            trigger_context = {
+                "event_id": f"action_{action.action_id}",
+                "triggered_at": action.timestamp.isoformat(),
+                "triggering_actions": [action],
+                "action_type": action.action_type.value,
+                "player_action": action
+            }
+            
+            # 调用现有的触发事件处理逻辑
+            result = self.process_trigger_event(player.player_id, trigger_context)
+            
+            # 添加动作相关信息到结果中
+            result["action_processed"] = {
+                "action_id": action.action_id,
+                "action_type": action.action_type.value,
+                "timestamp": action.timestamp.isoformat()
+            }
+            
+            return result
+            
+        except Exception as e:
+            self.logger.error(f"处理玩家动作时出错: {e}")
+            return {
+                "success": False,
+                "error": str(e),
+                "action_id": action.action_id,
+                "timestamp": datetime.now().isoformat()
+            }
+    
+    def _perform_comprehensive_analysis(self, player_id: str, trigger_context: Dict[str, Any]) -> Dict[str, Any]:
+        """执行综合分析
+        
+        Args:
+            player_id: 玩家ID
+            trigger_context: 触发上下文
+            
+        Returns:
+            Dict[str, Any]: 分析结果
+        """
+        analysis_results = {
+            "emotion_analysis": None,
+            "bot_detection": None,
+            "churn_risk_analysis": None,
+            "analysis_timestamp": datetime.now().isoformat()
+        }
+        
+        if not self.llm_client:
+            self.logger.warning("LLM客户端不可用，跳过综合分析")
+            return analysis_results
+        
+        try:
+            # 获取玩家信息
+            player = self.data_manager.get_player(player_id)
+            if not player:
+                self.logger.warning(f"未找到玩家 {player_id}")
+                return analysis_results
+            
+            # 构建行为数据
+            print("构建行为数据")
+            behavior_data = self._extract_behavior_data(player, trigger_context)
+            print("行为数据:", behavior_data)
+            # 1. 情绪分析（优先级最高）
+            try:
+                emotion_tool = EmotionAnalysisTool(
+                    llm_client=self.llm_client,
+                    player_manager=getattr(self.data_manager, 'player_manager', None)
+                )
+                emotion_result = emotion_tool._run(
+                    player_id=player_id,
+                    behavior_data=behavior_data,
+                    analysis_depth="standard"
+                )
+                analysis_results["emotion_analysis"] = json.loads(emotion_result)
+                self.logger.info(f"完成玩家 {player_id} 的情绪分析")
+            except Exception as e:
+                traceback.print_exc()
+                self.logger.error(f"情绪分析失败: {e}")
+            
+            # 2. 机器人检测（如果不是明显的人类玩家）
+            try:
+                bot_tool = BotDetectionTool(
+                    llm_client=self.llm_client,
+                    player_manager=getattr(self.data_manager, 'player_manager', None)
+                )
+                bot_result = bot_tool._run(
+                    player_id=player_id,
+                    behavior_data=behavior_data,
+                    time_window_hours=24
+                )
+                analysis_results["bot_detection"] = json.loads(bot_result)
+                self.logger.info(f"完成玩家 {player_id} 的机器人检测")
+            except Exception as e:
+                traceback.print_exc()
+                self.logger.error(f"机器人检测失败: {e}")
+            
+            # 3. 流失风险分析
+            try:
+                churn_tool = ChurnRiskAnalysisTool(
+                    llm_client=self.llm_client,
+                    player_manager=getattr(self.data_manager, 'player_manager', None)
+                )
+                churn_result = churn_tool._run(
+                    player_id=player_id,
+                    behavior_data=behavior_data,
+                    time_window_days=30
+                )
+                analysis_results["churn_risk_analysis"] = json.loads(churn_result)
+                self.logger.info(f"完成玩家 {player_id} 的流失风险分析")
+            except Exception as e:
+                traceback.print_exc()
+                self.logger.error(f"流失风险分析失败: {e}")
+            
+        except Exception as e:
+            traceback.print_exc()
+            self.logger.error(f"综合分析过程中出错: {e}")
+        
+        return analysis_results
+    
+    def _extract_behavior_data(self, player, trigger_context: Dict[str, Any]) -> Dict[str, Any]:
+        """提取行为数据
+        
+        Args:
+            player: 玩家对象
+            trigger_context: 触发上下文
+            
+        Returns:
+            Dict[str, Any]: 行为数据
+        """
+        behavior_data = {
+            "player_basic_info": {
+                "player_id": player.player_id,
+                "username": player.username,
+                "vip_level": player.vip_level,
+                "total_playtime_hours": player.total_playtime_hours,
+                "last_login": player.last_login.isoformat() if player.last_login else None,
+                "total_spent": player.total_spent,
+                "current_status": player.current_status.value,
+                "frustration_level": player.frustration_level,
+                "consecutive_failures": player.consecutive_failures
+            },
+            "trigger_info": {
+                "event_id": getattr(trigger_context, 'event_id', None),
+                "trigger_condition": getattr(trigger_context, 'trigger_condition', {}).name if hasattr(getattr(trigger_context, 'trigger_condition', {}), 'name') else None,
+                "triggered_at": getattr(trigger_context, 'triggered_at', None),
+                "triggering_actions": getattr(trigger_context, 'triggering_actions', [])
+            },
+            "recent_activity": {
+                "login_frequency": "daily",  # 这里可以从实际数据中获取
+                "session_duration": "2-3 hours",
+                "task_completion_rate": 0.75,
+                "social_interactions": 5,
+                "purchase_behavior": "occasional"
+            }
+        }
+        
+        return behavior_data
+    
+    def _check_emotion_intervention_needed(self, player_id: str, analysis_results: Dict[str, Any]) -> bool:
+        """检查是否需要基于情绪的干预
+        
+        Args:
+            player_id: 玩家ID
+            analysis_results: 分析结果
+            
+        Returns:
+            bool: 是否需要干预
+        """
+        try:
+            emotion_analysis = analysis_results.get("emotion_analysis")
+            if not emotion_analysis or not emotion_analysis.get("success"):
+                return False
+            
+            # 检查是否有显著的正面情绪（奖励干预）
+            dominant_positive = emotion_analysis.get("dominant_positive_emotions", [])
+            positive_intervention = len(dominant_positive) >= 2  # 两个正面情绪触发奖励
+            
+            # 检查是否有显著的负面情绪（安慰干预）
+            dominant_negative = emotion_analysis.get("dominant_negative_emotions", [])
+            negative_intervention = len(dominant_negative) >= 2  # 两个负面情绪触发安慰
+            
+            intervention_needed = positive_intervention or negative_intervention
+            
+            if intervention_needed:
+                intervention_type = "奖励" if positive_intervention else "安慰"
+                emotions = dominant_positive if positive_intervention else dominant_negative
+                self.logger.info(f"玩家 {player_id} 需要{intervention_type}干预: 情绪{emotions}")
+            
+            return intervention_needed
+            
+        except Exception as e:
+            self.logger.error(f"检查情绪干预需求时出错: {e}")
+            return False
+    
+    def _enhance_result_with_emotion_intervention(self, result: Dict[str, Any], analysis_results: Dict[str, Any]) -> Dict[str, Any]:
+        """增强结果，添加情绪干预
+        
+        Args:
+            result: 原始结果
+            analysis_results: 分析结果
+            
+        Returns:
+            Dict[str, Any]: 增强后的结果
+        """
+        try:
+            emotion_analysis = analysis_results.get("emotion_analysis", {})
+            intervention_type = emotion_analysis.get("intervention_type", "none")
+            
+            # 添加情绪干预标记
+            result["emotion_intervention_applied"] = True
+            result["emotion_analysis_summary"] = {
+                "dominant_negative_emotions": emotion_analysis.get("dominant_negative_emotions", []),
+                "dominant_positive_emotions": emotion_analysis.get("dominant_positive_emotions", []),
+                "intervention_type": intervention_type,
+                "intervention_suggestions": emotion_analysis.get("intervention_suggestions", [])
+            }
+            
+            # 根据干预类型增强最终答案
+            original_answer = result.get("final_answer", "")
+            if intervention_type == "reward":
+                emotion_enhancement = "\n\n【奖励干预】恭喜您！我们检测到您当前的积极情绪状态，特别为您准备了额外的奖励和惊喜！"
+            elif intervention_type == "comfort":
+                emotion_enhancement = "\n\n【安慰干预】我们理解您当前可能遇到的困难，已经为您准备了特别的支持和帮助。请不要气馁！"
+            else:
+                emotion_enhancement = "\n\n【情绪干预】基于情绪分析，我们为您准备了个性化的支持。"
+            
+            result["final_answer"] = original_answer + emotion_enhancement
+            
+            return result
+            
+        except Exception as e:
+            self.logger.error(f"增强情绪干预结果时出错: {e}")
+            return result
+    
+    def _add_emotion_intervention_to_rule_result(self, result: Dict[str, Any], analysis_results: Dict[str, Any]) -> Dict[str, Any]:
+        """为规则引擎结果添加情绪干预
+        
+        Args:
+            result: 规则引擎结果
+            analysis_results: 分析结果
+            
+        Returns:
+            Dict[str, Any]: 增强后的结果
+        """
+        try:
+            emotion_analysis = analysis_results.get("emotion_analysis", {})
+            intervention_type = emotion_analysis.get("intervention_type", "none")
+            
+            # 添加情绪干预信息
+            result["emotion_intervention_applied"] = True
+            result["emotion_context"] = {
+                "negative_emotions": emotion_analysis.get("dominant_negative_emotions", []),
+                "positive_emotions": emotion_analysis.get("dominant_positive_emotions", []),
+                "intervention_type": intervention_type,
+                "intervention_reason": f"检测到{intervention_type}干预需求"
+            }
+            
+            # 增强干预计划
+            if "intervention_plan" in result:
+                plan = result["intervention_plan"]
+                if intervention_type == "reward":
+                    plan["message_content"] += "\n\n恭喜您的出色表现！我们为您准备了特别的奖励。"
+                    plan["rewards"].append("celebration_reward_package:1")
+                elif intervention_type == "comfort":
+                    plan["message_content"] += "\n\n我们理解您的困难，特别为您准备了额外的关怀和支持。"
+                    plan["rewards"].append("comfort_support_package:1")
+                else:
+                    plan["message_content"] += "\n\n我们注意到您当前的情绪状态，特别为您准备了个性化支持。"
+                    plan["rewards"].append("emotion_support_package:1")
+            
+            return result
+            
+        except Exception as e:
+            self.logger.error(f"为规则引擎结果添加情绪干预时出错: {e}")
+            return result
         self.logger.info(f"清理了超过 {max_age_hours} 小时的旧数据")
     
     def export_session_data(self) -> Dict[str, Any]:

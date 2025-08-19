@@ -11,6 +11,11 @@ class TriggerType(str, Enum):
     HELP_SEEKING = "help_seeking"                  # 寻求帮助
     HIGH_VALUE_RISK = "high_value_risk"            # 高价值玩家风险
     SOCIAL_ISOLATION = "social_isolation"          # 社交孤立
+    
+    # 新增的触发类型
+    EMOTION_INTERVENTION = "emotion_intervention"   # 情绪干预（两个负面+一个正面）
+    BOT_DETECTION = "bot_detection"                # 机器人检测
+    CHURN_RISK = "churn_risk"                      # 流失风险
 
 class TriggerCondition(BaseModel):
     """触发条件配置"""
@@ -170,5 +175,36 @@ DEFAULT_TRIGGERS = [
         time_window_minutes=3,
         required_action_types=[ActionType.BATTLE_LOSE, ActionType.OPEN_GUIDE],
         priority=6
+    ),
+    
+    # 新增的触发条件
+    TriggerCondition(
+        trigger_type=TriggerType.EMOTION_INTERVENTION,
+        name="情绪干预触发",
+        description="检测到玩家有两个负面情绪和一个正面情绪的组合",
+        min_failures=0,  # 不依赖失败次数
+        time_window_minutes=60,  # 1小时内的行为
+        priority=9,  # 高优先级
+        cooldown_hours=2  # 2小时冷却
+    ),
+    
+    TriggerCondition(
+        trigger_type=TriggerType.BOT_DETECTION,
+        name="机器人检测触发",
+        description="检测到疑似机器人行为模式",
+        min_failures=0,
+        time_window_minutes=120,  # 2小时内的行为
+        priority=7,
+        cooldown_hours=6  # 6小时冷却
+    ),
+    
+    TriggerCondition(
+        trigger_type=TriggerType.CHURN_RISK,
+        name="流失风险触发",
+        description="检测到玩家有流失风险",
+        min_failures=0,
+        time_window_minutes=1440,  # 24小时内的行为
+        priority=8,
+        cooldown_hours=12  # 12小时冷却
     )
 ]

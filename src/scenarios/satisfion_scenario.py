@@ -14,7 +14,7 @@ from ..triggers.behavior_analyzer import BehaviorAnalyzer
 from ..agent.smart_game_agent import SmartGameAgent
 from ..config.settings import Settings
 
-class FrustrationScenario:
+class SatisfionScenario:
     """受挫场景测试
     
     模拟玩家因连续失败导致受挫的完整场景，并测试智能体的干预效果
@@ -24,7 +24,7 @@ class FrustrationScenario:
                  data_manager: DataManager,
                  settings: Settings,
                  agent: Optional[SmartGameAgent] = None):
-        """初始化受挫场景
+        """初始化满意场景
         
         Args:
             data_manager: 数据管理器
@@ -52,29 +52,29 @@ class FrustrationScenario:
             "player_name": "张三",
             "initial_level": 25,
             "initial_vip": 5,
-            "failure_count": 3,
+            "failure_count": 0,
             "scenario_duration_minutes": 30,
             "intervention_delay_seconds": 5
         }
         
-        self.logger.info("受挫场景初始化完成")
+        self.logger.info("满意场景初始化完成")
     
-    def run_frustraion_complete_scenario(self) -> Dict[str, Any]:
-        """运行完整的受挫场景
+    def run_satisfion_complete_scenario(self) -> Dict[str, Any]:
+        """运行完整的满意场景
         
         Returns:
             Dict[str, Any]: 场景运行结果
         """
-        self.logger.info("开始运行受挫场景")
+        self.logger.info("开始运行满意场景")
         
         try:
             # 第一幕：设置场景
             self.logger.info("=== 第一幕：场景设置 ===")
             self._setup_scenario()
             
-            # 第二幕：触发受挫
-            self.logger.info("=== 第二幕：触发受挫 ===")
-            self._trigger_frustration()
+            # 第二幕：触发满意
+            self.logger.info("=== 第二幕：触发满意 ===")
+            self._trigger_satisfion()
             
             # 第三幕：智能体干预
             self.logger.info("=== 第三幕：智能体干预 ===")
@@ -84,18 +84,18 @@ class FrustrationScenario:
             self.logger.info("=== 第四幕：效果评估 ===")
             results = self._evaluate_results()
             
-            self.logger.info("受挫场景运行完成")
+            self.logger.info("满意场景运行完成")
             return results
             
         except Exception as e:
-            self.logger.error(f"运行受挫场景时出错: {e}", exc_info=True)
+            self.logger.error(f"运行满意场景时出错: {e}", exc_info=True)
             return {"error": str(e)}
     
     def _setup_scenario(self):
         """设置场景"""
         # 创建测试玩家
         self.scenario_player = self.mock_generator.generate_player(
-            player_id="test_player_001",
+            player_id="test_player_002",
             username=self.scenario_config["player_name"],
             player_type="high_value"
         )
@@ -118,19 +118,19 @@ class FrustrationScenario:
             f"等级={self.scenario_player.level}, VIP={self.scenario_player.vip_level}"
         )
     
-    def _trigger_frustration(self):
-        """触发受挫情况"""
-        self.logger.info("开始触发受挫情况...")
+    def _trigger_satisfion(self):
+        """触发满意情况"""
+        self.logger.info("开始触发满意情况...")
         
         # 生成连续失败序列
-        frustration_actions = self.mock_generator.generate_action_sequence(
+        satisfion_actions = self.mock_generator.generate_action_sequence(
             self.scenario_player.player_id,
-            "frustration",
+            "satisfion",
             count=self.scenario_config["failure_count"]
         )
         
         # 逐个添加行为，模拟实时发生
-        for i, action in enumerate(frustration_actions):
+        for i, action in enumerate(satisfion_actions):
             self.data_manager.add_action(action)
             self.scenario_actions.append(action)
             
@@ -142,7 +142,7 @@ class FrustrationScenario:
             self.data_manager.update_player(self.scenario_player)
             
             self.logger.info(
-                f"行为 {i+1}/{len(frustration_actions)}: {action.action_type.value} - "
+                f"行为 {i+1}/{len(satisfion_actions)}: {action.action_type.value} - "
                 f"{'失败' if action.is_failure() else '成功'}"
             )
             
@@ -154,7 +154,7 @@ class FrustrationScenario:
         self.triggered_events.extend(triggered_events)
         
         self.logger.info(
-            f"受挫触发完成: 连续失败={self.scenario_player.consecutive_failures}, "
+            f"满意触发完成: 连续成功={self.scenario_player.consecutive_satisfions}, "
             f"触发事件数={len(triggered_events)}"
         )
     
