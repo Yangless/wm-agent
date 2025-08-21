@@ -7,9 +7,7 @@ class Settings(BaseSettings):
     
     # 模型配置
     model_provider: str = "volces"  # 模型提供商类型
-    model_base_url: str = "https://ark.cn-beijing.volces.com/api/v3"
-    model_name: str = "ep-20250721140404-4bf2t"
-    model_api_key: str = "8d8f08ce-ee01-4bcc-9142-ce10e05cf0c5"
+
     model_retry_count: int = 3
     model_retry_delay: int = 1
     model_timeout: int = 30
