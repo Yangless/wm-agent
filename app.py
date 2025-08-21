@@ -23,7 +23,7 @@ st.set_page_config(
     page_title="智能游戏Agent可视化界面",
     page_icon="🎮",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="collapsed"  # 折叠侧边栏，因为我们将使用三栏布局
 )
 
 # 初始化session state
@@ -32,8 +32,7 @@ if 'player' not in st.session_state:
         player_id="player_001",
         username="起个名字真难",
         registration_date=datetime.now(),
-
-
+        vip_level=3,
         level=15,
         experience=2500,
         coins=1000,
@@ -57,143 +56,191 @@ def main():
     st.title("🎮 智能游戏Agent可视化界面")
     st.markdown("---")
     
-    # 侧边栏 - 玩家信息
-    with st.sidebar:
-        st.header("👤 玩家信息")
+    # 创建三栏布局
+    col1, col2, col3 = st.columns(3)
+    
+    # 第一栏：玩家状态与动作日志
+    with col1:
+        st.header("👤 玩家信息与近期动作")
+        
         player = st.session_state.player
-
-        # 使用 st.write 和 Markdown 语法
+        
+        # 玩家核心信息
+        st.subheader("📋 核心信息")
         st.write(f"**玩家ID:** {player.player_id}")
         st.write(f"**用户名:** {player.username}")
         st.write(f"**等级:** {player.level}")
         st.write(f"**VIP等级:** {player.vip_level}")
+        st.write(f"**总游戏时长:** {player.total_playtime_hours:.1f} 小时")
         
         formatted_date = player.registration_date.strftime("%Y-%m-%d")
-        st.write(f"**注册时间:** {formatted_date}")
-
-
-
+        st.write(f"**注册日期:** {formatted_date}")
         
         st.markdown("---")
-        st.header("📊 当前状态")
-
-        # --- 显示当前情绪状态 (已优化) ---
-        st.subheader("😊 当前情绪")
-
-        # 检查属性是否存在且列表不为空
+        
+        # 玩家情绪状态
+        st.subheader("😊 情绪状态")
+        
+        # 当前情绪
         if hasattr(player, 'current_emotions') and player.current_emotions:
-            # 遍历并显示每个情绪的 .value
+            st.write("**当前情绪:**")
             for emotion in player.current_emotions:
-                st.write(f"• {emotion.value.capitalize()}") # 使用 .capitalize() 让首字母大写，更美观
+                st.write(f"• {emotion.value.capitalize()}")
         else:
-            # 如果列表为空，显示提示信息
-            st.info("未知 (暂无情绪分析数据)")
-
-        # --- 显示风险等级 (关键修改) ---
-        st.subheader("⚠️ 风险评估")
-
-        # --- 机器人风险等级 (使用 Markdown) ---
-        if hasattr(player, 'bot_risk_level') and player.bot_risk_level:
-            risk_level_value = player.bot_risk_level.value.upper() # 获取值并转为大写
-            
-            # 根据风险等级设置颜色
-            if risk_level_value == "HIGH":
-                color = "red"
-            elif risk_level_value == "MEDIUM":
-                color = "orange"
+            st.info("暂无情绪分析数据")
+        
+        # 情绪历史记录（使用expander节约空间）
+        with st.expander("📈 情绪历史记录"):
+            if hasattr(player, 'emotion_history') and player.emotion_history:
+                for i, emotion_record in enumerate(reversed(player.emotion_history[-5:])):
+                    st.write(f"**{i+1}.** {emotion_record}")
             else:
-                color = "green"
-                
-            # 使用 Markdown 和 HTML/CSS 来显示带颜色的文本
-            st.markdown(f'🤖 **机器人风险等级:** <span style="color:{color}; font-weight:bold;">{risk_level_value}</span>', unsafe_allow_html=True)
+                st.info("暂无情绪历史记录")
+        
+        # 风险评估
+        st.subheader("⚠️ 风险评估")
+        
+        # 机器人风险等级
+        if hasattr(player, 'bot_risk_level') and player.bot_risk_level:
+            risk_level_value = player.bot_risk_level.value.upper()
+            color = "red" if risk_level_value == "HIGH" else "orange" if risk_level_value == "MEDIUM" else "green"
+            st.markdown(f'🤖 **机器人风险:** <span style="color:{color}; font-weight:bold;">{risk_level_value}</span>', unsafe_allow_html=True)
         else:
-            st.markdown('🤖 **机器人风险等级:** 未知')
-
-        # --- 流失风险等级 (使用 Markdown) ---
+            st.markdown('🤖 **机器人风险:** 未知')
+        
+        # 流失风险等级
         if hasattr(player, 'churn_risk_level') and player.churn_risk_level:
             churn_level_value = player.churn_risk_level.value.upper()
-            
-            if churn_level_value in ["HIGH", "CRITICAL"]:
-                color = "red"
-            elif churn_level_value == "MEDIUM":
-                color = "orange"
-            else:
-                color = "green"
-                
-            st.markdown(f'📉 **流失风险等级:** <span style="color:{color}; font-weight:bold;">{churn_level_value}</span>', unsafe_allow_html=True)
+            color = "red" if churn_level_value in ["HIGH", "CRITICAL"] else "orange" if churn_level_value == "MEDIUM" else "green"
+            st.markdown(f'📉 **流失风险:** <span style="color:{color}; font-weight:bold;">{churn_level_value}</span>', unsafe_allow_html=True)
         else:
-            st.markdown('📉 **流失风险等级:** 未知')
+            st.markdown('📉 **流失风险:** 未知')
+        
+        st.markdown("---")
+        
+        # 近期动作日志
+        st.subheader("🎯 近期动作日志")
+        
+        if st.session_state.action_history:
+            st.write("**最近5条动作:**")
+            for i, action_data in enumerate(reversed(st.session_state.action_history[-5:])):
+                timestamp = action_data['timestamp']
+                action_type = action_data['action_type']
+                details = action_data.get('details', '')
+                st.write(f"**{i+1}.** `{timestamp}` - {action_type}")
+                if details:
+                    st.write(f"   └─ {details}")
+        else:
+            st.info("暂无动作历史")
     
-    # 主界面布局
-    col1, col2 = st.columns([2, 1])
+    # 第二栏：Agent分析过程与结果
+    with col2:
+        st.header("🤖 Agent 决策过程")
+        
+        # 显示最新的分析结果
+        if st.session_state.intervention_history:
+            latest_intervention = st.session_state.intervention_history[-1]
+            
+            # 核心分析结论
+            st.subheader("📊 核心分析结论")
+            
+            # 从最新干预结果中提取关键信息
+            intervention_needed = latest_intervention.get('intervention_applied', False)
+            
+            # 显示是否干预
+            if intervention_needed:
+                st.markdown("**🚨 是否干预:** <span style='color:red; font-weight:bold;'>是</span>", unsafe_allow_html=True)
+            else:
+                st.markdown("**✅ 是否干预:** <span style='color:green; font-weight:bold;'>否</span>", unsafe_allow_html=True)
+            
+            # 尝试从结果中提取干预原因和背景
+            if 'reason' in latest_intervention:
+                st.write(f"**干预原因:** {latest_intervention['reason']}")
+            
+            if 'context' in latest_intervention:
+                st.write(f"**干预背景:** {latest_intervention['context']}")
+            
+            # 显示玩家情绪总结（如果有的话）
+            if 'player_mood' in latest_intervention:
+                st.write(f"**玩家情绪总结:** {latest_intervention['player_mood']}")
+            
+            st.markdown("---")
+            
+            # Agent思考链
+            st.subheader("🧠 Agent 思考链")
+            
+            # 检查是否有intermediate_steps
+            if 'intermediate_steps' in latest_intervention and latest_intervention['intermediate_steps']:
+                for i, step in enumerate(latest_intervention['intermediate_steps']):
+                    st.markdown(f"**步骤 {i+1}:**")
+                    
+                    # 如果step是元组格式 (action, observation)
+                    if isinstance(step, tuple) and len(step) == 2:
+                        action, observation = step
+                        st.markdown(f"**思考:** {getattr(action, 'log', '正在分析...')}")
+                        st.markdown(f"**工具调用:** {getattr(action, 'tool', '未知工具')}")
+                        st.markdown(f"**观察:** {observation}")
+                    else:
+                        # 如果是其他格式，直接显示
+                        st.markdown(f"**内容:** {step}")
+                    
+                    st.markdown("---")
+            else:
+                st.info("暂无详细的思考过程记录")
+            
+            st.markdown("---")
+            
+            # 完整的返回结果
+            with st.expander("🔍 查看完整JSON结果"):
+                st.json(latest_intervention)
+                
+        else:
+            st.info("暂无分析结果，请在第三栏生成一些动作来触发Agent分析")
     
-    with col1:
-        st.header("🎯 动作生成器")
+    # 第三栏：动作生成器
+    with col3:
+        st.header("🎮 动作生成器")
         
         # 动作生成按钮区域
         st.subheader("选择要生成的动作类型：")
         
         # 战斗相关动作
         st.markdown("**⚔️ 战斗动作**")
-        battle_col1, battle_col2, battle_col3 = st.columns(3)
         
-        with battle_col1:
-            if st.button("🏆 战斗胜利", use_container_width=True):
-                generate_action(ActionType.BATTLE_WIN)
+        if st.button("🏆 战斗胜利", use_container_width=True):
+            generate_action(ActionType.BATTLE_WIN)
         
-        with battle_col2:
-            if st.button("💀 战斗失败", use_container_width=True):
-                generate_action(ActionType.BATTLE_LOSE)
+        if st.button("💀 战斗失败", use_container_width=True):
+            generate_action(ActionType.BATTLE_LOSE)
         
-        with battle_col3:
-            if st.button("⚡ 技能使用", use_container_width=True):
-                generate_action(ActionType.SKILL_USE)
+        if st.button("⚡ 技能使用", use_container_width=True):
+            generate_action(ActionType.SKILL_USE)
         
         # 抽卡相关动作
         st.markdown("**🎴 抽卡动作**")
-        card_col1, card_col2, card_col3 = st.columns(3)
         
-        with card_col1:
-            if st.button("✨ 抽到稀有卡", use_container_width=True):
-                generate_action(ActionType.CARD_DRAW, {"rarity": "legendary"})
+        if st.button("✨ 抽到稀有卡", use_container_width=True):
+            generate_action(ActionType.CARD_DRAW, {"rarity": "legendary"})
         
-        with card_col2:
-            if st.button("📦 普通抽卡", use_container_width=True):
-                generate_action(ActionType.CARD_DRAW, {"rarity": "common"})
+        if st.button("📦 普通抽卡", use_container_width=True):
+            generate_action(ActionType.CARD_DRAW, {"rarity": "common"})
         
-        with card_col3:
-            if st.button("💎 购买道具", use_container_width=True):
-                generate_action(ActionType.ITEM_PURCHASE)
+        if st.button("💎 购买道具", use_container_width=True):
+            generate_action(ActionType.ITEM_PURCHASE)
         
         # 社交相关动作
         st.markdown("**👥 社交动作**")
-        social_col1, social_col2, social_col3 = st.columns(3)
         
-        with social_col1:
-            if st.button("💬 发送消息", use_container_width=True):
-                generate_action(ActionType.CHAT_MESSAGE)
+        if st.button("💬 发送消息", use_container_width=True):
+            generate_action(ActionType.CHAT_MESSAGE)
         
-        with social_col2:
-            if st.button("🎁 赠送礼物", use_container_width=True):
-                generate_action(ActionType.GIFT_SEND)
+        if st.button("🎁 赠送礼物", use_container_width=True):
+            generate_action(ActionType.GIFT_SEND)
         
-        with social_col3:
-            if st.button("🏃 退出游戏", use_container_width=True):
-                generate_action(ActionType.GAME_EXIT)
+        if st.button("🏃 退出游戏", use_container_width=True):
+            generate_action(ActionType.GAME_EXIT)
     
-    with col2:
-        st.header("🤖 Agent分析结果")
-        
-        # 显示最新的分析结果
-        if st.session_state.intervention_history:
-            latest_intervention = st.session_state.intervention_history[-1]
-            
-            st.subheader("最新干预结果")
-            st.json(latest_intervention)
-        else:
-            st.info("暂无分析结果，请生成一些动作来触发Agent分析")
-    
-    # 历史记录区域
+    # 历史记录区域（移到底部）
     st.markdown("---")
     st.header("📜 历史记录")
     

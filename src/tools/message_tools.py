@@ -1,4 +1,5 @@
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, Union
+from langchain_core.runnables import Runnable
 from langchain.tools import BaseTool
 from langchain.llms.base import LLM
 from langchain.prompts import PromptTemplate
@@ -8,7 +9,6 @@ import json
 import random
 
 class GenerateSoothingMessageInput(BaseModel):
-    
     """生成安抚消息工具的输入参数"""
     failure_context: str = Field(description="失败场景的上下文描述")
     player_info: Optional[Dict[str, Any]] = Field(default=None, description="玩家信息（可选）")
@@ -16,8 +16,6 @@ class GenerateSoothingMessageInput(BaseModel):
 
 
 class GenerateSoothingMessageTool(BaseTool):
-
-    
     """生成安抚消息工具
     
     调用LLM生成个性化、有同理心的安抚文案
@@ -25,22 +23,16 @@ class GenerateSoothingMessageTool(BaseTool):
     
     name: str = "generate_soothing_message"
     description: str = """根据玩家的失败场景和角色信息，生成一段个性化、有同理心的安抚文案。
-    输入参数：
-    - failure_context: 失败场景的描述
-    - player_info: 玩家信息（可选）
-    - message_tone: 消息语调（encouraging/empathetic/helpful）
+    输入JSON格式：
+    {
+        "failure_context": "失败场景的描述",
+        "player_info": { "username": "张三", "vip_level": 5 }, // 可选
+        "message_tone": "encouraging" // encouraging/empathetic/helpful
+    }
     返回：生成的安抚文本消息"""
     args_schema: type = GenerateSoothingMessageInput
     
-    # --- 核心修改点 开始 ---
-
-    # 1. 将 llm 保持为 Pydantic 字段声明。
-    #    这样在创建工具实例时，可以通过关键字参数传入，例如：
-    #    tool = GenerateSoothingMessageTool(llm=my_llm_instance)
-    llm: Optional[LLM] = None   # 设为None，以便在没有LLM时也能工作
-    
-    # 2. 将 fallback_templates 定义为类属性。
-    #    它对于所有实例都是相同的，只在类加载时创建一次，更高效。
+    llm: Optional[Runnable] = None
     fallback_templates: Dict[str, List[str]] = {
         "encouraging": [
             "不要气馁，{username}！每个强者都经历过挫折，这只是成长路上的一个小插曲。相信你的实力，再试一次吧！",
@@ -59,17 +51,13 @@ class GenerateSoothingMessageTool(BaseTool):
         ]
     }
 
-    # 3. 将 prompt_template 也定义为类属性。
-    #    它也是静态的，不需要在每次创建实例时都重新生成。
     prompt_template: PromptTemplate = PromptTemplate(
         input_variables=["failure_context", "player_info", "message_tone"],
         template="""
 你是一个游戏中的智能助手，专门帮助遇到困难的玩家。请根据以下信息生成一段温暖、个性化的安抚消息：
 
 失败场景：{failure_context}
-
 玩家信息：{player_info}
-
 消息语调：{message_tone}
 
 要求：
@@ -84,6 +72,36 @@ class GenerateSoothingMessageTool(BaseTool):
 """
     )
 
+    # ========================== 修改部分开始 ==========================
+    def _parse_input(
+        self, tool_input: Union[str, dict], tool_call_id: Optional[str] = None
+    ) -> Union[str, dict]:
+        """
+        重写 LangChain 的 _parse_input 方法来处理LLM可能输出的字符串格式
+        
+        这个方法会在 LangChain 的验证之前被调用
+        """
+        print(f"LangChain _parse_input 调用，输入: {tool_input}")
+        print(f"输入类型: {type(tool_input)}")
+        
+        # 如果输入已经是字典，直接返回
+        if isinstance(tool_input, dict):
+            return tool_input
+
+        # 如果输入是字符串，尝试将其解析为JSON字典
+        if isinstance(tool_input, str):
+            try:
+                # 移除可能的Markdown代码块标记
+                cleaned_input = tool_input.strip().lstrip('```json').lstrip('```').rstrip('```')
+                parsed_input = json.loads(cleaned_input)
+                print(f"输入是字符串，成功解析为JSON: {parsed_input}")
+                return parsed_input
+            except json.JSONDecodeError:
+                print("字符串输入无法解析为JSON，返回原始输入让Pydantic处理")
+                return tool_input
+
+        return tool_input
+    # ========================== 修改部分结束 ==========================
     
     def _run(self, 
              failure_context: str, 
@@ -91,10 +109,10 @@ class GenerateSoothingMessageTool(BaseTool):
              message_tone: str = "encouraging") -> str:
         """执行工具逻辑"""
         try:
-            # 现在 self.llm 是通过Pydantic初始化的可选字段
             if self.llm:
                 return self._generate_with_llm(failure_context, player_info, message_tone)
             else:
+                print("LLM实例未提供，将使用预定义模板生成消息。")
                 return self._generate_fallback_message(failure_context, player_info, message_tone)
                 
         except Exception as e:
@@ -109,15 +127,10 @@ class GenerateSoothingMessageTool(BaseTool):
                           message_tone: str) -> str:
         """使用LLM生成消息"""
         try:
-            # self.prompt_template 现在是类属性，可以直接访问
-            print("self.llm:", self.llm)
-            chain = LLMChain(llm=self.llm, prompt=self.prompt_template)
+            chain = self.prompt_template | self.llm
             
             player_info_str = "未提供玩家信息"
-            print("player_info:", player_info)
-            if  player_info:
-                
-
+            if player_info:
                 player_info_str = f"""玩家ID: {player_info.get('player_id', '未知')}
 用户名: {player_info.get('username', '未知')}
 VIP等级: {player_info.get('vip_level', 0)}
@@ -127,11 +140,11 @@ VIP等级: {player_info.get('vip_level', 0)}
 受挫程度: {player_info.get('frustration_level', 0)}/10
 连续失败次数: {player_info.get('consecutive_failures', 0)}"""
             
-            result = chain.run(
-                failure_context=failure_context,
-                player_info=player_info_str,
-                message_tone=message_tone
-            )
+            result = chain.invoke({
+                "failure_context": failure_context,
+                "player_info": player_info_str,
+                "message_tone": message_tone
+            })
             
             return json.dumps({
                 "success": True,
@@ -141,6 +154,7 @@ VIP等级: {player_info.get('vip_level', 0)}
             }, ensure_ascii=False, indent=2)
             
         except Exception as e:
+            print(f"LLM生成失败，转为使用预定义模板: {str(e)}")
             return self._generate_fallback_message(failure_context, player_info, message_tone)
     
     def _generate_fallback_message(self, 
@@ -153,7 +167,6 @@ VIP等级: {player_info.get('vip_level', 0)}
             if player_info and "username" in player_info:
                 username = player_info["username"]
             
-            # self.fallback_templates 现在是类属性，可以直接访问
             if message_tone not in self.fallback_templates:
                 message_tone = "encouraging"
             
@@ -181,24 +194,13 @@ VIP等级: {player_info.get('vip_level', 0)}
                            player_info: Optional[Dict[str, Any]],
                            failure_context: str) -> str:
         """个性化消息内容"""
-        # (此方法无需改动)
-        if not player_info:
-            return base_message
+        if not player_info: return base_message
         
-        vip_level = player_info.get("vip_level", 0)
-        if vip_level >= 5:
+        if player_info.get("vip_level", 0) >= 5:
             base_message += " 作为我们尊贵的VIP会员，我特别为你准备了一些额外的帮助。"
-        elif vip_level >= 3:
-            base_message += " 感谢你对游戏的支持，让我来为你提供一些帮助。"
         
-        consecutive_failures = player_info.get("consecutive_failures", 0)
-        if consecutive_failures >= 3:
+        if player_info.get("consecutive_failures", 0) >= 3:
             base_message += " 我注意到你最近遇到了一些挑战，这里有一些资源可能对你有帮助。"
-        
-        if "攻城" in failure_context or "attack_city" in failure_context:
-            base_message += " 建议先检查一下装备和兵力配置，或者尝试攻打等级稍低的城市来积累经验。"
-        elif "PVP" in failure_context or "attack_player" in failure_context:
-            base_message += " PVP战斗需要策略，可以先观察对手的阵容，调整自己的战术。"
         
         return base_message
     
@@ -207,10 +209,7 @@ VIP等级: {player_info.get('vip_level', 0)}
                     player_info: Optional[Dict[str, Any]] = None,
                     message_tone: str = "encouraging") -> str:
         """异步执行"""
-        # (此方法无需改动)
         return self._run(failure_context, player_info, message_tone)
-
-
 
 class MockLLM(LLM):
     """模拟LLM，用于测试"""

@@ -56,7 +56,7 @@ st.markdown("""
 if 'player' not in st.session_state:
     st.session_state.player = Player(
         player_id="demo_player_001",
-        player_name="玩家1",
+        username="玩家1",
         registration_date=datetime.now(),
         level=15,
         experience=2500,

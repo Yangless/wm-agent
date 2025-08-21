@@ -57,6 +57,9 @@ class BehaviorAnalyzer:
         
         try:
             # 获取玩家信息
+            print("player_id:", player_id)
+            #type
+            print("type(player_id):", type(player_id))
             player = self.data_manager.get_player(player_id)
             if not player:
                 return {"error": "玩家不存在"}

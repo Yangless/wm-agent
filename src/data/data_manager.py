@@ -3,10 +3,10 @@ from typing import List, Dict, Optional, Any
 from datetime import datetime, timedelta
 from pathlib import Path
 
-from ..models.player import Player, PlayerStatus
-from ..models.action import PlayerAction, ActionType
-from ..models.trigger import TriggerEvent, TriggerCondition
-from ..config.settings import settings
+from src.models.player import Player, PlayerStatus
+from src.models.action import PlayerAction, ActionType
+from src.models.trigger import TriggerEvent, TriggerCondition
+from src.config.settings import settings
 
 class DataManager:
     """数据管理器 - 统一管理所有游戏数据"""

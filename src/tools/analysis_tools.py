@@ -1,4 +1,4 @@
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional,Union
 from langchain.tools import BaseTool
 from pydantic import BaseModel, Field
 import json
@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 from ..data.data_manager import DataManager
 from ..models.action import ActionType
 from ..models.trigger import TriggerCondition, DEFAULT_TRIGGERS
-
+import traceback
 class AnalyzePlayerBehaviorInput(BaseModel):
     """分析玩家行为工具的输入参数"""
     player_id: str = Field(description="玩家ID")
@@ -22,33 +22,68 @@ class AnalyzePlayerBehaviorTool(BaseTool):
     
     name: str = "analyze_player_behavior"
     description: str = """深度分析玩家的行为模式，识别情绪状态、风险等级和干预需求。
-    输入参数：
-    - player_id: 玩家ID
-    - analysis_depth: 分析深度（basic/standard/detailed）
-    - time_window_hours: 分析时间窗口（小时）
-    返回：详细的行为分析报告"""
+    输入参数是一个JSON对象，格式为：{"player_id": "玩家ID", "analysis_depth": "basic", "time_window_hours": 24}
+    - player_id: 玩家ID (必填)
+    - analysis_depth: 分析深度 (可选, basic/standard/detailed, 默认 standard)
+    - time_window_hours: 分析时间窗口（小时）(可选, 默认 24)
+    返回：JSON格式的详细行为分析报告"""
     args_schema: type = AnalyzePlayerBehaviorInput
-    data_manager: DataManager
+    data_manager: DataManager = Field(default_factory=DataManager)
 
-    # def __init__(self, data_manager: DataManager):
-    #     super().__init__()
-    #     self.data_manager = data_manager
-    
-    def _run(self, 
-             player_id: str, 
-             analysis_depth: str = "standard",
-             time_window_hours: int = 24) -> str:
-        """执行工具逻辑"""
+    def _parse_and_validate_input(self, tool_input: Any) -> AnalyzePlayerBehaviorInput:
+        """
+        解析并验证输入参数，使其能够健壮地处理各种输入格式。
+        """
         try:
-            # 获取玩家信息
+            if isinstance(tool_input, AnalyzePlayerBehaviorInput):
+                return tool_input
+            
+            elif isinstance(tool_input, str):
+                try:
+                    data = json.loads(tool_input)
+                except json.JSONDecodeError as e:
+                    raise ValueError(f"输入不是有效的JSON格式: {str(e)}")
+                
+                if not isinstance(data, dict):
+                    raise ValueError(f"JSON输入必须是一个对象，但收到的是: {type(data).__name__}")
+                
+                return AnalyzePlayerBehaviorInput(**data)
+            
+            elif isinstance(tool_input, dict):
+                return AnalyzePlayerBehaviorInput(**tool_input)
+            
+            else:
+                raise ValueError(f"不支持的输入类型: {type(tool_input).__name__}")
+                
+        except ValidationError as e:
+            error_details = [f"字段 '{err['loc'][0]}': {err['msg']}" for err in e.errors()]
+            raise ValueError(f"输入参数验证失败: {'; '.join(error_details)}")
+        
+        except Exception as e:
+            raise ValueError(f"解析输入时发生未知错误: {str(e)}")
+
+    def _run(self, tool_input: Any) -> str:
+        """
+        以健壮的方式执行工具的核心逻辑。
+        """
+        validated_input = None
+        try:
+            # 步骤1: 解析和验证输入
+            validated_input = self._parse_and_validate_input(tool_input)
+            player_id = validated_input.player_id
+            analysis_depth = validated_input.analysis_depth
+            time_window_hours = validated_input.time_window_hours
+
+            # 步骤2: 业务逻辑验证
+            if not player_id or not player_id.strip():
+                return self._create_error_response("player_id 不能为空")
+
+            # 步骤3: 获取玩家数据
             player = self.data_manager.get_player(player_id)
             if not player:
-                return json.dumps({
-                    "error": "玩家不存在",
-                    "player_id": player_id
-                }, ensure_ascii=False)
+                return self._create_error_response("玩家不存在", player_id)
             
-            # 获取行为数据
+            # 步骤4: 获取行为数据
             time_window_minutes = time_window_hours * 60
             actions = self.data_manager.get_player_actions(
                 player_id=player_id,
@@ -56,15 +91,15 @@ class AnalyzePlayerBehaviorTool(BaseTool):
                 time_window_minutes=time_window_minutes
             )
             
-            # 执行不同深度的分析
+            # 步骤5: 执行分析
             if analysis_depth == "basic":
                 analysis_result = self._basic_analysis(player, actions)
             elif analysis_depth == "detailed":
                 analysis_result = self._detailed_analysis(player, actions)
-            else:  # standard
+            else:
                 analysis_result = self._standard_analysis(player, actions)
             
-            # 添加通用信息
+            # 步骤6: 组合最终结果
             analysis_result.update({
                 "player_id": player_id,
                 "analysis_timestamp": datetime.now().isoformat(),
@@ -73,14 +108,46 @@ class AnalyzePlayerBehaviorTool(BaseTool):
                 "total_actions_analyzed": len(actions)
             })
             
-            return json.dumps(analysis_result, ensure_ascii=False, indent=2)
+            return self._create_success_response(analysis_result)
+            
+        except ValueError as e:
+            # 输入验证/解析错误
+            player_id_for_error = validated_input.player_id if validated_input else None
+            return self._create_error_response(f"输入错误: {str(e)}", player_id_for_error)
             
         except Exception as e:
-            return json.dumps({
-                "error": f"分析玩家行为时出错: {str(e)}",
-                "player_id": player_id
-            }, ensure_ascii=False)
-    
+            # 其他系统级错误
+            traceback.print_exc()
+            player_id_for_error = validated_input.player_id if validated_input else None
+            return self._create_error_response(f"分析玩家行为时出错: {str(e)}", player_id_for_error)
+
+    def _create_success_response(self, analysis_data: dict) -> str:
+        """创建成功的JSON响应"""
+        response = {
+            "success": True,
+            "analysis_report": analysis_data,
+            "message": "分析成功"
+        }
+        return json.dumps(response, ensure_ascii=False, indent=2, default=str)
+
+    def _create_error_response(self, error_msg: str, player_id: str = None) -> str:
+        """创建失败的JSON响应"""
+        response = {
+            "success": False,
+            "error": error_msg,
+            "analysis_report": None
+        }
+        if player_id:
+            response["player_id"] = player_id
+        return json.dumps(response, ensure_ascii=False, indent=2)
+
+    async def _arun(self, tool_input: Any) -> str:
+        """
+        异步执行 - 保持与 _run 相同的输入处理逻辑。
+        """
+        return self._run(tool_input)
+
+    # _basic_analysis, _standard_analysis, _detailed_analysis 等分析方法的实现保持不变...
     def _basic_analysis(self, player, actions: List) -> Dict[str, Any]:
         """基础分析"""
         if not actions:
@@ -91,11 +158,9 @@ class AnalyzePlayerBehaviorTool(BaseTool):
                 "summary": "无足够数据进行分析"
             }
         
-        # 基础统计
         failure_count = sum(1 for action in actions if action.is_failure())
         success_count = sum(1 for action in actions if action.is_success())
         
-        # 风险评估
         risk_level = 1
         if player.consecutive_failures >= 3:
             risk_level = 8
@@ -104,7 +169,6 @@ class AnalyzePlayerBehaviorTool(BaseTool):
         elif failure_count > success_count:
             risk_level = 3
         
-        # 情绪状态
         emotional_state = "neutral"
         if player.frustration_level >= 7:
             emotional_state = "frustrated"
@@ -130,19 +194,10 @@ class AnalyzePlayerBehaviorTool(BaseTool):
         if not actions:
             return basic_result
         
-        # 行为模式分析
         behavior_pattern = self.data_manager.analyze_player_behavior_pattern(player.player_id)
-        
-        # 时间分布分析
         time_analysis = self._analyze_time_patterns(actions)
-        
-        # 社交行为分析
         social_analysis = self._analyze_social_behavior(actions)
-        
-        # 触发条件检查
         trigger_analysis = self._check_trigger_conditions(player, actions)
-        
-        # 干预建议
         intervention_suggestions = self._generate_intervention_suggestions(
             player, behavior_pattern, trigger_analysis
         )
@@ -165,19 +220,10 @@ class AnalyzePlayerBehaviorTool(BaseTool):
         if not actions:
             return standard_result
         
-        # 情绪轨迹分析
         emotional_trajectory = self._analyze_emotional_trajectory(actions)
-        
-        # 行为序列分析
         sequence_analysis = self._analyze_action_sequences(actions)
-        
-        # 价值评估
         value_assessment = self._assess_player_value(player, actions)
-        
-        # 预测分析
         prediction = self._predict_future_behavior(player, actions)
-        
-        # 个性化建议
         personalized_recommendations = self._generate_personalized_recommendations(
             player, actions, emotional_trajectory
         )
@@ -192,22 +238,20 @@ class AnalyzePlayerBehaviorTool(BaseTool):
         })
         
         return result
-    
+
+    # 保持所有其他辅助分析方法 (_analyze_time_patterns, _analyze_social_behavior, etc.) 不变
     def _analyze_time_patterns(self, actions: List) -> Dict[str, Any]:
         """分析时间模式"""
         if not actions:
             return {"pattern": "no_data"}
         
-        # 按小时统计活动
         hour_distribution = {}
         for action in actions:
             hour = action.timestamp.hour
             hour_distribution[hour] = hour_distribution.get(hour, 0) + 1
         
-        # 找出最活跃的时间段
         peak_hour = max(hour_distribution.items(), key=lambda x: x[1])[0] if hour_distribution else 0
         
-        # 计算活动间隔
         if len(actions) > 1:
             intervals = []
             for i in range(1, len(actions)):
@@ -242,13 +286,9 @@ class AnalyzePlayerBehaviorTool(BaseTool):
         triggered_conditions = []
         
         for condition in DEFAULT_TRIGGERS:
-            # 检查时间窗口
             if condition.check_time_window(actions):
-                # 检查失败模式
                 if condition.check_failure_pattern(actions):
-                    # 检查行为类型
                     if condition.check_action_types(actions):
-                        # 检查玩家条件
                         player_matches = True
                         if condition.min_vip_level and player.vip_level < condition.min_vip_level:
                             player_matches = False
@@ -274,11 +314,10 @@ class AnalyzePlayerBehaviorTool(BaseTool):
         if not actions:
             return {"trajectory": "no_data"}
         
-        # 计算情绪变化
         emotional_points = []
         cumulative_impact = 0
         
-        for action in reversed(actions):  # 按时间正序
+        for action in reversed(actions):
             impact = action.get_emotional_impact()
             cumulative_impact += impact
             emotional_points.append({
@@ -288,7 +327,6 @@ class AnalyzePlayerBehaviorTool(BaseTool):
                 "action_type": action.action_type.value
             })
         
-        # 分析趋势
         if len(emotional_points) >= 3:
             recent_trend = emotional_points[-3:]
             trend_direction = "stable"
@@ -312,7 +350,6 @@ class AnalyzePlayerBehaviorTool(BaseTool):
         if len(actions) < 3:
             return {"pattern": "insufficient_data"}
         
-        # 查找常见序列
         sequences = []
         for i in range(len(actions) - 2):
             sequence = [
@@ -322,7 +359,6 @@ class AnalyzePlayerBehaviorTool(BaseTool):
             ]
             sequences.append(sequence)
         
-        # 识别问题序列
         problem_sequences = []
         for seq in sequences:
             if "battle_lose" in seq and "complain" in seq:
@@ -341,13 +377,9 @@ class AnalyzePlayerBehaviorTool(BaseTool):
     
     def _assess_player_value(self, player, actions: List) -> Dict[str, Any]:
         """评估玩家价值"""
-        # 基础价值评分
         value_score = 0
-        
-        # VIP等级贡献
         value_score += player.vip_level * 10
         
-        # 消费贡献
         if player.total_spent >= 1000:
             value_score += 50
         elif player.total_spent >= 100:
@@ -355,15 +387,12 @@ class AnalyzePlayerBehaviorTool(BaseTool):
         elif player.total_spent >= 10:
             value_score += 10
         
-        # 活跃度贡献
         value_score += min(player.total_playtime_hours / 10, 20)
         
-        # 社交价值
         if player.guild_id:
             value_score += 5
         value_score += min(player.friends_count / 5, 10)
         
-        # 风险调整
         if player.current_status.value == "churning":
             risk_multiplier = 1.5
         elif player.current_status.value == "frustrated":
@@ -386,26 +415,21 @@ class AnalyzePlayerBehaviorTool(BaseTool):
         if not actions:
             return {"prediction": "insufficient_data"}
         
-        # 基于当前趋势预测
         churn_risk = 0
         
-        # 连续失败风险
         if player.consecutive_failures >= 3:
             churn_risk += 40
         elif player.consecutive_failures >= 2:
             churn_risk += 20
         
-        # 受挫程度风险
         churn_risk += player.frustration_level * 5
         
-        # 活跃度风险
         recent_actions_count = len([a for a in actions if a.timestamp >= datetime.now() - timedelta(hours=6)])
         if recent_actions_count == 0:
             churn_risk += 30
         elif recent_actions_count < 3:
             churn_risk += 15
         
-        # 社交孤立风险
         social_actions = [a for a in actions if a.is_social_activity()]
         if len(social_actions) == 0:
             churn_risk += 10
@@ -437,11 +461,11 @@ class AnalyzePlayerBehaviorTool(BaseTool):
         if trigger_analysis["should_trigger_intervention"]:
             suggestions.append("立即触发智能体干预流程")
         
-        if behavior_pattern["pattern"] == "high_frustration":
+        if behavior_pattern.get("pattern") == "high_frustration":
             suggestions.append("发送高优先级安抚消息")
             suggestions.append("提供装备强化材料或金币奖励")
         
-        if behavior_pattern["pattern"] == "seeking_help":
+        if behavior_pattern.get("pattern") == "seeking_help":
             suggestions.append("提供详细的游戏攻略和建议")
             suggestions.append("推荐加入活跃公会")
         
@@ -455,25 +479,15 @@ class AnalyzePlayerBehaviorTool(BaseTool):
         """生成个性化建议"""
         recommendations = []
         
-        # 基于情绪轨迹
         if emotional_trajectory["trend_direction"] == "declining":
             recommendations.append("情绪呈下降趋势，建议立即干预")
         
-        # 基于游戏等级
         if player.level < 10:
             recommendations.append("新手玩家，提供新手指导和保护机制")
         elif player.level > 30:
             recommendations.append("高级玩家，提供挑战性内容和高级奖励")
         
-        # 基于装备水平
         if player.equipment_power < 500:
             recommendations.append("装备较弱，建议提供装备强化资源")
         
         return recommendations
-    
-    async def _arun(self, 
-                    player_id: str, 
-                    analysis_depth: str = "standard",
-                    time_window_hours: int = 24) -> str:
-        """异步执行"""
-        return self._run(player_id, analysis_depth, time_window_hours)

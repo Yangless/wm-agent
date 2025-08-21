@@ -1,3 +1,4 @@
+from token import OP
 from typing import Dict, List, Optional, Any
 from langchain.memory import ConversationBufferWindowMemory
 from langchain.schema import BaseMessage, HumanMessage, AIMessage
@@ -19,6 +20,7 @@ class MemoryManager:
         self.memory_window_size = memory_window_size
         self.player_memories: Dict[str, ConversationBufferWindowMemory] = {}
         self.player_contexts: Dict[str, Dict[str, Any]] = {}
+        self.player_content: Dict[str, Dict[str, Any]] = {}
         self.last_interaction_time: Dict[str, datetime] = {}
     
     def get_player_memory(self, player_id: str) -> ConversationBufferWindowMemory:
@@ -38,33 +40,112 @@ class MemoryManager:
         
         return self.player_memories[player_id]
     
+
+                    # content={
+                    # "intervention_analysis": intervention_analysis,
+                    # "execution_result": result
+                
     def add_interaction(self, 
                        player_id: str, 
-                       human_input: str, 
-                       ai_response: str,
-                       context: Optional[Dict[str, Any]] = None):
+                       interaction_type: str,
+                       content: Optional[Dict[str, Any]] = None,
+                       context: Optional[Dict[str, Any]] = None,
+                       human_input: Optional[str] = None, 
+                       ai_response: Optional[str] = None):
         """添加一次交互记录
         
         Args:
             player_id: 玩家ID
-            human_input: 人类输入（触发条件描述）
-            ai_response: AI响应
-            context: 额外的上下文信息
+            interaction_type: 交互类型（如trigger_event_v2, player_action等）
+            content: 交互内容数据（如intervention_analysis, execution_result等）
+            context: 额外的上下文信息（如触发条件、环境信息等）
+            human_input: 人类输入（可选，用于传统对话记录）
+            ai_response: AI响应（可选，用于传统对话记录）
+        
+        参数关系说明：
+        - content: 存储结构化的交互数据，如分析结果、执行结果等
+        - context: 存储环境和触发条件信息
+        - human_input/ai_response: 用于传统对话形式的记录（向后兼容）
         """
         memory = self.get_player_memory(player_id)
         
-        # 添加到记忆中
-        memory.chat_memory.add_user_message(human_input)
-        memory.chat_memory.add_ai_message(ai_response)
+        # 构建交互记录的描述信息
+        if human_input and ai_response:
+            # 传统对话模式
+            memory.chat_memory.add_user_message(human_input)
+            memory.chat_memory.add_ai_message(ai_response)
+        else:
+            # 新的结构化交互模式
+            interaction_summary = self._build_interaction_summary(interaction_type, content, context)
+            memory.chat_memory.add_user_message(f"触发事件: {interaction_type}")
+            memory.chat_memory.add_ai_message(interaction_summary)
         
         # 更新上下文
         if context:
             if player_id not in self.player_contexts:
                 self.player_contexts[player_id] = {}
             self.player_contexts[player_id].update(context)
+
+        # 更新内容数据
+        if content:
+            if player_id not in self.player_content:
+                self.player_content[player_id] = {}
+            # 按交互类型组织内容
+            if interaction_type not in self.player_content[player_id]:
+                self.player_content[player_id][interaction_type] = []
+            self.player_content[player_id][interaction_type].append({
+                "timestamp": datetime.now().isoformat(),
+                "data": content
+            })
         
         # 更新最后交互时间
         self.last_interaction_time[player_id] = datetime.now()
+    
+    def _build_interaction_summary(self, interaction_type: str, 
+                                 content: Optional[Dict[str, Any]], 
+                                 context: Optional[Dict[str, Any]]) -> str:
+        """构建交互摘要
+        
+        Args:
+            interaction_type: 交互类型
+            content: 内容数据
+            context: 上下文信息
+            
+        Returns:
+            str: 交互摘要
+        """
+        summary_parts = []
+        
+        if interaction_type == "trigger_event_v2":
+            if content and "intervention_analysis" in content:
+                analysis = content["intervention_analysis"]
+                if analysis.get("intervention_needed", False):
+                    summary_parts.append(f"检测到需要干预: {analysis.get('intervention_reason', '未知原因')}")
+                    summary_parts.append(f"建议干预类型: {analysis.get('suggested_intervention_type', '未指定')}")
+                else:
+                    summary_parts.append("分析完成，无需干预")
+                
+                if "player_mood_summary" in analysis:
+                    summary_parts.append(f"玩家情绪: {analysis['player_mood_summary']}")
+            
+            if content and "execution_result" in content:
+                result = content["execution_result"]
+                if result.get("success", False):
+                    summary_parts.append("干预执行成功")
+                else:
+                    summary_parts.append(f"干预执行失败: {result.get('error', '未知错误')}")
+        
+        elif interaction_type == "player_action":
+            if content and "action" in content:
+                action = content["action"]
+                summary_parts.append(f"玩家行为: {action.get('action_type', '未知行为')}")
+        
+        else:
+            summary_parts.append(f"交互类型: {interaction_type}")
+            if content:
+                summary_parts.append(f"包含 {len(content)} 项数据")
+        
+        return " | ".join(summary_parts) if summary_parts else "交互记录"
     
     def get_conversation_history(self, player_id: str) -> List[BaseMessage]:
         """获取玩家的对话历史
@@ -88,6 +169,24 @@ class MemoryManager:
             Dict[str, Any]: 玩家上下文信息
         """
         return self.player_contexts.get(player_id, {})
+    
+    def get_player_content(self, player_id: str, interaction_type: Optional[str] = None) -> Dict[str, Any]:
+        """获取玩家的内容数据
+        
+        Args:
+            player_id: 玩家ID
+            interaction_type: 可选的交互类型过滤器
+            
+        Returns:
+            Dict[str, Any]: 玩家内容数据
+        """
+        if player_id not in self.player_content:
+            return {}
+        
+        if interaction_type:
+            return self.player_content[player_id].get(interaction_type, [])
+        else:
+            return self.player_content[player_id]
     
     def update_player_context(self, player_id: str, context: Dict[str, Any]):
         """更新玩家上下文信息
